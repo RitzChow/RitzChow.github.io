@@ -12,14 +12,14 @@ fetchResultData();
 
 async function fetchResultData() {
   try {
-    const response = await fetch("/results");
+    const response = await fetch("https://physarena-backend.onrender.com/results");
     data = await response.json();
 	all_result_data = data["results"];
 	competition_info = data["competition_info"];
-	const secondary_response = await fetch("/secondary");
+	const secondary_response = await fetch("https://physarena-backend.onrender.com/secondary");
     secondary_data = await secondary_response.json();
 
-	const competition_dates_response = await fetch("/competition_dates");
+	const competition_dates_response = await fetch("https://physarena-backend.onrender.com/competition_dates");
 	competition_dates = await competition_dates_response.json();
 
 	// sort competitions by competitions_info[competition].index

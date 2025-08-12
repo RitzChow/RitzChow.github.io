@@ -152,7 +152,7 @@ function updateTraces(model, task) {
 	}, 100);
 
   const encModel = encodeURIComponent(model);
-  fetch(`/traces/${window.competition}/${encModel}/${task}`)
+  fetch(`https://physarena-backend.onrender.com/traces/${window.competition}/${encModel}/${task}`)
 		.then(handleResponse)
 		.then(data => {
 			renderTraceContent(data, tracesBox);
