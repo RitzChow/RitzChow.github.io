@@ -1,0 +1,692 @@
+.nav-tabs .nav-link.active {
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+.nav-tabs {
+  border-bottom: none !important;
+}
+
+/* Make problem header cell same width as each small cell */
+th.problem-header {
+  max-width: 60px;
+  min-width: 60px;
+  text-align: center;
+  white-space: nowrap;
+}
+/* 1. BASE / GLOBAL STYLES */
+body {
+  font-family: 'Open Sans';
+}
+
+h4 {
+  margin-top: 10px !important;
+}
+
+table {
+  border-collapse: separate;
+  width: 100%;
+}
+
+/* 2. TYPOGRAPHY */
+.dnerf {
+  font-variant: small-caps;
+}
+
+.tldr {
+  font-size: 1.9rem;
+}
+
+.eql-cntrb { 
+  font-size: smaller;
+}
+
+.overall-percentage {
+  font-size: 1rem;
+}
+
+.warning-small {
+  font-size: 0.8rem !important;
+  position: relative;
+  top: -1px;
+  opacity: 0.7;
+}
+
+.publication-title {
+  /* font-family: 'Open Sans'; */
+  font-size: 2.9rem !important;
+}
+
+.publication-authors {
+  font-family: 'Open Sans';
+  margin-top: -20px;
+  margin-bottom: -40px;
+  display: inline-flex;            /* uniform horizontal layout */
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;                      /* tighter overall spacing */
+}
+
+/* Ensure the three header logos have the same visual size */
+.publication-authors .header-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 4.2em;      /* larger logos overall */
+  width: 9.5em;       /* wider footprint for consistency */
+}
+
+/* Slightly enlarge the 3rd logo */
+.publication-authors .header-link:nth-child(3) {
+  height: 5.0em;
+  width: 11.2em;
+}
+
+/* Make the first logo's box slightly narrower to compensate its inner whitespace */
+.publication-authors .header-link:first-child {
+  width: 8.3em;       /* slightly narrower to compensate inner whitespace */
+  margin-right: -0.45em; /* visually reduce gap to the second logo */
+}
+
+/* Enlarge the spacing between the 2nd and 3rd logos */
+.publication-authors .header-link:nth-child(2) {
+  margin-right: 1.4em; /* slightly larger extra gap between 2nd and 3rd logos */
+}
+
+.publication-authors .header-link .header-image {
+  height: 100%;       /* fill the box vertically */
+  width: auto;        /* keep aspect ratio */
+}
+
+.caption {
+  font-weight: bold;
+  margin: 20px 6% 35px 6%; 
+  padding: 0 0 0 2%;
+  border-left: thick solid #8c8b8d;
+}
+
+.competition-name, .model-name {
+  font-size: 1.1rem !important;
+  font-variant: normal !important;
+}
+
+.competition-name {
+  text-align: center;
+}
+
+.model-name {
+  text-align: left !important;
+}
+
+.model-names {
+  font-size: 1.0rem !important;
+  min-width: 230px;
+  width: 230px;
+  /* font-family: "Latin Modern Roman", serif; */
+  /* font-variant: small-caps; */
+}
+
+.avg-cost {
+  font-size: 1.0rem !important;
+  width: 80px;
+  max-width: 80px;
+}
+
+.model-names-secondary {
+  font-size: 1.0rem !important;
+  /* font-family: "Latin Modern Roman", serif; */
+  /* font-variant: small-caps; */
+  width:230px;
+  min-width:230px;
+}
+
+.avg-cost-secondary,
+.avg-cost-header {
+  font-size: 1.0rem !important;
+  width: 230px !important;
+  text-align: center !important;
+}
+
+
+/* 3. LAYOUT */
+.container {
+  justify-content: center !important;
+  max-width: 90vw;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.column.is-ninety {
+  width: 90%;
+  max-width: 1000px;
+}
+
+.columns.is-centered.center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 4. CONTAINERS / BOXES */
+.box {
+  width: 100%;
+  margin: 0 0 1.5rem 0;
+  padding: 1.5rem; /* Consistent padding */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Softer, slightly larger shadow */
+  max-height: 500px; /* Increased max-height slightly */
+  margin-top: 20px; /* Consistent top margin */
+  position: relative;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0; /* Default subtle border */
+  line-height: 1.6;
+}
+
+.problem-box {
+  background-color: #f0f5ff; /* Lighter tint of #c7d9ff */
+  border-top: 4px solid #8eaadb; /* Original #c7d9ff darkened */
+  color: #2c3e50;
+}
+.solution-box {
+  background-color: #f0fff0; /* Lighter tint of #c7ffcb */
+  border-top: 4px solid #8ee094; /* Original #c7ffcb darkened */
+  color: #1e4620;
+}
+.description-box, .judgment-box {
+  background-color: #f9f9f9; /* Kept light grey */
+  border-top: 4px solid #cccccc;
+  color: #333333;
+}
+
+.response-box {
+  background-color: #fff5e7; /* Lighter tint of #ffe4c8 */
+  border-top: 4px solid #ffc993; /* Original #ffe4c8 darkened */
+  color: #5a3e2b;
+  font-weight: normal;
+  color: #000000 
+}
+
+.user { background-color: #d1bca5; }
+.assistant { background-color: #ffe4c8; }
+.correct { background-color: #f0fff0; border-top: 4px solid #76c77b; }
+.incorrect { background-color: #fff0f0; border-top: 4px solid #ff8a80; }
+
+.semicorrect { background-color: #fff9f0; border-top: 4px solid #ffd9a0; }
+
+/* 5. HEADERS / FOOTERS */
+.footer {
+  padding-bottom: 30px !important;
+  padding-top: 30px !important;
+}
+
+.footer .icon-link {
+  font-size: 25px;
+  color: #000;
+}
+
+.logo {
+  height: 2.8em;
+  margin-bottom: -0.4em;
+}
+
+.header-image {
+  height: 2.4em; /* default; overridden in header by the more specific selector above */
+  margin-left: 0;
+  margin-right: 0;
+  display: inline-block;
+  border: none;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.header-link {
+  text-decoration: none;
+  border: none;
+  outline: none;
+}
+
+.header-link:hover {
+  text-decoration: none !important;
+  border: none !important;
+  outline: none !important;
+}
+
+/* 6. TABLES */
+.table-wrapper {
+  width: calc(100% - 40px);
+  overflow-x: auto;
+  max-width: 90vw;
+  margin: 0;
+}
+
+.table-info-box {
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  margin: 10px auto;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+table.dataTable thead {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+table.dataTable tbody tr {
+  transition: background-color 0.3s;
+}
+
+table.dataTable tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+table.dataTable thead th, table.dataTable tbody td {
+  padding: 12px 0px;
+}
+
+table.dataTable thead th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.problem-column {
+  font-size: 12px !important;
+  min-width: 40px;
+  width: 40px;
+  max-width: 40px;
+  padding: 12px 0 !important;
+}
+
+.main-table-column {
+  min-width: 100px;
+}
+
+.highlight-column {
+  box-shadow: inset 0 0 0 9999px rgba(0, 0, 0, 0.035) !important;
+}
+
+/* 7. MEDIA QUERIES */
+@media (max-width: 900px) {
+  .publication-authors { gap: 0.5em; }
+  .publication-authors .header-link { height: 3.2em; width: 8.0em; }
+  .publication-authors .header-link:first-child { width: 7.2em; margin-right: -0.4em; }
+  .publication-authors .header-link:nth-child(2) { margin-right: 1.2em; }
+  .publication-authors .header-link:nth-child(3) { height: 3.9em; width: 9.6em; }
+  .header-image { height: 2.0em; }
+  .logo { height: 2.3em; }
+  .column.is-ninety {
+    width: 95%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .publication-authors {
+    margin-top: -20px;
+    margin-bottom: -40px;
+  }
+
+  .publication-title, .title {
+    font-size: 2rem !important;
+  }
+
+  .dt-container, .dt-container .dt-paging .dt-paging-button .overall-percentage {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .publication-authors { gap: 0.45em; }
+  .publication-authors .header-link { height: 2.8em; width: 7.0em; }
+  .publication-authors .header-link:first-child { width: 6.2em; margin-right: -0.35em; }
+  .publication-authors .header-link:nth-child(2) { margin-right: 1.0em; }
+  .publication-authors .header-link:nth-child(3) { height: 3.4em; width: 8.5em; }
+  .header-image { height: 1.8em; }
+  .logo { height: 2.0em; }
+  .table-wrapper, .container {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: calc(100% - 20px);
+    max-width: 95vw;
+  }
+}
+
+/* 8. COMPONENTS */
+
+.section-code-pdf {
+  display: flex; 
+  justify-content: center; 
+  gap: 3em;
+  margin-bottom: 2em;
+}
+
+.icon-code-pdf {
+  height: 3em;
+  vertical-align: middle;
+  margin-bottom: 0.5em;
+}
+
+/* Tabs */
+.tab {
+  overflow: hidden;
+  border: 1px solid #dee2e6;
+  border-bottom: none; /* Remove bottom border from the tab bar itself */
+  background-color: #f8f9fa;
+  border-radius: 6px 6px 0 0; /* Rounded top corners */
+  margin-top: 1.5rem; /* Space above tabs */
+}
+
+.tab button {
+  background-color: inherit;
+  float: left;
+  /* border: none;  <-- REMOVE THIS LINE */
+  outline: none;
+  cursor: pointer;
+  padding: 14px 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 0.95rem;
+  color: #495057;
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+  border-right: 1px solid #dee2e6; /* Separator between tabs */
+
+  /* ✅ ADD THIS LINE */
+  /* This reserves 2px of vertical space, matching the active state's border */
+  border-bottom: 2px solid transparent; 
+}
+
+.tab button:last-child {
+  border-right: none;
+}
+
+.tab button:hover {
+  background-color: #e9ecef;
+  color: #0056b3;
+}
+
+.tab button.active {
+  background-color: #ffffff; 
+  color: #007bff;
+  font-weight: 600;
+  border-bottom: 2px solid #007bff; /* Highlight active tab */
+  position: relative;
+  top: 1px;
+}
+
+.tabcontent, .tabcontentjudges {
+  display: none;
+  padding: 20px 15px; /* More padding in content */
+  border: 1px solid #dee2e6;
+  background-color: #ffffff;
+  border-top: none; /* Top border handled by active tab or overall tab bar */
+  border-radius: 0 0 6px 6px; /* Rounded bottom corners */
+  line-height: 1.6;
+}
+
+/* 9. CUSTOM SECTIONS */
+#tableModels {
+  margin-top: -6rem !important;
+}
+
+
+#traces {
+  display: none;
+  width: 100%;
+  overflow-x: auto;
+  height: 100%;
+  margin: 0% 2%;
+}
+
+.tracesHeading {
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  margin: auto;
+  color: #c7cacf;
+}
+
+.tableHeading {
+  font-size: 16px;
+  padding-bottom: 15px;
+  text-align: center;
+  margin: auto;
+}
+
+#tracesHint {
+  color: #276dff;
+}
+
+.problem-difficulty {
+  font-weight: 400;
+  padding: 0;
+  font-size: 12px;
+}
+
+.problem-easy {
+  color: #38a169; /* Green for easy */
+}
+.problem-medium {
+  color: #d69e2e; /* Yellow for medium */
+}
+.problem-hard {
+  color: #e53e3e; /* Red for hard */
+}
+
+
+/* FAQ Section */
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  margin-bottom: 1rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.faq-question {
+  font-size: 1rem; /* Reduced font size */
+  font-weight: 600;
+  color: #4a5568;
+  padding: 0.75rem 1.25rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.faq-question:hover {
+  color: #c7cacf;
+}
+
+.faq-question::after {
+  content: "+";
+  font-size: 1.75rem;
+  font-weight: 300;
+  color: #c7cacf;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 1rem; /* Ensures space between text and icon */
+}
+
+.faq-question.is-active::after {
+  content: "-";
+  transform: translateY(-2px); /* Minor vertical alignment for minus sign */
+}
+
+.faq-answer {
+  padding: 0 1rem 1rem 1rem;
+  display: none;
+}
+
+/* Competition Tabs */
+.competition-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+}
+
+.competition-tab {
+  padding: 10px 20px;
+  margin-right: 5px;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  background: #f8f8f8;
+  cursor: pointer;
+  border-radius: 5px 5px 0 0;
+  position: relative;
+  bottom: -1px;
+}
+
+.competition-tab:hover {
+  background: #f0f0f0;
+}
+
+.competition-tab.active {
+  background: #fff;
+  border-bottom: 1px solid #fff;
+  margin-bottom: -1px;
+  color: #c7cacf;
+  font-weight: bold;
+}
+
+.competition-container {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Nav Tabs */
+.nav-tabs {
+  border-bottom: 1px solid #dee2e6;
+  margin-bottom: 20px;
+}
+
+.nav-tabs .nav-strip {
+  display: flex;
+  justify-content: center;
+  border-bottom: 3px solid #ffffff;
+}
+
+.nav-tabs .nav-link {
+  margin-bottom: -1px;
+  border: 1px solid transparent;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  color: #495057;
+}
+
+.nav-tabs .nav-link:hover {
+  border-color: #e9ecef #e9ecef #dee2e6;
+}
+
+.nav-tabs .nav-link.active {
+  color: #276dff;
+  background-color: #fff;
+  border-color: #dee2e6 #dee2e6 #fff;
+  font-weight: bold;
+}
+
+/* 10. UTILITIES */
+.link-block a {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.target {
+  border: 3px solid #c7cacf !important;
+  box-shadow: inset 0 0 0 9999px rgba(163,170,179,0.25);
+}
+
+.target-candidate {
+  border: 2.5px solid #c7cacf !important;
+}
+
+.info-container {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #856404;
+  cursor: pointer;
+}
+
+.warning-text {
+  font-size: 14px;
+}
+
+.info-button {
+  border: none;
+  background: none;
+  color: #856404;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  margin-right: 20px;
+}
+
+.detail-box {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 4px;
+  color: #856404;
+  display: none;
+}
+
+.detail-box.show {
+  display: block;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Latin+Modern+Roman&display=swap');
+
+/* Custom styling for contamination warning tooltip */
+.contamination-warning {
+    cursor: pointer;
+    position: relative;
+}
+
+/* Custom tooltip styling */
+.contamination-warning:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 0;
+    transform: translateX(150%);
+    transform: translateY(150%);
+    top: -30px;
+    background-color: #fbf9ba;
+    color: #333333;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 100;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.citation-block {
+  background-color: #f5f5f5;
+  border-left: 5px solid #979797;
+  padding: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 0px;
+  border-radius: 8px;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.95em;
+  color: #333;
+  overflow-x: auto;
+  width: 100%;
+}

@@ -1,0 +1,68 @@
+
+/* For mobile phones: */
+@media (max-width: 768px) {
+  .nav-tabs {
+    display: none !important; /* Use !important to ensure it's hidden */
+  }
+
+  .competition-container .dropdown {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .competition-container .btn-secondary:hover,
+  .competition-container .btn-secondary:focus,
+  .competition-container .btn-secondary:active {
+    background-color: #f8f9fa !important;
+    color: #495057 !important;
+  }
+
+  .competition-container .dropdown-toggle {
+    width: 100%;
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+    color: #495057;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .competition-container .dropdown-menu {
+    width: 100%;
+  }
+
+  .competition-container .dropdown-item .nav-strip {
+    border-bottom-width: 4px;
+    border-bottom-style: solid;
+  }
+
+  .table-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  table.dataTable {
+    font-size: 0.9rem;
+  }
+
+  table.dataTable .model-names {
+    min-width: 160px !important;
+    width: 160px !important;
+  }
+
+  table.dataTable .model-names,
+  table.dataTable .overall-percentage,
+  table.dataTable .avg-cost {
+    font-size: 0.8rem !important;
+  }
+}
+
+/* For desktop: */
+@media (min-width: 769px) {
+  .competition-container .dropdown {
+    display: none;
+  }
+}
