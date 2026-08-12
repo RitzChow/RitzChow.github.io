@@ -44,6 +44,7 @@ export function PaperFigure({ title, category, image, imageAlt }: PaperFigurePro
       <span className="paper-figure__orb" />
       <span className="paper-figure__axis" />
       <span className="paper-figure__trace" />
+      {safeCategory === "physical-ai" ? <span className="paper-figure__core" /> : null}
     </figure>
   );
 }

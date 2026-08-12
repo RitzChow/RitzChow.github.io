@@ -100,6 +100,15 @@ describe("publication archive", () => {
 });
 
 describe("PaperFigure", () => {
+  it("gives the physical-AI fallback a distinct embodied-system motif", () => {
+    const { container } = render(
+      <PaperFigure title="A Fixture Paper" category="physical-ai" />,
+    );
+
+    expect(container.querySelector(".paper-figure--physical-ai")).toBeInTheDocument();
+    expect(container.querySelector(".paper-figure__core")).toBeInTheDocument();
+  });
+
   it("uses a deterministic category fallback when no image is configured", () => {
     const { container } = render(
       <PaperFigure title="A Fixture Paper" category="world-models" />,
