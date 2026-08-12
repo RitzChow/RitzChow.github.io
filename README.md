@@ -18,6 +18,11 @@ npm test -- --run
 npm run lint
 npx tsc --noEmit
 npm run build
+```
+
+For additional browser validation, run the local end-to-end suite separately:
+
+```sh
 npm run test:e2e
 ```
 
