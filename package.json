@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build --webpack",
     "lint": "eslint .",
-    "test": "vitest",
-    "test:watch": "vitest",
+    "test": "vitest --exclude 'e2e/**'",
+    "test:watch": "vitest --exclude 'e2e/**'",
     "test:e2e": "playwright test"
   },
   "dependencies": {
