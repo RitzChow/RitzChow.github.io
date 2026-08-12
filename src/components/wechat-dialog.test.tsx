@@ -45,6 +45,24 @@ describe("WeChatDialog", () => {
     expect(trigger).toHaveFocus();
   });
 
+  it("blocks background pointer interaction in fallback mode", async () => {
+    const user = userEvent.setup();
+    const backgroundAction = vi.fn();
+    render(
+      <>
+        <button type="button" onClick={backgroundAction}>Background action</button>
+        <WeChatDialog qrSrc="/profile/wechat.png" />
+      </>,
+    );
+
+    await user.click(screen.getByRole("button", { name: /WeChat/i }));
+    const overlay = screen.getByTestId("wechat-fallback-overlay");
+    await user.click(overlay);
+
+    expect(backgroundAction).not.toHaveBeenCalled();
+    expect(screen.getByRole("dialog")).toBeVisible();
+  });
+
   it("has a labeled close action", async () => {
     const user = userEvent.setup();
     render(<WeChatDialog qrSrc="/profile/wechat.png" />);

@@ -267,6 +267,26 @@ a {
   background: rgb(32 30 26 / 58%);
 }
 
+.wechat-fallback-overlay {
+  position: fixed;
+  z-index: 50;
+  inset: 0;
+  display: grid;
+  padding: 1rem;
+  place-items: center;
+  background: rgb(32 30 26 / 58%);
+  pointer-events: auto;
+}
+
+.wechat-fallback-overlay .wechat-dialog {
+  position: relative;
+  inset: auto;
+  display: block;
+  max-height: calc(100vh - 2rem);
+  margin: 0;
+  overflow: auto;
+}
+
 .wechat-dialog__heading {
   display: flex;
   align-items: center;

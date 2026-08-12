@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { profile } from "@/data/profile";
 import type { Profile } from "@/data/types";
@@ -60,5 +60,14 @@ describe("IdentityRail", () => {
 
     expect(screen.getByText("Portrait not yet provided")).toBeInTheDocument();
     expect(screen.queryByRole("img")).not.toBeInTheDocument();
+  });
+
+  it("replaces a failed configured portrait with accessible fallback artwork", () => {
+    render(<IdentityRail profile={{ ...profile, portrait: "/profile/portrait.jpg" }} />);
+
+    fireEvent.error(screen.getByRole("img", { name: "Portrait of Ruizhe Zhou" }));
+
+    expect(screen.queryByRole("img")).not.toBeInTheDocument();
+    expect(screen.getByText("Portrait not yet provided")).toBeInTheDocument();
   });
 });

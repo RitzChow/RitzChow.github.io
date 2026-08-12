@@ -13,6 +13,9 @@ export function WeChatDialog({ qrSrc }: WeChatDialogProps) {
   const triggerRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const supportsNativeModal =
+    typeof HTMLDialogElement !== "undefined" &&
+    typeof HTMLDialogElement.prototype.showModal === "function";
 
   function closeDialog() {
     if (typeof dialogRef.current?.close === "function") {
@@ -50,6 +53,40 @@ export function WeChatDialog({ qrSrc }: WeChatDialogProps) {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [open]);
 
+  const dialog = open ? (
+    <dialog
+      ref={dialogRef}
+      className="wechat-dialog"
+      open={supportsNativeModal ? undefined : true}
+      aria-modal="true"
+      aria-labelledby="wechat-dialog-title"
+      onCancel={(event) => {
+        event.preventDefault();
+        closeDialog();
+      }}
+    >
+      <div className="wechat-dialog__heading">
+        <h2 id="wechat-dialog-title">WeChat QR code</h2>
+        <button
+          ref={closeRef}
+          className="wechat-dialog__close"
+          type="button"
+          onClick={closeDialog}
+          aria-label="Close WeChat QR code"
+        >
+          <FiX aria-hidden="true" />
+        </button>
+      </div>
+      <Image
+        src={qrSrc}
+        width={320}
+        height={320}
+        unoptimized
+        alt="WeChat QR code for Ruizhe Zhou"
+      />
+    </dialog>
+  ) : null;
+
   return (
     <>
       <button
@@ -64,41 +101,17 @@ export function WeChatDialog({ qrSrc }: WeChatDialogProps) {
         <FiArrowUpRight className="identity-contact__marker" aria-hidden="true" />
       </button>
 
-      {open ? (
-        <dialog
-          ref={dialogRef}
-          className="wechat-dialog"
-          aria-modal="true"
-          aria-labelledby="wechat-dialog-title"
-          onCancel={(event) => {
-            event.preventDefault();
-            closeDialog();
-          }}
-          onMouseDown={(event) => {
-            if (event.currentTarget === event.target) closeDialog();
-          }}
+      {open && !supportsNativeModal ? (
+        <div
+          className="wechat-fallback-overlay"
+          data-testid="wechat-fallback-overlay"
+          role="presentation"
         >
-          <div className="wechat-dialog__heading">
-            <h2 id="wechat-dialog-title">WeChat QR code</h2>
-            <button
-              ref={closeRef}
-              className="wechat-dialog__close"
-              type="button"
-              onClick={closeDialog}
-              aria-label="Close WeChat QR code"
-            >
-              <FiX aria-hidden="true" />
-            </button>
-          </div>
-          <Image
-            src={qrSrc}
-            width={320}
-            height={320}
-            unoptimized
-            alt="WeChat QR code for Ruizhe Zhou"
-          />
-        </dialog>
-      ) : null}
+          {dialog}
+        </div>
+      ) : (
+        dialog
+      )}
     </>
   );
 }
