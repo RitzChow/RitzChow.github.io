@@ -24,6 +24,7 @@ export const publications: Publication[] = [
       "Xiaodan Liang",
     ],
     year: 2025,
+    publicationType: "Survey",
     venue: "arXiv",
     category: "physical-ai",
     arxivId: "2510.04978",
@@ -50,6 +51,7 @@ export const publications: Publication[] = [
       "Xiaodan Liang",
     ],
     year: 2025,
+    publicationType: "Position paper",
     venue: "NeurIPS LAW Workshop",
     category: "world-models",
     tldr:
@@ -74,6 +76,7 @@ export const publications: Publication[] = [
       "Tao Tan",
     ],
     year: 2024,
+    publicationType: "Preprint",
     venue: "arXiv",
     category: "text-detection",
     tldr:

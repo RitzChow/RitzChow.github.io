@@ -13,13 +13,6 @@ export function sortPublicationsNewestFirst(items: Publication[]) {
     .map(({ publication }) => publication);
 }
 
-function categoryLabel(category: string) {
-  return category
-    .split("-")
-    .map((word) => word === "ai" ? "AI" : word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-}
-
 function Authors({ authors }: { authors: string[] }) {
   return (
     <p className="publication-authors">
@@ -48,7 +41,7 @@ export function PublicationList({ publications }: PublicationListProps) {
           />
           <div className="publication-row__content">
             <p className="publication-kicker">
-              {categoryLabel(publication.category)} · {publication.year}
+              {publication.year} · {publication.publicationType}
             </p>
             <h2>{publication.title}</h2>
             <Authors authors={publication.authors} />

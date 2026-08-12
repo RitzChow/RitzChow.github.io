@@ -10,6 +10,7 @@ const fixture: Publication = {
   title: "A Fixture Paper",
   authors: ["First Author", "Ruizhe Zhou", "Last Author"],
   year: 2025,
+  publicationType: "Survey",
   venue: "Test Conference",
   category: "physical-ai",
   tldr: "A short explanation of the contribution.",
@@ -47,7 +48,8 @@ describe("publication archive", () => {
     expect(within(article!).getByRole("heading", { name: fixture.title })).toBeInTheDocument();
     expect(within(article!).getByText("Ruizhe Zhou").tagName).toBe("STRONG");
     expect(within(article!).getByText("Ruizhe Zhou")).toHaveClass("publication-author--self");
-    expect(article).toHaveTextContent("Physical AI · 2025");
+    expect(article).toHaveTextContent("2025 · Survey");
+    expect(article).not.toHaveTextContent("Physical AI · 2025");
     expect(article).toHaveTextContent(fixture.venue);
     expect(article).toHaveTextContent(fixture.tldr!);
     expect(article).toHaveTextContent(fixture.award!);

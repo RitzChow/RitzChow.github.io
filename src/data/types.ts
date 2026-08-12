@@ -51,6 +51,7 @@ export interface Publication {
   title: string;
   authors: string[];
   year: number;
+  publicationType: string;
   venue: string;
   category: string;
   arxivId?: string;
