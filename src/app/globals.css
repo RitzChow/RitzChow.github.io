@@ -127,6 +127,200 @@ a {
   display: none;
 }
 
+.home-shell {
+  width: min(100% - 3rem, 78rem);
+  margin-inline: auto;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.home-content {
+  min-width: 0;
+  max-width: 53rem;
+  padding-block: clamp(4rem, 9vw, 8rem);
+}
+
+.home-section {
+  padding-block: clamp(3rem, 6vw, 5.5rem);
+  border-top: 1px solid var(--rule);
+  scroll-margin-top: 2rem;
+}
+
+.home-section:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.section-label {
+  margin: 0 0 1.25rem;
+  color: var(--clay);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.home-section h1,
+.home-section h2,
+.home-section h3,
+.home-section p {
+  margin-top: 0;
+}
+
+.home-section h1,
+.home-section h2,
+.home-section h3 {
+  font-family: var(--font-serif);
+}
+
+.home-section h1 {
+  max-width: 14ch;
+  margin-bottom: 2rem;
+  font-size: clamp(2.7rem, 7vw, 5.6rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.home-section h2 {
+  margin-bottom: 2.25rem;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.about__bio {
+  max-width: 43rem;
+  color: var(--muted);
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  line-height: 1.7;
+}
+
+.about__bio p:last-child {
+  margin-bottom: 0;
+}
+
+.rough-phrase {
+  position: relative;
+  display: inline-block;
+  color: var(--ink);
+}
+
+.rough-phrase__mark {
+  position: absolute;
+  right: -0.1rem;
+  bottom: -0.35rem;
+  width: calc(100% + 0.2rem);
+  height: 0.55rem;
+  overflow: visible;
+  stroke: var(--clay);
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.editorial-list,
+.timeline,
+.news-feed ol {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.editorial-row {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  gap: 1.25rem;
+  padding-block: 1.75rem;
+  border-top: 1px solid var(--rule);
+}
+
+.editorial-row:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.editorial-row__number,
+.news-item time,
+.timeline__date {
+  color: var(--clay);
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+}
+
+.editorial-row h3,
+.timeline h3,
+.news-item h3 {
+  margin-bottom: 0.4rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.editorial-row p,
+.timeline p,
+.news-item p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.timeline {
+  border-bottom: 1px solid var(--rule);
+}
+
+.timeline__item {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.75rem 0 1.75rem 2rem;
+  border-top: 1px solid var(--rule);
+}
+
+.timeline__item::before {
+  position: absolute;
+  top: 2.1rem;
+  left: 0;
+  width: 0.55rem;
+  height: 0.55rem;
+  border: 2px solid var(--clay);
+  border-radius: 50%;
+  content: "";
+}
+
+.timeline__institution {
+  font-size: 0.92rem;
+}
+
+.news-feed {
+  height: 25rem;
+  padding-right: 1rem;
+  overflow-y: auto;
+  scrollbar-color: var(--clay) transparent;
+}
+
+.news-item {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  gap: 1.5rem;
+  padding-block: 1.6rem;
+  border-top: 1px solid var(--rule);
+}
+
+.news-item:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.news-item a {
+  text-decoration-color: var(--clay);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+}
+
 @media (max-width: 760px) {
   .site-header__inner {
     width: min(100% - 2rem, 78rem);
@@ -150,6 +344,30 @@ a {
   .site-header__mobile-nav a {
     padding: 0.85rem 0;
     border-bottom: 1px solid var(--rule);
+  }
+
+  .home-shell {
+    width: min(100% - 2rem, 78rem);
+  }
+
+  .home-content {
+    padding-block: 3.5rem;
+  }
+
+  .editorial-row {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .news-feed {
+    height: auto;
+    padding-right: 0;
+    overflow: visible;
+  }
+
+  .news-item {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
   }
 }
 
