@@ -41,6 +41,7 @@ test("the current news feed is not a useless keyboard stop", async ({ page }) =>
 
 for (const viewport of [
   { name: "desktop", width: 1440, height: 900 },
+  { name: "tablet", width: 768, height: 1024 },
   { name: "mobile", width: 390, height: 844 },
 ]) {
   test(`has no horizontal overflow at ${viewport.name} size`, async ({ page }) => {
@@ -51,6 +52,21 @@ for (const viewport of [
     await expectNoHorizontalOverflow(page);
   });
 }
+
+test("a cross-page home anchor lands on its target section", async ({ page }) => {
+  await page.goto("/publications/");
+  await page.getByRole("navigation", { name: "Primary" })
+    .getByRole("link", { name: "Research" })
+    .click();
+
+  await expect(page).toHaveURL(/\/#research$/);
+  const research = page.locator("#research");
+  await expect(research).toBeVisible();
+  await expect.poll(() => research.evaluate((element) => {
+    const top = element.getBoundingClientRect().top;
+    return top >= 0 && top < window.innerHeight;
+  })).toBe(true);
+});
 
 test("mobile menu expands and navigates", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });

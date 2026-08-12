@@ -33,7 +33,13 @@ export function PublicationActions({ links, bibtex }: PublicationActionsProps) {
       <div className="publication-actions__links" aria-label="Publication links">
         {configuredLinks.map(([key, label]) =>
           links[key] ? (
-            <a key={key} href={links[key]} target="_blank" rel="noreferrer">
+            <a
+              aria-label={`${label} (opens in a new tab)`}
+              key={key}
+              href={links[key]}
+              target="_blank"
+              rel="noreferrer"
+            >
               {label}<span aria-hidden="true"> ↗</span>
             </a>
           ) : null,

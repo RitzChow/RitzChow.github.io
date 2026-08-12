@@ -22,6 +22,13 @@ export function ExperienceSection({ items = experience }: ExperienceSectionProps
             <div>
               <h3>{item.role}</h3>
               <p className="timeline__institution">{item.institution}</p>
+              {item.lab || item.advisor || item.project ? (
+                <dl className="timeline__details">
+                  {item.lab ? <><dt>Lab</dt><dd>{item.lab}</dd></> : null}
+                  {item.advisor ? <><dt>Advisor</dt><dd>{item.advisor}</dd></> : null}
+                  {item.project ? <><dt>Project</dt><dd>{item.project}</dd></> : null}
+                </dl>
+              ) : null}
               {item.description ? <p>{item.description}</p> : null}
             </div>
             {item.displayDate ? <p className="timeline__date">{item.displayDate}</p> : null}

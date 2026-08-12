@@ -64,6 +64,37 @@ describe("home sections", () => {
     expect(section).toHaveTextContent("Sun Yat-sen University");
   });
 
+  it("labels configured lab, advisor, and project experience details", () => {
+    render(
+      <ExperienceSection
+        items={[{
+          role: "Research Assistant",
+          institution: "Test University",
+          lab: "Embodied Intelligence Lab",
+          advisor: "Prof. Ada Example",
+          project: "World Model Evaluation",
+        }]}
+      />,
+    );
+
+    const section = screen.getByRole("region", { name: "Academic experience" });
+    expect(within(section).getByText("Lab")).toBeInTheDocument();
+    expect(within(section).getByText("Embodied Intelligence Lab")).toBeInTheDocument();
+    expect(within(section).getByText("Advisor")).toBeInTheDocument();
+    expect(within(section).getByText("Prof. Ada Example")).toBeInTheDocument();
+    expect(within(section).getByText("Project")).toBeInTheDocument();
+    expect(within(section).getByText("World Model Evaluation")).toBeInTheDocument();
+  });
+
+  it("omits labels for unconfigured experience details", () => {
+    render(<ExperienceSection items={[{ role: "Researcher", institution: "Test University" }]} />);
+
+    const section = screen.getByRole("region", { name: "Academic experience" });
+    expect(within(section).queryByText("Lab")).not.toBeInTheDocument();
+    expect(within(section).queryByText("Advisor")).not.toBeInTheDocument();
+    expect(within(section).queryByText("Project")).not.toBeInTheDocument();
+  });
+
   it("sorts news newest first", () => {
     const items: NewsItem[] = [
       { date: "2024-01-03", title: "Oldest" },

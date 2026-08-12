@@ -25,7 +25,13 @@ function NavLinks({ cv, onSelect }: SiteHeaderProps & { onSelect?: () => void })
         </Link>
       ))}
       {cv ? (
-        <a href={cv} onClick={onSelect} rel="noreferrer" target="_blank">
+        <a
+          aria-label="CV (opens in a new tab)"
+          href={cv}
+          onClick={onSelect}
+          rel="noreferrer"
+          target="_blank"
+        >
           CV
         </a>
       ) : null}

@@ -17,10 +17,11 @@ describe("SiteHeader", () => {
   it("renders a configured CV as an external new-tab link", () => {
     render(<SiteHeader cv="https://example.com/cv.pdf" />);
 
-    for (const link of screen.getAllByRole("link", { name: "CV" })) {
+    for (const link of screen.getAllByRole("link", { name: "CV (opens in a new tab)" })) {
       expect(link).toHaveAttribute("href", "https://example.com/cv.pdf");
       expect(link).toHaveAttribute("target", "_blank");
       expect(link).toHaveAttribute("rel", "noreferrer");
+      expect(link).toHaveTextContent(/^CV$/);
     }
   });
 

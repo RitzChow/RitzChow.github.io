@@ -17,9 +17,9 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "npm run dev -- --hostname 127.0.0.1 --port 3107",
+    command: "npm run build && serve out -l tcp://127.0.0.1:3107 --no-clipboard",
     url: "http://127.0.0.1:3107",
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     timeout: 120_000,
   },
 });

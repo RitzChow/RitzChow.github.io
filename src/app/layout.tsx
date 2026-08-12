@@ -6,11 +6,13 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Ruizhe Zhou — Academic Portfolio",
+  description:
+    "Ruizhe Zhou's academic portfolio: research in physical AI, physics reasoning, and multimodal evaluation.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body>
         <SiteHeader cv={profile.cv} />
         {children}

@@ -58,8 +58,12 @@ describe("publication archive", () => {
   it("only renders configured links and omits empty BibTeX actions", () => {
     render(<PublicationList publications={[{ ...fixture, bibtex: undefined }]} />);
 
-    expect(screen.getByRole("link", { name: "Paper" })).toHaveAttribute("target", "_blank");
-    expect(screen.getByRole("link", { name: "Code" })).toHaveAttribute("rel", "noreferrer");
+    const paper = screen.getByRole("link", { name: "Paper (opens in a new tab)" });
+    const code = screen.getByRole("link", { name: "Code (opens in a new tab)" });
+    expect(paper).toHaveAttribute("target", "_blank");
+    expect(code).toHaveAttribute("rel", "noreferrer");
+    expect(paper).toHaveTextContent(/^Paper ↗$/);
+    expect(code).toHaveTextContent(/^Code ↗$/);
     expect(screen.queryByRole("link", { name: "Project" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /bibtex/i })).not.toBeInTheDocument();
   });
