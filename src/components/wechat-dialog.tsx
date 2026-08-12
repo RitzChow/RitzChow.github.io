@@ -26,8 +26,12 @@ export function WeChatDialog({ qrSrc }: WeChatDialogProps) {
     if (!open) return;
 
     const dialog = dialogRef.current;
-    if (dialog && typeof dialog.showModal === "function" && !dialog.open) {
-      dialog.showModal();
+    if (dialog) {
+      if (typeof dialog.showModal === "function") {
+        if (!dialog.open) dialog.showModal();
+      } else {
+        dialog.setAttribute("open", "");
+      }
     }
     closeRef.current?.focus();
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -64,7 +68,6 @@ export function WeChatDialog({ qrSrc }: WeChatDialogProps) {
         <dialog
           ref={dialogRef}
           className="wechat-dialog"
-          open
           aria-modal="true"
           aria-labelledby="wechat-dialog-title"
           onCancel={(event) => {

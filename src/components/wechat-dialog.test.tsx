@@ -1,9 +1,31 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { WeChatDialog } from "./wechat-dialog";
 
 describe("WeChatDialog", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    delete (HTMLDialogElement.prototype as Partial<HTMLDialogElement>).showModal;
+  });
+
+  it("opens as a native modal when showModal is supported", async () => {
+    const user = userEvent.setup();
+    const showModal = vi.fn(function (this: HTMLDialogElement) {
+        this.open = true;
+      });
+    Object.defineProperty(HTMLDialogElement.prototype, "showModal", {
+      configurable: true,
+      value: showModal,
+    });
+    render(<WeChatDialog qrSrc="/profile/wechat.png" />);
+
+    await user.click(screen.getByRole("button", { name: /WeChat/i }));
+
+    expect(showModal).toHaveBeenCalledOnce();
+    expect(screen.getByRole("dialog")).toHaveAttribute("open");
+  });
+
   it("opens with a QR image, closes on Escape, and restores trigger focus", async () => {
     const user = userEvent.setup();
     render(<WeChatDialog qrSrc="/profile/wechat.png" />);
