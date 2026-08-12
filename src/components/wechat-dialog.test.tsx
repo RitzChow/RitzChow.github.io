@@ -12,6 +12,7 @@ describe("WeChatDialog", () => {
     await user.click(trigger);
 
     expect(screen.getByRole("dialog", { name: "WeChat QR code" })).toBeVisible();
+    expect(screen.getByRole("dialog").tagName).toBe("DIALOG");
     expect(
       screen.getByRole("img", { name: "WeChat QR code for Ruizhe Zhou" }),
     ).toBeInTheDocument();

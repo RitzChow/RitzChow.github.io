@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { profile } from "@/data/profile";
 import type { Profile } from "@/data/types";
@@ -15,6 +15,12 @@ describe("IdentityRail", () => {
     expect(
       screen.getByRole("link", { name: /Google Scholar/i }),
     ).toBeInTheDocument();
+    for (const label of ["GitHub", "Google Scholar"]) {
+      const link = screen.getByRole("link", { name: new RegExp(label, "i") });
+      const icons = link.querySelectorAll("svg[aria-hidden='true']");
+      expect(icons.length).toBeGreaterThanOrEqual(1);
+      expect(within(link).getByText(label)).toBeVisible();
+    }
     expect(screen.queryByText("LinkedIn")).not.toBeInTheDocument();
     expect(screen.queryByText("WeChat")).not.toBeInTheDocument();
     expect(screen.queryByText("Email")).not.toBeInTheDocument();
@@ -30,7 +36,6 @@ describe("IdentityRail", () => {
           contact.href ||
           {
             LinkedIn: "https://linkedin.com/in/ritz",
-            WeChat: "wechat",
             Email: "mailto:ritz@example.com",
           }[contact.label],
       })),
@@ -41,6 +46,13 @@ describe("IdentityRail", () => {
     expect(screen.getByRole("link", { name: /LinkedIn/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /WeChat/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Email/i })).toBeInTheDocument();
+    for (const label of ["LinkedIn", "WeChat", "Email"]) {
+      const row = screen.getByRole(label === "WeChat" ? "button" : "link", {
+        name: new RegExp(label, "i"),
+      });
+      expect(row.querySelector("svg[aria-hidden='true']")).toBeInTheDocument();
+      expect(within(row).getByText(label)).toBeVisible();
+    }
   });
 
   it("renders accessible artwork when no portrait is configured", () => {

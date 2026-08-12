@@ -251,21 +251,20 @@ a {
   color: var(--clay);
 }
 
-.wechat-backdrop {
+.wechat-dialog {
   position: fixed;
   z-index: 50;
   inset: 0;
-  display: grid;
-  place-items: center;
-  padding: 1rem;
-  background: rgb(32 30 26 / 58%);
-}
-
-.wechat-dialog {
   width: min(100%, 25rem);
+  margin: auto;
   padding: 1.5rem;
   background: var(--paper);
   border: 1px solid var(--rule);
+  color: var(--ink);
+}
+
+.wechat-dialog::backdrop {
+  background: rgb(32 30 26 / 58%);
 }
 
 .wechat-dialog__heading {

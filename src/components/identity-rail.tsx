@@ -52,12 +52,7 @@ export function IdentityRail({ profile }: IdentityRailProps) {
   const definedLinks = profile.contacts.filter(
     (contact) => contact.href?.trim() && contact.label !== "WeChat",
   );
-  const hasWeChat = Boolean(
-    profile.wechatQr?.trim() &&
-      profile.contacts.some(
-        (contact) => contact.label === "WeChat" && contact.href?.trim(),
-      ),
-  );
+  const hasWeChat = Boolean(profile.wechatQr?.trim());
 
   return (
     <aside className="identity-rail" aria-label="Academic identity">

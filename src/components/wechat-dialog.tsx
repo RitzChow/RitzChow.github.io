@@ -12,8 +12,12 @@ export function WeChatDialog({ qrSrc }: WeChatDialogProps) {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   function closeDialog() {
+    if (typeof dialogRef.current?.close === "function") {
+      dialogRef.current.close();
+    }
     setOpen(false);
     window.setTimeout(() => triggerRef.current?.focus(), 0);
   }
@@ -21,6 +25,10 @@ export function WeChatDialog({ qrSrc }: WeChatDialogProps) {
   useEffect(() => {
     if (!open) return;
 
+    const dialog = dialogRef.current;
+    if (dialog && typeof dialog.showModal === "function" && !dialog.open) {
+      dialog.showModal();
+    }
     closeRef.current?.focus();
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -53,40 +61,40 @@ export function WeChatDialog({ qrSrc }: WeChatDialogProps) {
       </button>
 
       {open ? (
-        <div
-          className="wechat-backdrop"
-          role="presentation"
+        <dialog
+          ref={dialogRef}
+          className="wechat-dialog"
+          open
+          aria-modal="true"
+          aria-labelledby="wechat-dialog-title"
+          onCancel={(event) => {
+            event.preventDefault();
+            closeDialog();
+          }}
           onMouseDown={(event) => {
             if (event.currentTarget === event.target) closeDialog();
           }}
         >
-          <div
-            className="wechat-dialog"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="wechat-dialog-title"
-          >
-            <div className="wechat-dialog__heading">
-              <h2 id="wechat-dialog-title">WeChat QR code</h2>
-              <button
-                ref={closeRef}
-                className="wechat-dialog__close"
-                type="button"
-                onClick={closeDialog}
-                aria-label="Close WeChat QR code"
-              >
-                <FiX aria-hidden="true" />
-              </button>
-            </div>
-            <Image
-              src={qrSrc}
-              width={320}
-              height={320}
-              unoptimized
-              alt="WeChat QR code for Ruizhe Zhou"
-            />
+          <div className="wechat-dialog__heading">
+            <h2 id="wechat-dialog-title">WeChat QR code</h2>
+            <button
+              ref={closeRef}
+              className="wechat-dialog__close"
+              type="button"
+              onClick={closeDialog}
+              aria-label="Close WeChat QR code"
+            >
+              <FiX aria-hidden="true" />
+            </button>
           </div>
-        </div>
+          <Image
+            src={qrSrc}
+            width={320}
+            height={320}
+            unoptimized
+            alt="WeChat QR code for Ruizhe Zhou"
+          />
+        </dialog>
       ) : null}
     </>
   );
