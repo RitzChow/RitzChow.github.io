@@ -55,6 +55,7 @@ export interface Publication {
   category: string;
   arxivId?: string;
   image?: string;
+  imageAlt?: string;
   tldr?: string;
   award?: string;
   bibtex?: string;
