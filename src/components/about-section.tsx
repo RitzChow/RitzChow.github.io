@@ -13,9 +13,6 @@ export function AboutSection({ data = profile }: AboutSectionProps) {
       <h1 id="about-heading">Understanding intelligence through the physical world.</h1>
       <div className="about__bio">
         <p>
-          {data.name} · {data.role} at {data.institution}.
-        </p>
-        <p>
           {data.bio} The central question is how AI systems{" "}
           <span className="rough-phrase">
             reason about physics

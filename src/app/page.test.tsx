@@ -3,9 +3,14 @@ import { describe, expect, it } from "vitest";
 import Page from "./page";
 
 describe("home page", () => {
-  it("presents Ruizhe Zhou as the main heading", () => {
+  it("presents the academic statement as the main heading", () => {
     render(<Page />);
 
-    expect(screen.getByRole("main")).toHaveTextContent("Ruizhe Zhou");
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: "Understanding intelligence through the physical world.",
+      }),
+    ).toBeInTheDocument();
   });
 });

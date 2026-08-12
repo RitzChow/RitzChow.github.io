@@ -1,4 +1,4 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { NewsItem, Profile } from "@/data/types";
 import { AboutSection } from "./about-section";
@@ -50,8 +50,8 @@ describe("home sections", () => {
     const section = screen.getByRole("region", {
       name: "Understanding intelligence through the physical world.",
     });
-    expect(section).toHaveTextContent("Visiting Researcher at Test Institute");
     expect(section).toHaveTextContent(customProfile.bio);
+    expect(section).not.toHaveTextContent("Visiting Researcher at Test Institute");
     expect(section).not.toHaveTextContent("physical AI");
   });
 
@@ -81,13 +81,29 @@ describe("home sections", () => {
     ]);
   });
 
-  it("does not make a short news list a focus stop", () => {
+  it("does not make a non-overflowing desktop news list a focus stop", async () => {
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn().mockReturnValue({
+        matches: true,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      }),
+    );
     render(<NewsSection items={[{ date: "2026-04-12", title: "One item" }]} />);
 
     const list = screen.getByRole("list");
+    Object.defineProperties(list.parentElement, {
+      clientHeight: { configurable: true, value: 400 },
+      scrollHeight: { configurable: true, value: 300 },
+    });
+    fireEvent(window, new Event("resize"));
+
+    await waitFor(() =>
+      expect(list.parentElement).not.toHaveAttribute("tabindex"),
+    );
     expect(list.parentElement).not.toHaveAttribute("tabindex");
     expect(list.parentElement).not.toHaveAttribute("role", "region");
-    expect(list.parentElement).not.toHaveClass("news-feed--scrollable");
   });
 
   it("makes a long desktop news list keyboard-scrollable", async () => {
@@ -99,12 +115,19 @@ describe("home sections", () => {
         removeEventListener: vi.fn(),
       }),
     );
-    const items = Array.from({ length: 6 }, (_, index) => ({
+    const items = Array.from({ length: 2 }, (_, index) => ({
       date: `2026-04-${String(index + 1).padStart(2, "0")}`,
       title: `Update ${index + 1}`,
     }));
 
     render(<NewsSection items={items} />);
+
+    const list = screen.getByRole("list");
+    Object.defineProperties(list.parentElement, {
+      clientHeight: { configurable: true, value: 400 },
+      scrollHeight: { configurable: true, value: 600 },
+    });
+    fireEvent(window, new Event("resize"));
 
     await waitFor(() =>
       expect(screen.getByRole("region", { name: "News updates" })).toHaveAttribute(

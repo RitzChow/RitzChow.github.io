@@ -298,9 +298,6 @@ a {
 
 .news-feed {
   scrollbar-color: var(--clay) transparent;
-}
-
-.news-feed--scrollable {
   max-height: 25rem;
   padding-right: 1rem;
   overflow-y: auto;
@@ -362,7 +359,7 @@ a {
     gap: 0.75rem;
   }
 
-  .news-feed--scrollable {
+  .news-feed {
     max-height: none;
     padding-right: 0;
     overflow: visible;
