@@ -81,17 +81,29 @@ test("publications are newest first and expose their types", async ({ page }) =>
   await expect(rows.locator(".publication-kicker")).toContainText(expectedPublicationTypes);
 });
 
-test("reduced motion disables intro and decorative motion", async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: "reduce" });
+test("reduced motion disables authored navigation motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/publications/");
 
-  for (const selector of [".publications-intro", ".site-header__mark"]) {
-    const durations = await page.locator(selector).evaluate((element) => {
-      const styles = getComputedStyle(element);
-      return [styles.animationDuration, styles.transitionDuration].map((duration) =>
-        duration.endsWith("ms") ? Number.parseFloat(duration) : Number.parseFloat(duration) * 1000,
-      );
-    });
-    expect(durations.every((duration) => duration <= 0.01)).toBe(true);
-  }
+  const motionTarget = page.getByRole("navigation", { name: "Primary" })
+    .getByRole("link", { name: "Publications" });
+  const readMotion = () => motionTarget.evaluate((element) => {
+    const styles = getComputedStyle(element);
+    const toMilliseconds = (duration: string) =>
+      duration.endsWith("ms")
+        ? Number.parseFloat(duration)
+        : Number.parseFloat(duration) * 1000;
+    return {
+      animationName: styles.animationName,
+      transitionMilliseconds: toMilliseconds(styles.transitionDuration),
+    };
+  });
+
+  const normalMotion = await readMotion();
+  expect(normalMotion.transitionMilliseconds).toBeCloseTo(160);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const reducedMotion = await readMotion();
+  expect(reducedMotion.transitionMilliseconds).toBeLessThanOrEqual(0.01);
+  expect(reducedMotion.animationName).toBe("none");
 });
