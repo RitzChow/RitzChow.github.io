@@ -1,0 +1,48 @@
+import { describe, expect, it } from "vitest";
+import { definedLinks, sortNews, sortPublications } from "./content";
+
+describe("definedLinks", () => {
+  it("removes links whose href is empty", () => {
+    const links = [
+      { label: "GitHub", href: "https://github.com/RitzChow" },
+      { label: "Email", href: "" },
+      { label: "LinkedIn", href: "   " },
+    ];
+
+    expect(definedLinks(links)).toEqual([links[0]]);
+    expect(links).toHaveLength(3);
+  });
+});
+
+describe("sortNews", () => {
+  it("sorts ISO dates newest first without changing the source array", () => {
+    const items = [{ date: "2025-01-01" }, { date: "2026-01-01" }];
+
+    expect(sortNews(items).map(({ date }) => date)).toEqual([
+      "2026-01-01",
+      "2025-01-01",
+    ]);
+    expect(items.map(({ date }) => date)).toEqual(["2025-01-01", "2026-01-01"]);
+  });
+});
+
+describe("sortPublications", () => {
+  it("sorts by descending year and preserves source order within a year", () => {
+    const publications = [
+      { id: "older", year: 2024 },
+      { id: "first-new", year: 2025 },
+      { id: "second-new", year: 2025 },
+    ];
+
+    expect(sortPublications(publications).map(({ id }) => id)).toEqual([
+      "first-new",
+      "second-new",
+      "older",
+    ]);
+    expect(publications.map(({ id }) => id)).toEqual([
+      "older",
+      "first-new",
+      "second-new",
+    ]);
+  });
+});
