@@ -297,10 +297,13 @@ a {
 }
 
 .news-feed {
-  height: 25rem;
+  scrollbar-color: var(--clay) transparent;
+}
+
+.news-feed--scrollable {
+  max-height: 25rem;
   padding-right: 1rem;
   overflow-y: auto;
-  scrollbar-color: var(--clay) transparent;
 }
 
 .news-item {
@@ -359,8 +362,8 @@ a {
     gap: 0.75rem;
   }
 
-  .news-feed {
-    height: auto;
+  .news-feed--scrollable {
+    max-height: none;
     padding-right: 0;
     overflow: visible;
   }

@@ -1,18 +1,22 @@
 import { profile } from "@/data/profile";
+import type { Profile } from "@/data/types";
 import { RoughMark } from "./rough-mark";
 
-export function AboutSection() {
+type AboutSectionProps = {
+  data?: Profile;
+};
+
+export function AboutSection({ data = profile }: AboutSectionProps) {
   return (
     <section aria-labelledby="about-heading" className="home-section about" id="about">
       <p className="section-label">About</p>
       <h1 id="about-heading">Understanding intelligence through the physical world.</h1>
       <div className="about__bio">
         <p>
-          {profile.name} is an undergraduate researcher at {profile.institution},
-          working on physical AI, physics reasoning, and multimodal evaluation.
+          {data.name} · {data.role} at {data.institution}.
         </p>
         <p>
-          This work explores how AI systems perceive the physical world and{" "}
+          {data.bio} The central question is how AI systems{" "}
           <span className="rough-phrase">
             reason about physics
             <RoughMark className="rough-phrase__mark" variant="underline" />
