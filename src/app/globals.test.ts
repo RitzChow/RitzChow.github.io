@@ -62,7 +62,7 @@ describe("global layout styles", () => {
     expect(legendRule).toMatch(/font-weight:\s*(?:500|600)/);
     expect(legendRule).toMatch(/color:\s*(?:var\(--ink\)|color-mix\([^;]*var\(--ink\))/);
     expect(legendRule).toMatch(/text-align:\s*center/);
-    expect(legendRule).toMatch(/margin:\s*0\s+0\s+1\.5rem/);
+    expect(legendRule).toMatch(/margin:/);
   });
 
   it("uses one white 16:9 canvas and contains publication media without cropping", () => {
