@@ -22,16 +22,18 @@ test("desktop navigation opens the publication archive", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1, name: "Publications" })).toBeVisible();
 });
 
-test("the one-item news viewport is keyboard-scrollable when it overflows", async ({ page }) => {
+test("a single non-overflowing news item is not a useless keyboard stop", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/#news");
 
   const feed = page.locator(".news-feed");
-  await expect(feed).toHaveAttribute("tabindex", "0");
-  await expect(feed).toHaveAttribute("role", "region");
-  await expect(feed).toHaveAttribute("aria-label", "News updates");
-  await feed.focus();
-  await expect(feed).toBeFocused();
+  await feed.locator("li:not(:first-child)").evaluateAll((items) => {
+    for (const item of items) item.remove();
+    window.dispatchEvent(new Event("resize"));
+  });
+  await expect(feed).not.toHaveAttribute("tabindex", "0");
+  await expect(feed).not.toHaveAttribute("role", "region");
+  await expect(feed).not.toHaveAttribute("aria-label", "News updates");
 });
 
 for (const viewport of [
