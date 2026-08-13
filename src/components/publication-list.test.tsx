@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -197,6 +199,27 @@ describe("publication data", () => {
       correspondingAuthor: true,
     });
   });
+
+  it("ships safe, standalone vector SVG assets for every configured preview", () => {
+    const previewPaths = publications.flatMap(({ image }) =>
+      image?.endsWith(".svg") ? [image] : [],
+    );
+
+    expect(previewPaths).toHaveLength(3);
+    for (const previewPath of previewPaths) {
+      const svg = readFileSync(join(process.cwd(), "public", previewPath), "utf8");
+      const openingTag = svg.match(/<svg\b[^>]*>/i)?.[0] ?? "";
+      const imageElements = svg.match(/<image\b/gi) ?? [];
+      const vectorElements = svg.match(/<(?:path|rect|circle|ellipse|line|polyline|polygon)\b/gi) ?? [];
+
+      expect(openingTag).toMatch(/\bviewBox\s*=\s*["'][^"']+["']/i);
+      expect(svg).toMatch(/<\/svg>\s*$/i);
+      expect(vectorElements.length).toBeGreaterThan(0);
+      expect(svg).not.toMatch(/<script\b/i);
+      expect(svg).not.toMatch(/(?:href|src)\s*=\s*["']https?:\/\//i);
+      expect(imageElements.length === 1 && vectorElements.length === 0).toBe(false);
+    }
+  });
 });
 
 describe("PaperFigure", () => {
@@ -216,6 +239,8 @@ describe("PaperFigure", () => {
     expect(figure).toHaveClass("paper-figure--uniform");
     expect(figure).not.toHaveAttribute("style");
     expect(preview).toHaveAttribute("src", "/portfolio/image/fixture-preview.svg");
+    expect(preview).toHaveAttribute("loading", "lazy");
+    expect(preview).toHaveAttribute("decoding", "async");
     expect(container.querySelector("object")).not.toBeInTheDocument();
     vi.unstubAllEnvs();
   });

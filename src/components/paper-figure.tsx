@@ -33,6 +33,8 @@ export function PaperFigure({
           width="560"
           height="350"
           alt={imageAlt ?? `Figure from ${title}`}
+          loading="lazy"
+          decoding="async"
           onError={() => setImageFailed(true)}
         />
       </figure>
