@@ -1,0 +1,62 @@
+<style>
+  .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; }
+  .card { display: flex; flex-direction: column; }
+  .card-image { padding: 18px; background: #f3eee4; }
+  .pair { display: grid; gap: 12px; }
+  .sample { position: relative; height: 158px; overflow: hidden; }
+  .sample object { width: 100%; height: 100%; border: 0; pointer-events: none; }
+  .sample-a { background: #e7e1d6; border: 1px solid #cfc5b5; padding: 18px; }
+  .sample-a object { background: white; box-shadow: 0 5px 16px rgb(40 34 27 / 10%); }
+  .sample-b { background: #1f211f; border-radius: 3px; padding: 22px; }
+  .sample-b object { background: white; box-shadow: 0 8px 22px rgb(0 0 0 / 28%); }
+  .sample-c { background: #ebe4d8; border-top: 1px solid #b9aa96; border-bottom: 1px solid #b9aa96; padding: 15px 20px; }
+  .sample-c object { background: white; }
+  .tag { position: absolute; right: 9px; bottom: 7px; padding: 3px 6px; background: rgb(247 243 235 / 92%); color: #6f6559; font: 600 9px/1.2 system-ui; letter-spacing: .08em; text-transform: uppercase; }
+  .recommended { color: #9b4932; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  @media (max-width: 900px) { .cards { grid-template-columns: 1fr; } }
+</style>
+
+<h2>How should every publication image feel?</h2>
+<p class="subtitle">Each option uses the same fixed 16:9 footprint. The original vector PDF is scaled inside without cropping.</p>
+
+<div class="cards">
+  <div class="card" data-choice="gallery-mat" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="pair">
+        <div class="sample sample-a"><object data="http://localhost:3000/image/physical-ai-survey.pdf" type="application/pdf"></object><span class="tag">PDF</span></div>
+        <div class="sample sample-a"><object data="http://localhost:3000/image/models-under-scope.pdf" type="application/pdf"></object><span class="tag">PDF</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="recommended">Recommended</div>
+      <h3>A — Gallery Mat</h3>
+      <p>Warm neutral mount, thin rule, generous breathing room. Quiet, academic, and consistent with the current editorial site.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="dark-plinth" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="pair">
+        <div class="sample sample-b"><object data="http://localhost:3000/image/physical-ai-survey.pdf" type="application/pdf"></object><span class="tag">PDF</span></div>
+        <div class="sample sample-b"><object data="http://localhost:3000/image/models-under-scope.pdf" type="application/pdf"></object><span class="tag">PDF</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Dark Plinth</h3>
+      <p>Charcoal presentation field with a floating white page. More dramatic and premium, but visually heavier than the rest of the site.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="archive-strip" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="pair">
+        <div class="sample sample-c"><object data="http://localhost:3000/image/physical-ai-survey.pdf" type="application/pdf"></object><span class="tag">PDF</span></div>
+        <div class="sample sample-c"><object data="http://localhost:3000/image/models-under-scope.pdf" type="application/pdf"></object><span class="tag">PDF</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Archive Strip</h3>
+      <p>Flat archival band with horizontal rules and minimal depth. Most restrained, though wide PDFs can feel slightly less prominent.</p>
+    </div>
+  </div>
+</div>

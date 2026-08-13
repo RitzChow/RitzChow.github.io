@@ -1,12 +1,11 @@
 import type { Profile } from "./types";
 
 export const profile: Profile = {
-  name: "Ruizhe Zhou",
-  role: "Undergraduate Researcher",
-  institution: "Sun Yat-sen University",
-  bio: "Undergraduate researcher at Sun Yat-sen University working on physical AI, physics reasoning, and multimodal evaluation.",
-  portrait: "/image/my-photo.jpg",
-  cv: "",
+  name: "Ruizhe Zhou(周瑞哲)",
+  //institution: "Sun Yat-sen University",
+  bio: "",
+  portrait: "/image/my-photo.svg",
+  cv: "/image/my-cv.pdf",
   wechatQr: "/image/wechat.jpg",
   contacts: [
     { label: "GitHub", href: "https://github.com/RitzChow" },
@@ -17,5 +16,6 @@ export const profile: Profile = {
     { label: "LinkedIn", href: "https://www.linkedin.com/in/ruizhe-zhou-702185386/?locale=zh" },
     { label: "Email", href: "z1459306087@gmail.com" },
     { label: "WeChat", href: "" },
+    { label: "X", href: "https://www.linkedin.com/in/ruizhe-zhou-702185386/?locale=zh" },
   ],
 };

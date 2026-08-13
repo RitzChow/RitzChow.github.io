@@ -14,10 +14,9 @@ type LogoSource = {
 };
 
 const root = resolve(import.meta.dirname, "../..");
-const expectedFiles = ["sysu-logo.gif", "unc-logo.svg", "uc-san-diego-logo.svg"];
-const vectorFiles = ["unc-logo.svg", "uc-san-diego-logo.svg"];
-const officialHosts = new Set(["sysu.edu.cn", "www.sysu.edu.cn", "unc.edu", "www.unc.edu", "identity.unc.edu", "ucsd.edu", "brand.ucsd.edu"]);
-const approvedRasterSource = "https://applyforchina.com/wp-content/uploads/2024/10/Sun-Yat-sen-University.gif";
+const expectedFiles = ["sysu-logo.svg", "unc-logo.svg", "uc-san-diego-logo.svg"];
+const vectorFiles = ["sysu-logo.svg", "unc-logo.svg", "uc-san-diego-logo.svg"];
+const approvedHosts = new Set(["applyforchina.com", "scholarrx.com", "ucsd.edu", "brand.ucsd.edu"]);
 
 describe("approved university logo assets", () => {
   const manifestPath = resolve(root, "public/image/university-logo-sources.json");
@@ -28,14 +27,13 @@ describe("approved university logo assets", () => {
     expect(manifest.map(({ file }) => file).sort()).toEqual([...expectedFiles].sort());
     expect(manifest.every(({ institution }) => institution.trim().length > 0)).toBe(true);
     expect(manifest.every(({ sourceUrl }) => {
+        if (sourceUrl === "user-provided") return true;
         const url = new URL(sourceUrl);
-        return url.protocol === "https:" && (officialHosts.has(url.hostname) || sourceUrl === approvedRasterSource);
+        return url.protocol === "https:" && approvedHosts.has(url.hostname);
     })).toBe(true);
-    expect(manifest.find(({ file }) => file === "sysu-logo.gif")?.referenceUrl).toBe(
-      "https://applyforchina.com/ru/universities/sun-yat-sen-university/",
-    );
+    expect(manifest.find(({ file }) => file === "sysu-logo.svg")?.referenceUrl).toBe("中山大学-emblem-010.png");
     expect(manifest.find(({ file }) => file === "unc-logo.svg")?.referenceUrl).toBe(
-      "https://scholarrx.com/supporting-student-centered-learning-through-formative-assessments/unc-logo/",
+      "the-university-of-north-carolina-at-chapel-hill-logo-vector.svg",
     );
     expect(manifest.find(({ file }) => file === "uc-san-diego-logo.svg")?.archiveMember).toBe(
       "UC San Diego Logo Kit 2024/SVG for Canva/UCSanDiegoLogo-BlueGold.svg",
@@ -64,14 +62,6 @@ describe("approved university logo assets", () => {
     expect(svg).not.toMatch(/\s+(?:href|src|xlink:href)\s*=/i);
 
     const elements = [...svg.matchAll(/<\/?([A-Za-z][\w:-]*)\b/g)].map((match) => match[1]);
-    expect(new Set(elements)).toEqual(new Set(["svg", "defs", "style", "g", "path", ...(file === "unc-logo.svg" ? ["rect"] : [])]));
-  });
-
-  it("keeps the approved SYSU raster asset as the original 381 by 130 GIF", () => {
-    const gif = readFileSync(resolve(root, "public/image/sysu-logo.gif"));
-
-    expect(gif.subarray(0, 6).toString("ascii")).toMatch(/^GIF8[79]a$/);
-    expect(gif.readUInt16LE(6)).toBe(381);
-    expect(gif.readUInt16LE(8)).toBe(130);
+    expect([...new Set(elements)].every((element) => ["svg", "defs", "style", "g", "path", "line"].includes(element))).toBe(true);
   });
 });

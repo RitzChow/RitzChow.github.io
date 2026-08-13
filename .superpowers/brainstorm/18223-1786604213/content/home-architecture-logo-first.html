@@ -1,0 +1,29 @@
+<style>
+  .page { max-width:1080px;margin:auto;padding:22px;color:#201e1a;background:#f3eee4;font-family:Georgia,serif }
+  .nav { display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #cfc5b5 }
+  .nav strong{font-size:22px}.nav span{font:700 10px system-ui;letter-spacing:.11em;word-spacing:18px}
+  .grid{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:54px;padding-top:32px}.label{margin:0 0 12px;color:#9b4932;font:700 10px system-ui;letter-spacing:.13em;text-transform:uppercase}
+  .copy{max-width:600px;margin:0;color:#625d55;font-size:20px;line-height:1.55}.news{margin-top:34px;padding:18px 0;border-top:1px solid #cfc5b5;border-bottom:1px solid #cfc5b5;display:grid;grid-template-columns:100px 1fr;gap:20px}.news time{color:#9b4932;font:700 11px system-ui}.news p{margin:0;color:#625d55;line-height:1.5}
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:34px}.panel{min-height:210px;padding:19px;border:1px solid #cfc5b5;border-radius:14px;background:rgba(255,255,255,.18)}
+  .brand-stage{height:94px;display:flex;align-items:center;justify-content:center;margin:7px 0 18px}.brand{display:grid;place-items:center;width:78px;height:78px;border:1px solid #9b4932;border-radius:50%;color:#9b4932;font:700 12px system-ui}.wordmark{display:grid;place-items:center;width:122px;height:48px;border-top:2px solid #29465b;border-bottom:1px solid #c69214;color:#29465b;font:750 12px system-ui;letter-spacing:.03em}
+  .panel h3{margin:0;text-align:center;font-size:18px}.meta{margin:7px 0 0;text-align:center;color:#726b61;font:12px/1.5 system-ui}.experience-logos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}.experience-unit{padding:12px 8px;text-align:center;border-left:1px solid #d5ccbf}.experience-unit:first-child{border-left:0}.experience-unit .brand-stage{height:72px;margin:0 0 10px}.experience-unit .brand{width:58px;height:58px;font-size:9px}.experience-unit b{display:block;font:650 12px system-ui}.experience-unit small{color:#80776b;font:11px system-ui}
+  .portrait{aspect-ratio:1;border:1px solid #b9ad9d;background:#ded5c8}.identity h2{margin:18px 0 4px;font-size:25px}.identity>p{margin:0 0 16px;color:#726b61;font:12px system-ui}.contact{border-top:1px solid #d1c7ba;padding:9px 0;font:650 11px system-ui}.interests{margin-top:22px;padding:16px;border:1px solid #cfc5b5;border-radius:14px}.chip{display:block;padding:9px 0;border-top:1px solid #ddd4c8;font:600 12px system-ui}.chip:first-of-type{border-top:0}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}.identity{order:-1}.duo{grid-template-columns:1fr}.nav span{display:none}}
+</style>
+<h2>Homepage structure — Logo-first Cards</h2>
+<p class="subtitle">Institution marks become the primary visual anchors; supporting copy remains minimal.</p>
+<div class="card" data-choice="approve-logo-first" onclick="toggleSelect(this)">
+  <div class="page">
+    <div class="nav"><strong>Ruizhe Zhou</strong><span>ABOUT PUBLICATIONS EDUCATION EXPERIENCE NEWS</span></div>
+    <div class="grid">
+      <main><p class="label">About</p><p class="copy">Undergraduate researcher at Sun Yat-sen University working on physical AI, physics reasoning, and multimodal evaluation.</p>
+        <section style="margin-top:36px"><p class="label">News</p><div class="news"><time>2025-10-06</time><p>Our survey on aligning perception, reasoning, modeling, and interaction in Physical AI is available on arXiv.</p></div></section>
+        <div class="duo">
+          <section class="panel"><p class="label">Education</p><div class="brand-stage"><div class="brand">SYSU</div></div><h3>Sun Yat-sen University</h3><p class="meta">2023.09—2027.06</p></section>
+          <section class="panel"><p class="label">Experience</p><div class="experience-logos"><div class="experience-unit"><div class="brand-stage"><div class="brand">UNC</div></div><b>UNC Chapel Hill</b><small>Research Assistant · —</small></div><div class="experience-unit"><div class="brand-stage"><div class="wordmark">UC San Diego</div></div><b>UC San Diego</b><small>Research Assistant · —</small></div></div></section>
+        </div>
+      </main>
+      <aside class="identity"><div class="portrait"></div><h2>Ruizhe Zhou</h2><p>Sun Yat-sen University</p><div class="contact">GitHub ↗</div><div class="contact">Google Scholar ↗</div><div class="contact">LinkedIn ↗</div><div class="contact">Email ↗</div><div class="contact">WeChat ↗</div><div class="interests"><p class="label">Research Interests</p><span class="chip">Physical Intelligence</span><span class="chip">Visual Intelligence</span><span class="chip">Multimodal</span></div></aside>
+    </div>
+  </div><div class="card-body"><h3>Logo-first direction</h3><p>Final version will replace these placeholders with official vector marks from university brand sources.</p></div>
+</div>

@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { NewsItem, Profile } from "@/data/types";
+import type { NewsItem } from "@/data/types";
 import { AboutSection } from "./about-section";
 import { EducationSection } from "./education-section";
 import { ExperienceSection } from "./experience-section";
@@ -27,25 +27,22 @@ describe("home sections", () => {
     expect(container.querySelector("section#research")).not.toBeInTheDocument();
   });
 
-  it("renders about copy from the supplied profile", () => {
-    const customProfile: Profile = {
-      name: "Test Researcher",
-      role: "Visiting Researcher",
-      institution: "Test Institute",
-      bio: "A custom biography from the profile data source.",
-      contacts: [],
-    };
-
-    render(<AboutSection data={customProfile} />);
+  it("renders the three confirmed About paragraphs and linked mentors", () => {
+    render(<AboutSection />);
 
     const section = screen.getByRole("region", { name: "About" });
-    expect(section).toHaveTextContent(customProfile.bio);
+    expect(section.querySelectorAll(".about__bio > p")).toHaveLength(3);
+    expect(section).toHaveTextContent("I am an undergraduate student at Sun Yat-sen University");
+    expect(section).toHaveTextContent("My research interests primarily lie in physical intelligence");
+    expect(section).toHaveTextContent("I am currently seeking PhD/MS opportunities for Fall 2027.");
+    expect(within(section).getByRole("link", { name: "Prof. Xiaodan Liang" })).toHaveAttribute("href", "https://scholar.google.com/citations?user=voxznZAAAAAJ&hl=zh-CN");
+    expect(within(section).getByRole("link", { name: "Prof. Pengtao Xie" })).toHaveAttribute("href", "https://scholar.google.com/citations?user=cnncomYAAAAJ&hl=zh-CN");
+    expect(within(section).getByRole("link", { name: "Prof. Xiaoming Liu" })).toHaveAttribute("href", "https://scholar.google.com/citations?hl=zh-CN&user=Bii0w1oAAAAJ");
+    expect(within(section).getByText("PhD/MS opportunities").closest(".rough-phrase")).not.toBeNull();
     expect(within(section).getByRole("heading", { level: 2, name: "About" })).toHaveClass(
       "section-label",
     );
     expect(within(section).queryByRole("heading", { level: 1 })).not.toBeInTheDocument();
-    expect(section).not.toHaveTextContent("Visiting Researcher at Test Institute");
-    expect(section).not.toHaveTextContent("physical AI");
   });
 
   it("renders the confirmed education with its logo and exact date", () => {
@@ -55,10 +52,11 @@ describe("home sections", () => {
     expect(within(section).getAllByRole("listitem")).toHaveLength(1);
     expect(section).toHaveTextContent("Undergraduate");
     expect(section).toHaveTextContent("Sun Yat-sen University");
-    expect(section).toHaveTextContent("2023.09–2027.06");
+    expect(section).toHaveTextContent("2023.09 – 2027.06");
+    expect(section).toHaveTextContent("Supervisor: Xiaodan Liang");
     expect(within(section).getByRole("img", { name: "Sun Yat-sen University logo" })).toHaveAttribute(
       "src",
-      "/image/sysu-logo.gif",
+      "/image/sysu-logo.svg",
     );
   });
 
@@ -69,8 +67,8 @@ describe("home sections", () => {
     const rows = within(section).getAllByRole("listitem");
     expect(rows).toHaveLength(2);
     expect(rows.map((row) => row.textContent)).toEqual([
-      expect.stringContaining("UNC Chapel HillResearch Assistant—"),
-      expect.stringContaining("UC San DiegoResearch Assistant—"),
+      expect.stringContaining("UNC Chapel HillResearch Assistant2026.05 -"),
+      expect.stringContaining("UC San DiegoResearch Assistant2025.11 - 2026.02"),
     ]);
     expect(within(rows[0]).getByRole("img", { name: "UNC Chapel Hill logo" })).toHaveAttribute(
       "src",
@@ -104,6 +102,26 @@ describe("home sections", () => {
     expect(within(section).getByText("Prof. Ada Example")).toBeInTheDocument();
     expect(within(section).getByText("Project")).toBeInTheDocument();
     expect(within(section).getByText("World Model Evaluation")).toBeInTheDocument();
+  });
+
+  it("links a configured supervisor homepage below the date", () => {
+    render(
+      <ExperienceSection
+        items={[{
+          role: "Research Assistant",
+          institution: "Test University",
+          displayDate: "2026.01 -",
+          supervisor: "Prof. Ada Example",
+          supervisorUrl: "https://example.com/ada",
+          logo: "/image/test.svg",
+          logoAlt: "Test University logo",
+        }]}
+      />,
+    );
+
+    const link = screen.getByRole("link", { name: "Supervisor: Prof. Ada Example" });
+    expect(link).toHaveAttribute("href", "https://example.com/ada");
+    expect(link).toHaveAttribute("target", "_blank");
   });
 
   it("omits labels for unconfigured experience details", () => {

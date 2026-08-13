@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { FiArrowUpRight, FiMail, FiMessageCircle } from "react-icons/fi";
 import { SiGooglescholar } from "react-icons/si";
 import type { IconType } from "react-icons";
@@ -23,6 +24,7 @@ const contactIcons: Record<string, IconType> = {
   LinkedIn: FaLinkedin,
   WeChat: FiMessageCircle,
   Email: FiMail,
+  X: FaXTwitter,
 };
 
 function Portrait({ name, src }: { name: string; src?: string }) {
@@ -58,12 +60,13 @@ function Portrait({ name, src }: { name: string; src?: string }) {
 }
 
 export function IdentityRail({ profile, interests = researchInterests }: IdentityRailProps) {
-  const definedLinks = profile.contacts
+  const contacts = profile.contacts
+    .filter((contact) => contact.label !== "WeChat")
     .map((contact) => ({
       ...contact,
       href: normalizeContactHref(contact.href ?? ""),
     }))
-    .filter((contact) => contact.href && contact.label !== "WeChat");
+    .filter((contact) => contact.href || contact.label === "X");
   const hasWeChat = Boolean(profile.wechatQr?.trim());
 
   return (
@@ -75,9 +78,23 @@ export function IdentityRail({ profile, interests = researchInterests }: Identit
         <p className="identity-rail__institution">{profile.institution}</p>
       </div>
       <nav className="identity-contacts" aria-label="Contact links">
-        {definedLinks.map((contact) => {
+        {contacts.map((contact) => {
           const Icon = contactIcons[contact.label] ?? FiArrowUpRight;
           const href = contact.href;
+
+          if (!href) {
+            return (
+              <div
+                aria-label={`${contact.label} profile address not yet provided`}
+                className="identity-contact identity-contact--inactive"
+                key={contact.label}
+              >
+                <Icon aria-hidden="true" />
+                <span>{contact.label}</span>
+              </div>
+            );
+          }
+
           const external = /^https?:\/\//.test(href);
 
           return (

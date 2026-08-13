@@ -2,10 +2,17 @@ import type { NewsItem } from "./types";
 
 export const news: NewsItem[] = [
   {
-    date: "2025-10-06",
-    title: "Physical AI survey is available",
+    date: "2026-05",
+    title: "",
     description:
-      "Our survey on aligning perception, reasoning, modeling, and interaction in Physical AI is available on arXiv.",
-    href: "https://arxiv.org/abs/2510.04978",
+      "Our survey on Physical AI was accepted by T-PAMI.",
+    href: "",
+  },
+   {
+    date: "2026-04",
+    title: "",
+    description:
+      "One Paper was accepted by ICML2026.",
+    href: "",
   },
 ];

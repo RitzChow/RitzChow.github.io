@@ -25,6 +25,8 @@ export interface InstitutionEntry {
   logo: string;
   logoAlt: string;
   displayDate?: string;
+  supervisor?: string;
+  supervisorUrl?: string;
   lab?: string;
   advisor?: string;
   project?: string;

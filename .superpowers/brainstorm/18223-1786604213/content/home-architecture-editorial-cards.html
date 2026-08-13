@@ -1,0 +1,60 @@
+<style>
+  .page { max-width: 1080px; margin: 0 auto; padding: 22px; color:#201e1a; background:#f3eee4; font-family:Georgia,serif; }
+  .nav { display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid #cfc5b5; }
+  .nav strong { font-size:22px; } .nav span { font:700 10px/1 system-ui; letter-spacing:.11em; word-spacing:18px; }
+  .grid { display:grid; grid-template-columns:minmax(0,1fr) 270px; gap:54px; padding-top:32px; }
+  .label { margin:0 0 12px; color:#9b4932; font:700 10px/1 system-ui; letter-spacing:.13em; text-transform:uppercase; }
+  .copy { max-width:600px; margin:0; color:#625d55; font-size:20px; line-height:1.55; }
+  .news { margin-top:34px; padding:18px 0; border-top:1px solid #cfc5b5; border-bottom:1px solid #cfc5b5; display:grid; grid-template-columns:100px 1fr; gap:20px; }
+  .news time { color:#9b4932; font:700 11px system-ui; } .news p { margin:0; color:#625d55; line-height:1.5; }
+  .duo { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:34px; }
+  .panel { min-height:174px; padding:20px; border:1px solid #cfc5b5; border-radius:14px; background:rgba(255,255,255,.2); }
+  .panel-head { display:flex; gap:12px; align-items:center; margin-bottom:19px; }
+  .seal { display:grid; place-items:center; width:34px; height:34px; border:1px solid #9b4932; border-radius:50%; color:#9b4932; font:700 8px system-ui; }
+  .panel h3 { margin:0; font-size:18px; } .meta { color:#726b61; font:12px/1.5 system-ui; }
+  .entry { display:grid; grid-template-columns:1fr auto; gap:12px; padding:10px 0; border-top:1px solid #d9d0c4; }
+  .entry b { font:650 13px system-ui; } .entry time { color:#847b6f; font:11px system-ui; }
+  .portrait { aspect-ratio:1; border:1px solid #b9ad9d; background:#ded5c8; }
+  .identity h2 { margin:18px 0 4px; font-size:25px; } .identity p { margin:0 0 16px; color:#726b61; font:12px/1.5 system-ui; }
+  .contact { border-top:1px solid #d1c7ba; padding:9px 0; font:650 11px system-ui; }
+  .interests { margin-top:22px; padding:16px; border:1px solid #cfc5b5; border-radius:14px; }
+  .chip { display:block; padding:9px 0; border-top:1px solid #ddd4c8; font:600 12px system-ui; }
+  .chip:first-of-type { border-top:0; }
+  @media(max-width:760px){.grid{grid-template-columns:1fr}.identity{order:-1}.duo{grid-template-columns:1fr}.nav span{display:none}}
+</style>
+
+<h2>Homepage structure — Editorial Cards</h2>
+<p class="subtitle">No oversized section headings. Education and Experience sit side by side; Research Interests moves beneath the identity rail.</p>
+
+<div class="card" data-choice="approve-editorial-cards" onclick="toggleSelect(this)">
+  <div class="page">
+    <div class="nav"><strong>Ruizhe Zhou</strong><span>ABOUT PUBLICATIONS EDUCATION EXPERIENCE NEWS</span></div>
+    <div class="grid">
+      <main>
+        <p class="label">About</p>
+        <p class="copy">Undergraduate researcher at Sun Yat-sen University working on physical AI, physics reasoning, and multimodal evaluation.</p>
+        <section style="margin-top:36px">
+          <p class="label">News</p>
+          <div class="news"><time>2025-10-06</time><p>Our survey on aligning perception, reasoning, modeling, and interaction in Physical AI is available on arXiv.</p></div>
+        </section>
+        <div class="duo">
+          <section class="panel">
+            <div class="panel-head"><div class="seal">SYSU</div><div><p class="label" style="margin-bottom:5px">Education</p><h3>Sun Yat-sen University</h3></div></div>
+            <div class="entry"><b>Undergraduate</b><time>2023.09—2027.06</time></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><div class="seal">RA</div><div><p class="label" style="margin-bottom:5px">Experience</p><h3>Research Assistant</h3></div></div>
+            <div class="entry"><b>UNC Chapel Hill</b><time>—</time></div>
+            <div class="entry"><b>UC San Diego</b><time>—</time></div>
+          </section>
+        </div>
+      </main>
+      <aside class="identity">
+        <div class="portrait"></div><h2>Ruizhe Zhou</h2><p>Sun Yat-sen University</p>
+        <div class="contact">GitHub ↗</div><div class="contact">Google Scholar ↗</div><div class="contact">LinkedIn ↗</div><div class="contact">Email ↗</div><div class="contact">WeChat ↗</div>
+        <div class="interests"><p class="label">Research Interests</p><span class="chip">Physical Intelligence</span><span class="chip">Visual Intelligence</span><span class="chip">Multimodal</span></div>
+      </aside>
+    </div>
+  </div>
+  <div class="card-body"><h3>Recommended homepage direction</h3><p>The final cards will use official vector university marks where officially available.</p></div>
+</div>

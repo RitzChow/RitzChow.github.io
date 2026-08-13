@@ -78,6 +78,8 @@ describe("IdentityRail", () => {
     }
     expect(screen.getByRole("button", { name: /WeChat/i })).toBeInTheDocument();
     expect(screen.getAllByRole("button", { name: /WeChat/i })).toHaveLength(1);
+    expect(screen.getByLabelText("X profile address not yet provided")).toHaveTextContent("X");
+    expect(screen.queryByRole("link", { name: /^X/i })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Email" })).toHaveAttribute(
       "href",
       "mailto:z1459306087@gmail.com",

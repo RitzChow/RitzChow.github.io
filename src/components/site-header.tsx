@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { sitePath } from "@/lib/site-path";
 import { RoughMark } from "./rough-mark";
 
 type SiteHeaderProps = {
@@ -27,7 +28,7 @@ function NavLinks({ cv, onSelect }: SiteHeaderProps & { onSelect?: () => void })
       {cv ? (
         <a
           aria-label="CV (opens in a new tab)"
-          href={cv}
+          href={sitePath(cv)}
           onClick={onSelect}
           rel="noreferrer"
           target="_blank"

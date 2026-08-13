@@ -60,6 +60,16 @@ describe("global layout styles", () => {
     expect(mobilePanelRule).toMatch(/grid-column:\s*1\s*\/\s*-1/);
   });
 
+  it("gives About a wider measure, tighter ending, and interactive mentor links", () => {
+    const bioRule = css.match(/\.about__bio\s*{([^}]*)}/)?.[1] ?? "";
+    const aboutRule = css.match(/\.home-section\.about\s*{([^}]*)}/)?.[1] ?? "";
+    const mentorHoverRule = css.match(/\.about__bio a:hover,[\s\S]*?\.about__bio a:focus-visible\s*{([^}]*)}/)?.[1] ?? "";
+
+    expect(bioRule).toMatch(/max-width:\s*51rem/);
+    expect(aboutRule).toMatch(/padding-bottom:\s*clamp\(/);
+    expect(mentorHoverRule).toMatch(/color:\s*var\(--clay\)/);
+  });
+
   it("uses equal education and experience columns that stack on mobile", () => {
     const gridRule = css.match(/\.education-experience-grid\s*{([^}]*)}/)?.[1] ?? "";
     const mobileGridRule = css.match(
@@ -68,17 +78,20 @@ describe("global layout styles", () => {
 
     expect(gridRule).toMatch(/display:\s*grid/);
     expect(gridRule).toMatch(/grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/);
+    expect(gridRule).toMatch(/border-top:\s*1px solid/);
     expect(mobileGridRule).toMatch(/grid-template-columns:\s*minmax\(0,\s*1fr\)|grid-template-columns:\s*1fr/);
   });
 
   it("keeps institution rows editorial and logos fully contained", () => {
     const rowRule = css.match(/\.institution-row\s*{([^}]*)}/)?.[1] ?? "";
     const markerRule = css.match(/\.institution-row::before\s*{([^}]*)}/)?.[1] ?? "";
+    const logoFrameRule = css.match(/\.institution-row__logo-frame\s*{([^}]*)}/)?.[1] ?? "";
     const logoRule = css.match(/\.institution-row__logo\s*{([^}]*)}/)?.[1] ?? "";
 
     expect(rowRule).toMatch(/border-top:\s*1px solid/);
     expect(rowRule).not.toMatch(/box-shadow/);
     expect(markerRule).toMatch(/background(?:-color)?:\s*var\(--clay\)/);
+    expect(logoFrameRule).toMatch(/height:\s*9\.25rem/);
     expect(logoRule).toMatch(/object-fit:\s*contain/);
     expect(logoRule).toMatch(/object-position:\s*left center/);
     expect(logoRule).not.toMatch(/object-fit:\s*cover/);

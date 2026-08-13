@@ -1,0 +1,85 @@
+<style>
+  .composition-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:22px; }
+  .composition { background:#f5f0e7; border:1px solid #cfc6b7; color:#211f1b; cursor:pointer; min-height:520px; padding:0; text-align:left; transition:transform .18s ease, border-color .18s ease; }
+  .composition:hover { transform:translateY(-3px); border-color:#a54d33; }
+  .composition.selected { outline:3px solid rgba(165,77,51,.22); border-color:#a54d33; }
+  .sheet { min-height:430px; padding:20px; font-family:Arial,sans-serif; }
+  .mini-nav { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #cfc6b7; padding-bottom:12px; font-size:10px; letter-spacing:.04em; }
+  .mini-links { display:flex; gap:10px; }
+  .serif { font-family:Georgia,serif; font-weight:400; }
+  .hero-name { font-size:32px; line-height:1.02; margin:44px 0 18px; }
+  .hero-copy { font-family:Georgia,serif; font-size:17px; line-height:1.45; max-width:90%; }
+  .accent { color:#a54d33; }
+  .scribble { height:42px; margin:22px 0; position:relative; }
+  .scribble:before { content:''; position:absolute; width:92px; height:30px; border:1.6px solid #a54d33; border-radius:50%; transform:rotate(-7deg); }
+  .section-rule { border-top:1px solid #cfc6b7; margin-top:34px; padding-top:14px; }
+  .section-label { color:#7f756a; font-size:9px; letter-spacing:.13em; text-transform:uppercase; }
+  .paper-title { font-family:Georgia,serif; font-size:14px; margin:12px 0 5px; }
+  .meta { color:#70675e; font-size:9px; line-height:1.5; }
+  .two-col { display:grid; grid-template-columns:1.35fr .65fr; gap:20px; }
+  .side-note { border-left:1px solid #cfc6b7; margin-top:44px; padding-left:15px; }
+  .big-question { font-family:Georgia,serif; font-size:22px; line-height:1.25; margin:12px 0 24px; }
+  .index-row { display:grid; grid-template-columns:28px 1fr; gap:10px; border-top:1px solid #cfc6b7; padding:12px 0; }
+  .index-num { color:#a54d33; font-family:Georgia,serif; }
+  .composition-footer { background:#fff; border-top:1px solid #ddd; padding:15px 17px 17px; }
+  .composition-footer h3 { margin:0 0 5px; font-family:Georgia,serif; font-size:17px; }
+  .composition-footer p { margin:0; color:#685f56; font-size:12px; line-height:1.45; }
+  @media (max-width:900px){ .composition-grid{grid-template-columns:1fr;} .composition{min-height:auto;} }
+</style>
+
+<h2>Choose the homepage composition</h2>
+<p class="subtitle">All three use the same warm paper palette, editorial typography, sparse clay accents, and no images.</p>
+
+<div class="composition-grid">
+  <div class="composition" data-choice="a-editorial-column" onclick="toggleSelect(this)">
+    <div class="sheet">
+      <div class="mini-nav"><strong>RZ.</strong><div class="mini-links"><span>About</span><span>Research</span><span>Papers</span></div></div>
+      <div class="hero-name serif">Ruizhe<br>Zhou</div>
+      <div class="hero-copy">I study how intelligent systems can <span class="accent">reason about the physical world</span>, with a focus on physics reasoning and multimodal evaluation.</div>
+      <div class="scribble"></div>
+      <div class="section-rule">
+        <div class="section-label">Selected publication · 2025</div>
+        <div class="paper-title">Aligning Perception, Reasoning, Modeling and Interaction</div>
+        <div class="meta">A survey on Physical AI · Paper ↗ &nbsp; Code ↗</div>
+      </div>
+    </div>
+    <div class="composition-footer"><h3>A · Editorial column</h3><p>The clearest academic identity. Elegant, restrained, and highly readable.</p></div>
+  </div>
+
+  <div class="composition" data-choice="b-margin-notebook" onclick="toggleSelect(this)">
+    <div class="sheet">
+      <div class="mini-nav"><strong>Ruizhe Zhou</strong><div class="mini-links"><span>Index</span><span>CV</span></div></div>
+      <div class="two-col">
+        <div>
+          <div class="hero-name serif">Making machines<br><em>think physically.</em></div>
+          <div class="hero-copy">Research at the meeting point of physics, multimodal AI, and evaluation.</div>
+          <div class="section-rule">
+            <div class="section-label">Current inquiry</div>
+            <div class="big-question">What would it mean for a model to understand—not merely describe—the physical world?</div>
+          </div>
+        </div>
+        <div class="side-note">
+          <div class="section-label">Margin notes</div>
+          <div class="paper-title accent">SYSU</div>
+          <div class="meta">Undergraduate researcher<br><br>Scholar ↗<br>GitHub ↗</div>
+        </div>
+      </div>
+    </div>
+    <div class="composition-footer"><h3>B · Margin notebook</h3><p>Most distinctive and human. Side annotations create a personal research-journal feel.</p></div>
+  </div>
+
+  <div class="composition" data-choice="c-research-index" onclick="toggleSelect(this)">
+    <div class="sheet">
+      <div class="mini-nav"><strong>RITZ / CHOW</strong><div class="mini-links"><span>Scholar</span><span>GitHub</span></div></div>
+      <div class="hero-name serif">Ruizhe Zhou</div>
+      <div class="hero-copy">Undergraduate researcher at Sun Yat-sen University, exploring physically grounded intelligence.</div>
+      <div class="section-rule">
+        <div class="section-label">Research index</div>
+        <div class="index-row"><div class="index-num">01</div><div><div class="paper-title">Physical AI</div><div class="meta">Perception → reasoning → modeling → interaction</div></div></div>
+        <div class="index-row"><div class="index-num">02</div><div><div class="paper-title">Physics reasoning</div><div class="meta">How models represent and apply physical laws</div></div></div>
+        <div class="index-row"><div class="index-num">03</div><div><div class="paper-title">Evaluation</div><div class="meta">Benchmarks for multimodal scientific intelligence</div></div></div>
+      </div>
+    </div>
+    <div class="composition-footer"><h3>C · Research index</h3><p>Most structured and scalable. Research directions become the dominant first impression.</p></div>
+  </div>
+</div>

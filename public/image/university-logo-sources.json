@@ -1,18 +1,18 @@
 [
   {
-    "file": "sysu-logo.gif",
+    "file": "sysu-logo.svg",
     "institution": "Sun Yat-sen University",
-    "sha256": "873e139b93132b7c4dc6c0c3056ae0ca70d4ca84f933219b6a9dc0148a6a5cb0",
-    "sourceUrl": "https://applyforchina.com/wp-content/uploads/2024/10/Sun-Yat-sen-University.gif",
-    "referenceUrl": "https://applyforchina.com/ru/universities/sun-yat-sen-university/",
-    "note": "User-authorized raster exception; preserved without tracing or conversion."
+    "sha256": "183024283257cc2c8cc995a5619b2963cd7f72d9ea549a92e200a3c86cf49bc9",
+    "sourceUrl": "user-provided",
+    "referenceUrl": "中山大学-emblem-010.png",
+    "note": "Vector path tracing of the user-provided 8151 by 1773 PNG; contains no embedded raster image."
   },
   {
     "file": "unc-logo.svg",
     "institution": "University of North Carolina at Chapel Hill",
-    "sha256": "c99f09f43bcb150ebeb579f49db31cb686d503b7e8c3ed152ddaed5c9613effc",
-    "sourceUrl": "https://www.unc.edu/wp-content/uploads/2025/11/University_Signature_White_Navy_rgb_h.svg",
-    "referenceUrl": "https://scholarrx.com/supporting-student-centered-learning-through-formative-assessments/unc-logo/"
+    "sha256": "ba4eebec09e61f992e9948f93cdbca6b5cc3cd43cd752e236abb6654cc01d59f",
+    "sourceUrl": "user-provided",
+    "referenceUrl": "the-university-of-north-carolina-at-chapel-hill-logo-vector.svg"
   },
   {
     "file": "uc-san-diego-logo.svg",

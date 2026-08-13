@@ -450,6 +450,11 @@ a {
   color: var(--clay);
 }
 
+.identity-contact--inactive {
+  color: var(--muted);
+  cursor: default;
+}
+
 .identity-interests {
   margin-top: 1.15rem;
   padding: 1rem 1.05rem;
@@ -605,11 +610,18 @@ a {
 .education-experience-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
   gap: clamp(2rem, 4vw, 4rem);
+  border-top: 1px solid var(--rule);
 }
 
 .education-experience-grid .home-section {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  align-content: start;
   min-width: 0;
+  padding-block: clamp(3rem, 6vw, 5.5rem);
+  border-top: 0;
 }
 
 .education-experience-grid .section-label {
@@ -652,13 +664,35 @@ a {
   content: "";
 }
 
+.institution-row__logo-frame {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  width: min(100%, 18rem);
+  height: 9.25rem;
+}
+
 .institution-row__logo {
   display: block;
-  grid-column: 1 / -1;
-  width: min(100%, 18rem);
-  height: 3.5rem;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
   object-position: left center;
+}
+
+/* Equalize perceived logo area while preserving each institution's aspect ratio. */
+.institution-row__logo-frame[data-logo$="uc-san-diego-logo.svg"] .institution-row__logo {
+  width: 18rem;
+}
+
+.institution-row__logo-frame[data-logo$="sysu-logo.svg"] .institution-row__logo {
+  width: 16rem;
+}
+
+.institution-row__logo-frame[data-logo$="unc-logo.svg"] .institution-row__logo {
+  width: 16rem;
 }
 
 .institution-row__content {
@@ -686,6 +720,26 @@ a {
   white-space: nowrap;
 }
 
+.institution-row__meta {
+  display: grid;
+  gap: 0.25rem;
+  justify-items: end;
+  min-width: max-content;
+  text-align: right;
+}
+
+.institution-row__supervisor {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  text-decoration: none;
+}
+
+a.institution-row__supervisor:hover {
+  color: var(--clay);
+}
+
 .institution-row__details {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -706,11 +760,29 @@ a {
 }
 
 .about__bio {
-  max-width: 43rem;
+  max-width: 51rem;
   color: var(--muted);
   font-family: var(--font-serif);
   font-size: clamp(1.1rem, 2vw, 1.3rem);
   line-height: 1.7;
+}
+
+.home-section.about {
+  padding-bottom: clamp(2.25rem, 3.5vw, 3.25rem);
+}
+
+.about__bio a {
+  color: var(--ink);
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+
+.about__bio a:hover,
+.about__bio a:focus-visible {
+  color: var(--clay);
+  text-decoration-color: currentColor;
 }
 
 .about__bio p:last-child {

@@ -1,0 +1,42 @@
+<style>
+  .home{background:#f3eee4;color:#201e1a;border:1px solid #cfc6b7;min-height:920px;padding:30px 40px;font-family:Arial,sans-serif}
+  .nav{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #cbc1b2;padding-bottom:13px;font-size:10px}.navlinks{display:flex;gap:17px;color:#5f574f}.mono{font-family:Georgia,serif;font-size:16px}
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:64px}.main{padding-top:58px}.section{scroll-margin-top:20px;margin-bottom:52px}.kicker{text-transform:uppercase;letter-spacing:.16em;color:#9b4932;font-size:9px;margin-bottom:13px}.headline{font-family:Georgia,serif;font-weight:400;font-size:40px;line-height:1.08;margin:0 0 22px}.body{font-family:Georgia,serif;font-size:17px;line-height:1.62;max-width:650px}.body em{font-style:normal;color:#9b4932}
+  .interest-grid{border-top:1px solid #cbc1b2}.interest{display:grid;grid-template-columns:32px 1fr;gap:12px;border-bottom:1px solid #d8cfc1;padding:14px 0}.num{font-family:Georgia,serif;color:#9b4932}.topic{font-family:Georgia,serif;font-size:16px}.meta{font-size:10px;color:#70675d;margin-top:4px;line-height:1.5}
+  .timeline{border-left:1px solid #9b4932;margin-left:5px;padding-left:25px}.event{position:relative;padding-bottom:25px}.event:before{content:'';position:absolute;left:-30px;top:3px;width:8px;height:8px;border:1px solid #9b4932;border-radius:50%;background:#f3eee4}.event-date{font-size:9px;color:#756b61;letter-spacing:.1em;text-transform:uppercase}.event-role{font-family:Georgia,serif;font-size:16px;margin:5px 0}.placeholder{color:#8c8277;font-style:italic;font-size:10px}
+  .news-wrap{border-top:1px solid #cbc1b2;border-bottom:1px solid #cbc1b2;position:relative}.news-list{height:185px;overflow-y:auto;scrollbar-color:#9b4932 transparent;scrollbar-width:thin}.news-item{display:grid;grid-template-columns:76px 1fr;gap:18px;padding:14px 4px;border-bottom:1px solid #d8cfc1}.news-item:last-child{border-bottom:0}.news-date{font-size:9px;color:#756b61}.news-title{font-family:Georgia,serif;font-size:14px;line-height:1.35}.scroll-note{text-align:right;color:#9b4932;font-family:Georgia,serif;font-style:italic;font-size:10px;margin-top:8px}
+  .rail{border-left:1px solid #cbc1b2;padding:48px 0 0 26px}.portrait{height:235px;background:#ded5c8;position:relative;overflow:hidden;margin-bottom:24px}.portrait:before{content:'';position:absolute;width:70px;height:70px;border-radius:50%;background:#b8ad9f;left:50%;top:40px;transform:translateX(-50%)}.portrait:after{content:'';position:absolute;width:145px;height:145px;border-radius:48% 52% 0 0;background:#b8ad9f;left:50%;top:117px;transform:translateX(-50%)}.photo-note{position:absolute;bottom:9px;left:11px;z-index:2;font-size:8px;letter-spacing:.11em;text-transform:uppercase;color:#645b52}.name{font-family:Georgia,serif;font-size:30px;line-height:1;margin:0 0 11px;font-weight:400}.role{font-size:11px;line-height:1.55;color:#625a52;margin-bottom:23px}
+  .contacts{border-bottom:1px solid #cbc1b2}.contact{display:grid;grid-template-columns:24px 1fr 12px;align-items:center;gap:10px;border-top:1px solid #cbc1b2;padding:9px 1px;font-size:11px}.icon{width:17px;height:17px;border:1px solid #201e1a;border-radius:50%;display:grid;place-items:center;font-size:8px;font-weight:bold}.arrow{color:#9b4932}.approve{margin-top:18px;display:flex;justify-content:flex-end}
+  @media(max-width:760px){.home{padding:22px}.layout{grid-template-columns:1fr}.rail{grid-row:1;border-left:0;border-bottom:1px solid #cbc1b2;padding:30px 0;display:grid;grid-template-columns:120px 1fr;gap:20px}.portrait{height:155px;margin:0}.portrait:before{width:45px;height:45px;top:25px}.portrait:after{width:88px;height:92px;top:73px}.main{padding-top:38px}.headline{font-size:35px}.navlinks{gap:10px}.navlinks span:nth-child(2),.navlinks span:nth-child(3){display:none}.news-list{height:auto;overflow:visible}.scroll-note{display:none}}
+</style>
+
+<div class="home">
+  <nav class="nav"><div class="mono">RZ.</div><div class="navlinks"><span>About</span><span>Research</span><span>Publications</span><span>Experience</span><span>News</span><span>CV</span></div></nav>
+  <div class="layout">
+    <main class="main">
+      <section class="section"><div class="kicker">About</div><h1 class="headline">Understanding intelligence<br>through the physical world.</h1><p class="body">I am an undergraduate researcher at Sun Yat-sen University. I study how intelligent systems can <em>reason about physics</em>, moving from pattern recognition toward grounded understanding.</p></section>
+      <section class="section"><div class="kicker">Research interests</div><div class="interest-grid">
+        <div class="interest"><div class="num">01</div><div><div class="topic">Physical AI</div><div class="meta">Perception, reasoning, world modeling, and embodied interaction.</div></div></div>
+        <div class="interest"><div class="num">02</div><div><div class="topic">Physics reasoning</div><div class="meta">How models represent and apply the laws of the physical world.</div></div></div>
+        <div class="interest"><div class="num">03</div><div><div class="topic">Multimodal evaluation</div><div class="meta">Reliable benchmarks for scientific and physical understanding.</div></div></div>
+      </div></section>
+      <section class="section"><div class="kicker">Experience</div><div class="timeline">
+        <div class="event"><div class="event-date">Present</div><div class="event-role">Undergraduate Researcher · SYSU</div><div class="placeholder">Lab, advisor, and project details to be added.</div></div>
+        <div class="event"><div class="event-date">Earlier</div><div class="event-role placeholder">Additional experience can be added without changing the layout.</div></div>
+      </div></section>
+      <section class="section"><div class="kicker">News</div><div class="news-wrap"><div class="news-list">
+        <div class="news-item"><div class="news-date">2026 · —</div><div class="news-title placeholder">Latest research update to be added.</div></div>
+        <div class="news-item"><div class="news-date">2025 · Oct</div><div class="news-title">Physical AI survey available on arXiv.</div></div>
+        <div class="news-item"><div class="news-date">2025 · —</div><div class="news-title placeholder">Conference, project, or award update.</div></div>
+        <div class="news-item"><div class="news-date">2024 · —</div><div class="news-title placeholder">Earlier news remains accessible by scrolling.</div></div>
+      </div></div><div class="scroll-note">scroll for earlier notes ↓</div></section>
+    </main>
+    <aside class="rail">
+      <div class="portrait"><span class="photo-note">portrait placeholder</span></div><h2 class="name">Ruizhe Zhou</h2><div class="role">Undergraduate Researcher<br>Sun Yat-sen University</div>
+      <div class="contacts">
+        <div class="contact"><span class="icon">GH</span><span>GitHub</span><span class="arrow">↗</span></div><div class="contact"><span class="icon">GS</span><span>Google Scholar</span><span class="arrow">↗</span></div><div class="contact"><span class="icon">in</span><span>LinkedIn</span><span class="arrow">↗</span></div><div class="contact"><span class="icon">微</span><span>WeChat</span><span class="arrow">＋</span></div><div class="contact"><span class="icon">@</span><span>Email</span><span class="arrow">↗</span></div>
+      </div>
+    </aside>
+  </div>
+</div>
+<div class="approve"><button class="btn btn-primary" data-choice="homepage-structure-approved" onclick="toggleSelect(this)">Approve homepage structure</button></div>

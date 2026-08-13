@@ -1,0 +1,48 @@
+<style>
+  .profile-page{background:#f3eee4;color:#201e1a;border:1px solid #cfc6b7;min-height:690px;padding:32px 40px;font-family:Arial,sans-serif}
+  .profile-nav{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #cbc1b2;padding-bottom:14px;font-size:11px;letter-spacing:.03em}
+  .profile-navlinks{display:flex;gap:18px;color:#5f574f}.profile-monogram{font-family:Georgia,serif;font-size:16px}
+  .profile-layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:64px}
+  .profile-main{padding-top:72px}.profile-kicker{text-transform:uppercase;letter-spacing:.16em;color:#9b4932;font-size:10px}
+  .profile-heading{font-family:Georgia,serif;font-weight:400;font-size:45px;line-height:1.04;margin:16px 0 28px;letter-spacing:-.025em}
+  .profile-body{font-family:Georgia,serif;font-size:19px;line-height:1.65;max-width:650px;margin:0 0 18px}
+  .profile-body em{color:#9b4932;font-style:normal;position:relative}.profile-body em:after{content:'';position:absolute;left:0;right:0;bottom:-3px;height:5px;border-top:1.5px solid #9b4932;transform:rotate(-1deg)}
+  .profile-research{border-top:1px solid #cbc1b2;margin-top:44px;padding-top:20px}.profile-label{text-transform:uppercase;letter-spacing:.14em;color:#756b61;font-size:9px}
+  .profile-row{display:grid;grid-template-columns:32px 1fr;gap:12px;border-bottom:1px solid #d8cfc1;padding:15px 0}.profile-num{font-family:Georgia,serif;color:#9b4932;font-size:14px}.profile-topic{font-family:Georgia,serif;font-size:17px;margin-bottom:4px}.profile-meta{font-size:10px;line-height:1.5;color:#70675d}
+  .identity{border-left:1px solid #cbc1b2;padding:55px 0 0 26px}.portrait{height:260px;background:#ded5c8;position:relative;overflow:hidden;margin-bottom:26px}
+  .portrait:before{content:'';position:absolute;width:76px;height:76px;border-radius:50%;background:#b8ad9f;left:50%;top:48px;transform:translateX(-50%)}
+  .portrait:after{content:'';position:absolute;width:150px;height:150px;border-radius:48% 52% 0 0;background:#b8ad9f;left:50%;top:133px;transform:translateX(-50%)}
+  .photo-note{position:absolute;bottom:10px;left:12px;z-index:2;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#645b52}
+  .identity-name{font-family:Georgia,serif;font-size:31px;line-height:1;margin:0 0 13px;font-weight:400}.identity-role{font-size:11px;line-height:1.6;color:#625a52;margin-bottom:26px}
+  .identity-link{display:flex;justify-content:space-between;border-top:1px solid #cbc1b2;padding:9px 0;font-size:11px}.identity-link:last-child{border-bottom:1px solid #cbc1b2}
+  .approve-row{margin-top:18px;display:flex;justify-content:flex-end}
+  @media(max-width:760px){.profile-page{padding:22px}.profile-layout{grid-template-columns:1fr}.identity{grid-row:1;border-left:0;border-bottom:1px solid #cbc1b2;padding:32px 0;display:grid;grid-template-columns:120px 1fr;gap:20px}.portrait{height:150px;margin:0}.portrait:before{width:45px;height:45px;top:24px}.portrait:after{width:86px;height:90px;top:72px}.profile-main{padding-top:38px}.profile-heading{font-size:38px}.profile-navlinks span:nth-child(-n+3){display:none}}
+</style>
+
+<div class="profile-page">
+  <div class="profile-nav"><div class="profile-monogram">RZ.</div><div class="profile-navlinks"><span>About</span><span>Research</span><span>Publications</span><span>Notes</span><span>CV</span></div></div>
+  <div class="profile-layout">
+    <main class="profile-main">
+      <div class="profile-kicker">About</div>
+      <h1 class="profile-heading">Understanding intelligence<br>through the physical world.</h1>
+      <p class="profile-body">I am an undergraduate researcher at Sun Yat-sen University. I study how intelligent systems can <em>reason about physics</em>, moving from pattern recognition toward grounded understanding.</p>
+      <p class="profile-body">My current interests span physical AI, multimodal reasoning, and rigorous evaluation of scientific intelligence.</p>
+      <section class="profile-research">
+        <div class="profile-label">Research directions</div>
+        <div class="profile-row"><div class="profile-num">01</div><div><div class="profile-topic">Physical AI</div><div class="profile-meta">Connecting perception, reasoning, world modeling, and embodied interaction.</div></div></div>
+        <div class="profile-row"><div class="profile-num">02</div><div><div class="profile-topic">Physics reasoning</div><div class="profile-meta">Studying how models represent and apply the laws of the physical world.</div></div></div>
+        <div class="profile-row"><div class="profile-num">03</div><div><div class="profile-topic">Multimodal evaluation</div><div class="profile-meta">Building reliable benchmarks for scientific and physical understanding.</div></div></div>
+      </section>
+    </main>
+    <aside class="identity">
+      <div class="portrait"><span class="photo-note">portrait placeholder</span></div>
+      <div>
+        <h2 class="identity-name">Ruizhe Zhou</h2>
+        <div class="identity-role">Undergraduate Researcher<br>Sun Yat-sen University</div>
+        <div class="identity-link"><span>Google Scholar</span><span>↗</span></div>
+        <div class="identity-link"><span>GitHub</span><span>↗</span></div>
+      </div>
+    </aside>
+  </div>
+</div>
+<div class="approve-row"><button class="btn btn-primary" data-choice="right-profile-approved" onclick="toggleSelect(this)">Approve revised composition</button></div>

@@ -1,0 +1,37 @@
+<style>
+  .final-sheet{background:#f3eee4;color:#201e1a;border:1px solid #cfc6b7;min-height:650px;padding:34px 42px;font-family:Arial,sans-serif;position:relative;overflow:hidden}
+  .topline{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #cbc1b2;padding-bottom:14px;font-size:11px;letter-spacing:.03em}
+  .navlinks{display:flex;gap:18px;color:#5f574f}.monogram{font-family:Georgia,serif;font-size:16px}
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:50px}
+  .main{padding-top:64px}.eyebrow{text-transform:uppercase;letter-spacing:.16em;color:#9b4932;font-size:10px}
+  .name{font-family:Georgia,serif;font-weight:400;font-size:54px;line-height:.95;margin:15px 0 27px;letter-spacing:-.035em}
+  .statement{font-family:Georgia,serif;font-size:24px;line-height:1.45;max-width:610px;margin:0}
+  .circled{position:relative;white-space:nowrap}.circled:after{content:'';position:absolute;left:-7px;right:-7px;top:-4px;bottom:-5px;border:1.5px solid #a44e36;border-radius:48% 52% 45% 55%;transform:rotate(-2deg)}
+  .arrow{margin:34px 0 45px;width:130px;height:34px}.arrow path{fill:none;stroke:#24211e;stroke-width:1.25;stroke-linecap:round}
+  .current{border-top:1px solid #cbc1b2;padding-top:18px;display:grid;grid-template-columns:135px 1fr;gap:20px}
+  .label{text-transform:uppercase;letter-spacing:.14em;color:#756b61;font-size:9px}.question{font-family:Georgia,serif;font-size:18px;line-height:1.4;margin:0}
+  .margin{border-left:1px solid #cbc1b2;padding:69px 0 0 22px}.margin-block{margin-bottom:42px}.margin-title{font-family:Georgia,serif;font-size:17px;margin:8px 0;color:#9b4932}.margin-copy{font-size:11px;line-height:1.6;color:#625a52}.margin-link{display:block;border-bottom:1px solid #cbc1b2;padding:8px 0;color:#201e1a;font-size:11px}
+  .palette{display:flex;gap:8px;margin-top:10px}.swatch{width:30px;height:30px;border:1px solid #b9afa1}.paper{background:#f3eee4}.ink{background:#201e1a}.clay{background:#9b4932}.rule{background:#cbc1b2}
+  .approval{margin-top:18px;display:flex;justify-content:flex-end}.approval button{font:inherit}
+  @media(max-width:760px){.final-sheet{padding:24px}.layout{grid-template-columns:1fr}.margin{border-left:0;border-top:1px solid #cbc1b2;padding:24px 0 0}.name{font-size:44px}.statement{font-size:20px}.navlinks span:nth-child(-n+3){display:none}.current{grid-template-columns:1fr}.palette{margin-bottom:12px}}
+</style>
+
+<div class="final-sheet">
+  <div class="topline"><div class="monogram">RZ.</div><div class="navlinks"><span>About</span><span>Research</span><span>Publications</span><span>Notes</span><span>CV</span></div></div>
+  <div class="layout">
+    <main class="main">
+      <div class="eyebrow">Physics · Intelligence · Evaluation</div>
+      <h1 class="name">Ruizhe Zhou</h1>
+      <p class="statement">I study how intelligent systems can reason about the <span class="circled">physical world</span>, with a focus on physics reasoning and multimodal evaluation.</p>
+      <svg class="arrow" viewBox="0 0 130 34" aria-label="Hand-drawn arrow"><path d="M2 17 C34 12, 65 24, 112 16 M101 8 C107 12, 112 16, 105 24"/></svg>
+      <div class="current"><div class="label">Current inquiry</div><p class="question">What would it mean for a model to understand—not merely describe—the physical world?</p></div>
+    </main>
+    <aside class="margin">
+      <div class="margin-block"><div class="label">Affiliation</div><div class="margin-title">SYSU</div><div class="margin-copy">Undergraduate Researcher<br>Sun Yat-sen University</div></div>
+      <div class="margin-block"><div class="label">Elsewhere</div><span class="margin-link">Google Scholar ↗</span><span class="margin-link">GitHub ↗</span></div>
+      <div class="margin-block"><div class="label">Palette</div><div class="palette"><span class="swatch paper"></span><span class="swatch ink"></span><span class="swatch clay"></span><span class="swatch rule"></span></div></div>
+    </aside>
+  </div>
+</div>
+
+<div class="approval"><button class="btn btn-primary" data-choice="visual-system-approved" onclick="toggleSelect(this)">Approve visual system</button></div>

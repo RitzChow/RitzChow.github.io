@@ -1,0 +1,35 @@
+<style>
+  .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+  .card-image { padding: 18px; background: #eee9df; }
+  .paper-canvas { display: grid; place-items: center; width: 100%; overflow: hidden; border: 1px solid #d3cabd; background: #fff; }
+  .paper-canvas object { width: 100%; height: 100%; border: 0; pointer-events: none; }
+  .ratio-16-9 { aspect-ratio: 16 / 9; }
+  .ratio-3-2 { aspect-ratio: 3 / 2; }
+  .ratio-4-3 { aspect-ratio: 4 / 3; }
+  .recommended { color: #9b4932; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  @media (max-width: 900px) { .cards { grid-template-columns: 1fr; } }
+</style>
+
+<h2>Choose one fixed white canvas</h2>
+<p class="subtitle">The vector PDF remains complete and centered. Any unused space stays plain white.</p>
+
+<div class="cards">
+  <div class="card" data-choice="16-9" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="paper-canvas ratio-16-9"><object data="http://localhost:3000/image/models-under-scope.pdf" type="application/pdf"></object></div>
+    </div>
+    <div class="card-body"><div class="recommended">Recommended</div><h3>A — 16:9</h3><p>Compact and contemporary. Keeps every publication row from becoming too tall.</p></div>
+  </div>
+  <div class="card" data-choice="3-2" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="paper-canvas ratio-3-2"><object data="http://localhost:3000/image/models-under-scope.pdf" type="application/pdf"></object></div>
+    </div>
+    <div class="card-body"><h3>B — 3:2</h3><p>A little taller, with more white breathing room above and below wide PDFs.</p></div>
+  </div>
+  <div class="card" data-choice="4-3" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="paper-canvas ratio-4-3"><object data="http://localhost:3000/image/models-under-scope.pdf" type="application/pdf"></object></div>
+    </div>
+    <div class="card-body"><h3>C — 4:3</h3><p>Most archival and spacious, but makes publication rows noticeably taller.</p></div>
+  </div>
+</div>
