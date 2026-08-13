@@ -2,6 +2,7 @@
   {
     "file": "sysu-logo.gif",
     "institution": "Sun Yat-sen University",
+    "sha256": "873e139b93132b7c4dc6c0c3056ae0ca70d4ca84f933219b6a9dc0148a6a5cb0",
     "sourceUrl": "https://applyforchina.com/wp-content/uploads/2024/10/Sun-Yat-sen-University.gif",
     "referenceUrl": "https://applyforchina.com/ru/universities/sun-yat-sen-university/",
     "note": "User-authorized raster exception; preserved without tracing or conversion."
@@ -9,12 +10,14 @@
   {
     "file": "unc-logo.svg",
     "institution": "University of North Carolina at Chapel Hill",
+    "sha256": "c99f09f43bcb150ebeb579f49db31cb686d503b7e8c3ed152ddaed5c9613effc",
     "sourceUrl": "https://www.unc.edu/wp-content/uploads/2025/11/University_Signature_White_Navy_rgb_h.svg",
     "referenceUrl": "https://scholarrx.com/supporting-student-centered-learning-through-formative-assessments/unc-logo/"
   },
   {
     "file": "uc-san-diego-logo.svg",
     "institution": "University of California San Diego",
+    "sha256": "c17cd07c2dc4684576fb207030db1fbb5194c1885c14e994c093c93822bfc1ce",
     "sourceUrl": "https://brand.ucsd.edu/_files/brand-downloads/uc-san-diego-logo-kit-042425.zip",
     "archiveMember": "UC San Diego Logo Kit 2024/SVG for Canva/UCSanDiegoLogo-BlueGold.svg"
   }
