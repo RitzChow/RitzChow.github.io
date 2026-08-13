@@ -14,9 +14,20 @@ describe("normalizeContactHref", () => {
   });
 
   it("preserves an already usable contact URL", () => {
-    expect(normalizeContactHref("https://github.com/RitzChow")).toBe(
+    expect(normalizeContactHref("  https://github.com/RitzChow  ")).toBe(
       "https://github.com/RitzChow",
     );
+  });
+
+  it("preserves an existing mailto link", () => {
+    expect(normalizeContactHref("  mailto:ritz@example.com  ")).toBe(
+      "mailto:ritz@example.com",
+    );
+  });
+
+  it("rejects unsafe and unsupported URL schemes", () => {
+    expect(normalizeContactHref("javascript:alert(1)")).toBe("");
+    expect(normalizeContactHref("ftp://example.com/profile")).toBe("");
   });
 });
 

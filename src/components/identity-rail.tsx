@@ -8,6 +8,7 @@ import { SiGooglescholar } from "react-icons/si";
 import type { IconType } from "react-icons";
 import type { Profile } from "@/data/types";
 import { normalizeContactHref } from "@/lib/content";
+import { sitePath } from "@/lib/site-path";
 import { WeChatDialog } from "./wechat-dialog";
 
 interface IdentityRailProps {
@@ -38,7 +39,7 @@ function Portrait({ name, src }: { name: string; src?: string }) {
   return (
     <div className="identity-portrait">
       <Image
-        src={src}
+        src={sitePath(src)}
         alt={`Portrait of ${name}`}
         fill
         sizes="(max-width: 760px) 9rem, 16rem"
@@ -50,9 +51,12 @@ function Portrait({ name, src }: { name: string; src?: string }) {
 }
 
 export function IdentityRail({ profile }: IdentityRailProps) {
-  const definedLinks = profile.contacts.filter(
-    (contact) => contact.href?.trim() && contact.label !== "WeChat",
-  );
+  const definedLinks = profile.contacts
+    .map((contact) => ({
+      ...contact,
+      href: normalizeContactHref(contact.href ?? ""),
+    }))
+    .filter((contact) => contact.href && contact.label !== "WeChat");
   const hasWeChat = Boolean(profile.wechatQr?.trim());
 
   return (
@@ -66,7 +70,7 @@ export function IdentityRail({ profile }: IdentityRailProps) {
       <nav className="identity-contacts" aria-label="Contact links">
         {definedLinks.map((contact) => {
           const Icon = contactIcons[contact.label] ?? FiArrowUpRight;
-          const href = normalizeContactHref(contact.href!);
+          const href = contact.href;
           const external = /^https?:\/\//.test(href);
 
           return (

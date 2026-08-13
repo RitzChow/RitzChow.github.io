@@ -1,10 +1,51 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { afterEach, describe, expect, it } from "vitest";
 import { profile } from "@/data/profile";
 import type { Profile } from "@/data/types";
 import { IdentityRail } from "./identity-rail";
 
 describe("IdentityRail", () => {
+  const originalBasePath = process.env.NEXT_PUBLIC_BASE_PATH;
+
+  afterEach(() => {
+    process.env.NEXT_PUBLIC_BASE_PATH = originalBasePath;
+  });
+
+  it("prefixes identity media for a project Pages deployment", async () => {
+    process.env.NEXT_PUBLIC_BASE_PATH = "/portfolio";
+    const user = userEvent.setup();
+
+    render(<IdentityRail profile={profile} />);
+
+    expect(screen.getByRole("img", { name: "Portrait of Ruizhe Zhou" })).toHaveAttribute(
+      "src",
+      expect.stringContaining("/portfolio/image/my-photo.jpg"),
+    );
+
+    await user.click(screen.getByRole("button", { name: /WeChat/i }));
+
+    expect(
+      screen.getByRole("img", { name: "WeChat QR code for Ruizhe Zhou" }),
+    ).toHaveAttribute(
+      "src",
+      expect.stringContaining("/portfolio/image/wechat.jpg"),
+    );
+  });
+
+  it("filters contacts with unsafe URL schemes", () => {
+    render(
+      <IdentityRail
+        profile={{
+          ...profile,
+          contacts: [{ label: "Unsafe", href: "javascript:alert(1)" }],
+        }}
+      />,
+    );
+
+    expect(screen.queryByRole("link", { name: "Unsafe" })).not.toBeInTheDocument();
+  });
+
   it("shows the configured academic identity and filters empty contacts", () => {
     render(<IdentityRail profile={profile} />);
 

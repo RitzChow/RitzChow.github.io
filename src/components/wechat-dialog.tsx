@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { FiArrowUpRight, FiMessageCircle, FiX } from "react-icons/fi";
+import { sitePath } from "@/lib/site-path";
 
 interface WeChatDialogProps {
   qrSrc: string;
@@ -78,7 +79,7 @@ export function WeChatDialog({ qrSrc }: WeChatDialogProps) {
         </button>
       </div>
       <Image
-        src={qrSrc}
+        src={sitePath(qrSrc)}
         width={320}
         height={320}
         unoptimized
