@@ -5,7 +5,6 @@ import { AboutSection } from "./about-section";
 import { EducationSection } from "./education-section";
 import { ExperienceSection } from "./experience-section";
 import { NewsSection } from "./news-section";
-import { ResearchSection } from "./research-section";
 
 describe("home sections", () => {
   afterEach(() => {
@@ -16,26 +15,16 @@ describe("home sections", () => {
     const { container } = render(
       <>
         <AboutSection />
-        <ResearchSection />
         <EducationSection />
         <ExperienceSection />
         <NewsSection />
       </>,
     );
 
-    for (const id of ["about", "research", "education", "experience", "news"]) {
+    for (const id of ["about", "education", "experience", "news"]) {
       expect(container.querySelector(`section#${id}`)).toBeInTheDocument();
     }
-  });
-
-  it("renders exactly the three approved research interests", () => {
-    render(<ResearchSection />);
-
-    const section = screen.getByRole("region", { name: "Research interests" });
-    expect(within(section).getAllByRole("listitem")).toHaveLength(3);
-    expect(section).toHaveTextContent("Physical AI");
-    expect(section).toHaveTextContent("Physics Reasoning");
-    expect(section).toHaveTextContent("Multimodal Evaluation");
+    expect(container.querySelector("section#research")).not.toBeInTheDocument();
   });
 
   it("renders about copy from the supplied profile", () => {
@@ -49,10 +38,12 @@ describe("home sections", () => {
 
     render(<AboutSection data={customProfile} />);
 
-    const section = screen.getByRole("region", {
-      name: "Understanding intelligence through the physical world.",
-    });
+    const section = screen.getByRole("region", { name: "About" });
     expect(section).toHaveTextContent(customProfile.bio);
+    expect(within(section).getByRole("heading", { level: 2, name: "About" })).toHaveClass(
+      "section-label",
+    );
+    expect(within(section).queryByRole("heading", { level: 1 })).not.toBeInTheDocument();
     expect(section).not.toHaveTextContent("Visiting Researcher at Test Institute");
     expect(section).not.toHaveTextContent("physical AI");
   });

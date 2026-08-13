@@ -3,15 +3,21 @@ import { describe, expect, it } from "vitest";
 import Page from "./page";
 
 describe("home page", () => {
-  it("presents the academic statement as the main heading", () => {
+  it("uses a compact About label without the former statement heading", () => {
     render(<Page />);
 
+    expect(screen.getByRole("heading", { level: 2, name: "About" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { level: 1 })).not.toBeInTheDocument();
     expect(
-      screen.getByRole("heading", {
-        level: 1,
-        name: "Understanding intelligence through the physical world.",
-      }),
-    ).toBeInTheDocument();
+      screen.queryByText("Understanding intelligence through the physical world."),
+    ).not.toBeInTheDocument();
+  });
+
+  it("keeps research interests in the identity rail instead of the main narrative", () => {
+    const { container } = render(<Page />);
+
+    expect(container.querySelector(".home-content #research")).not.toBeInTheDocument();
+    expect(screen.getAllByRole("heading", { name: "Research Interests" })).toHaveLength(1);
   });
 
   it("orders the home narrative from about and news to education and experience", () => {

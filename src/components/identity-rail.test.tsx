@@ -58,7 +58,11 @@ describe("IdentityRail", () => {
     } else {
       expect(container.querySelector(".identity-rail__role")).not.toBeInTheDocument();
     }
-    expect(screen.getByText("Sun Yat-sen University")).toBeInTheDocument();
+    if (profile.institution) {
+      expect(screen.getByText(profile.institution)).toBeInTheDocument();
+    } else {
+      expect(container.querySelector(".identity-rail__institution")).toBeEmptyDOMElement();
+    }
     expect(screen.getByRole("link", { name: /GitHub/i })).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: /Google Scholar/i }),
@@ -75,6 +79,28 @@ describe("IdentityRail", () => {
       "href",
       "mailto:z1459306087@gmail.com",
     );
+  });
+
+  it("shows exactly the concise research interests in a secondary rail panel", () => {
+    const { container } = render(<IdentityRail profile={profile} />);
+
+    const panel = screen.getByRole("region", { name: "Research Interests" });
+    expect(panel).toHaveClass("identity-interests");
+    expect(
+      within(panel).getByRole("heading", { level: 2, name: "Research Interests" }),
+    ).toBeInTheDocument();
+    expect(within(panel).getAllByRole("listitem").map((item) => item.textContent)).toEqual([
+      "Physical Intelligence",
+      "Visual Intelligence",
+      "Multimodal",
+    ]);
+    expect(container.querySelectorAll(".identity-interests")).toHaveLength(1);
+  });
+
+  it("omits the research interests panel when configured with no interests", () => {
+    render(<IdentityRail profile={profile} interests={[]} />);
+
+    expect(screen.queryByRole("region", { name: "Research Interests" })).not.toBeInTheDocument();
   });
 
   it("renders one QR-driven WeChat trigger even when its contact href is empty", () => {

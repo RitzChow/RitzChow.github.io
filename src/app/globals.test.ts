@@ -44,6 +44,14 @@ describe("global layout styles", () => {
     expect(mobileRule).toMatch(/padding-top:\s*0/);
   });
 
+  it("styles research interests as a quiet rounded rail panel", () => {
+    const panelRule = css.match(/\.identity-interests\s*{([^}]*)}/)?.[1] ?? "";
+
+    expect(panelRule).toMatch(/border:\s*1px solid/);
+    expect(panelRule).toMatch(/border-radius:/);
+    expect(panelRule).not.toMatch(/box-shadow/);
+  });
+
   it("centers the publication filter and uses a sliding light indicator", () => {
     const filterRule = css.match(/\.publication-filter\s*{([^}]*)}/)?.[1] ?? "";
     const indicatorRule = css.match(/\.publication-filter::before\s*{([^}]*)}/)?.[1] ?? "";

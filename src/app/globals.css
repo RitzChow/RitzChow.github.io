@@ -445,6 +445,39 @@ a {
   color: var(--clay);
 }
 
+.identity-interests {
+  margin-top: 1.15rem;
+  padding: 1rem 1.05rem;
+  border: 1px solid var(--rule);
+  border-radius: 0.8rem;
+  background: rgb(255 255 255 / 18%);
+}
+
+.identity-interests h2 {
+  margin: 0 0 0.7rem;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.identity-interests ul {
+  display: grid;
+  gap: 0.48rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.identity-interests li {
+  color: var(--ink);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
 .wechat-dialog {
   position: fixed;
   z-index: 50;
@@ -749,6 +782,10 @@ a {
   .identity-contacts {
     grid-column: 1 / -1;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .identity-interests {
+    grid-column: 1 / -1;
   }
 
   .editorial-row {

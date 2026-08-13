@@ -6,13 +6,15 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FiArrowUpRight, FiMail, FiMessageCircle } from "react-icons/fi";
 import { SiGooglescholar } from "react-icons/si";
 import type { IconType } from "react-icons";
-import type { Profile } from "@/data/types";
+import { researchInterests } from "@/data/research";
+import type { Profile, ResearchInterest } from "@/data/types";
 import { normalizeContactHref } from "@/lib/content";
 import { sitePath } from "@/lib/site-path";
 import { WeChatDialog } from "./wechat-dialog";
 
 interface IdentityRailProps {
   profile: Profile;
+  interests?: ResearchInterest[];
 }
 
 const contactIcons: Record<string, IconType> = {
@@ -55,7 +57,7 @@ function Portrait({ name, src }: { name: string; src?: string }) {
   );
 }
 
-export function IdentityRail({ profile }: IdentityRailProps) {
+export function IdentityRail({ profile, interests = researchInterests }: IdentityRailProps) {
   const definedLinks = profile.contacts
     .map((contact) => ({
       ...contact,
@@ -95,6 +97,16 @@ export function IdentityRail({ profile }: IdentityRailProps) {
         })}
         {hasWeChat ? <WeChatDialog qrSrc={profile.wechatQr!} /> : null}
       </nav>
+      {interests.length > 0 ? (
+        <section className="identity-interests" aria-labelledby="identity-interests-heading">
+          <h2 id="identity-interests-heading">Research Interests</h2>
+          <ul>
+            {interests.map((interest) => (
+              <li key={interest.title}>{interest.title}</li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
     </aside>
   );
 }
