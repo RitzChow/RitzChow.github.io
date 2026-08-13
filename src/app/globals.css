@@ -403,6 +403,7 @@ a {
 }
 
 .identity-rail__name {
+  margin: 0;
   font-family: var(--font-serif);
   font-size: 1.65rem;
   font-weight: 600;

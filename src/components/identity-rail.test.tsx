@@ -2,6 +2,7 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it } from "vitest";
 import { profile } from "@/data/profile";
+import { researchInterests } from "@/data/research";
 import type { Profile } from "@/data/types";
 import { IdentityRail } from "./identity-rail";
 
@@ -52,7 +53,9 @@ describe("IdentityRail", () => {
   it("shows the configured academic identity and filters empty contacts", () => {
     const { container } = render(<IdentityRail profile={profile} />);
 
-    expect(screen.getByText("Ruizhe Zhou")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: "Ruizhe Zhou" })).toHaveClass(
+      "identity-rail__name",
+    );
     if (profile.role) {
       expect(screen.getByText(profile.role)).toBeInTheDocument();
     } else {
@@ -95,6 +98,23 @@ describe("IdentityRail", () => {
       "Multimodal",
     ]);
     expect(container.querySelectorAll(".identity-interests")).toHaveLength(1);
+  });
+
+  it("keeps the configured descriptions aligned with the concise interest labels", () => {
+    expect(researchInterests).toEqual([
+      {
+        title: "Physical Intelligence",
+        description: "Intelligent systems that perceive, reason, and act in the physical world.",
+      },
+      {
+        title: "Visual Intelligence",
+        description: "Understanding, grounding, and reasoning over visual content.",
+      },
+      {
+        title: "Multimodal",
+        description: "Integrating text, vision, and other modalities.",
+      },
+    ]);
   });
 
   it("omits the research interests panel when configured with no interests", () => {

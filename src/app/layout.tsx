@@ -7,7 +7,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Ruizhe Zhou — Academic Portfolio",
   description:
-    "Ruizhe Zhou's academic portfolio: research in physical AI, physics reasoning, and multimodal evaluation.",
+    "Ruizhe Zhou's academic portfolio: research in Physical Intelligence, Visual Intelligence, and Multimodal systems.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

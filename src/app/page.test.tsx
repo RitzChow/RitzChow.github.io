@@ -7,7 +7,8 @@ describe("home page", () => {
     render(<Page />);
 
     expect(screen.getByRole("heading", { level: 2, name: "About" })).toBeInTheDocument();
-    expect(screen.queryByRole("heading", { level: 1 })).not.toBeInTheDocument();
+    expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
+    expect(screen.getByRole("heading", { level: 1, name: "Ruizhe Zhou" })).toBeInTheDocument();
     expect(
       screen.queryByText("Understanding intelligence through the physical world."),
     ).not.toBeInTheDocument();

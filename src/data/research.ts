@@ -3,17 +3,14 @@ import type { ResearchInterest } from "./types";
 export const researchInterests: ResearchInterest[] = [
   {
     title: "Physical Intelligence",
-    description:
-      "AI systems that connect perception, reasoning, modeling, and interaction in the physical world.",
+    description: "Intelligent systems that perceive, reason, and act in the physical world.",
   },
   {
     title: "Visual Intelligence",
-    description:
-      "Methods that help AI systems understand and reason about physical laws and processes.",
+    description: "Understanding, grounding, and reasoning over visual content.",
   },
   {
     title: "Multimodal",
-    description:
-      "Evaluation of how multimodal models perceive, reason about, and respond to complex inputs.",
+    description: "Integrating text, vision, and other modalities.",
   },
 ];

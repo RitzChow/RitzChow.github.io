@@ -5,9 +5,10 @@ import RootLayout, { metadata } from "./layout";
 describe("root layout", () => {
   it("describes Ruizhe Zhou's research areas in metadata", () => {
     expect(metadata.description).toContain("Ruizhe Zhou");
-    expect(metadata.description).toMatch(/physical AI/i);
-    expect(metadata.description).toMatch(/physics reasoning/i);
-    expect(metadata.description).toMatch(/multimodal evaluation/i);
+    expect(metadata.description).toMatch(/physical intelligence/i);
+    expect(metadata.description).toMatch(/visual intelligence/i);
+    expect(metadata.description).toMatch(/multimodal/i);
+    expect(metadata.description).not.toMatch(/physics reasoning|multimodal evaluation/i);
   });
 
   it("opts the document into smooth native anchor scrolling", () => {

@@ -50,6 +50,10 @@ describe("global layout styles", () => {
     expect(panelRule).toMatch(/border:\s*1px solid/);
     expect(panelRule).toMatch(/border-radius:/);
     expect(panelRule).not.toMatch(/box-shadow/);
+    const mobilePanelRule = css.match(
+      /@media \(max-width:\s*760px\)[\s\S]*?\.identity-interests\s*{([^}]*)}/,
+    )?.[1] ?? "";
+    expect(mobilePanelRule).toMatch(/grid-column:\s*1\s*\/\s*-1/);
   });
 
   it("centers the publication filter and uses a sliding light indicator", () => {

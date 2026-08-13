@@ -70,7 +70,7 @@ export function IdentityRail({ profile, interests = researchInterests }: Identit
     <aside className="identity-rail" aria-label="Academic identity">
       <Portrait name={profile.name} src={profile.portrait} />
       <div className="identity-rail__text">
-        <p className="identity-rail__name">{profile.name}</p>
+        <h1 className="identity-rail__name">{profile.name}</h1>
         {profile.role ? <p className="identity-rail__role">{profile.role}</p> : null}
         <p className="identity-rail__institution">{profile.institution}</p>
       </div>
