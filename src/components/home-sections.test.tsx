@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { NewsItem, Profile } from "@/data/types";
 import { AboutSection } from "./about-section";
@@ -145,14 +145,20 @@ describe("home sections", () => {
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
 
-  it("makes an overflowing mobile news list keyboard-scrollable", async () => {
+  it("measures one complete news item and refreshes overflow when content resizes", async () => {
+    let resizeCallback: ResizeObserverCallback | undefined;
+    const observe = vi.fn();
+    const disconnect = vi.fn();
     vi.stubGlobal(
-      "matchMedia",
-      vi.fn().mockReturnValue({
-        matches: false,
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-      }),
+      "ResizeObserver",
+      class {
+        constructor(callback: ResizeObserverCallback) {
+          resizeCallback = callback;
+        }
+
+        observe = observe;
+        disconnect = disconnect;
+      },
     );
     const items = Array.from({ length: 2 }, (_, index) => ({
       date: `2026-04-${String(index + 1).padStart(2, "0")}`,
@@ -162,29 +168,62 @@ describe("home sections", () => {
     render(<NewsSection items={items} />);
 
     const list = screen.getByRole("list");
-    Object.defineProperties(list.parentElement, {
-      clientHeight: { configurable: true, value: 160 },
-      scrollHeight: { configurable: true, value: 320 },
-    });
-    fireEvent(window, new Event("resize"));
+    const feed = list.parentElement as HTMLDivElement;
+    const firstItem = within(list).getAllByRole("listitem")[0];
+    expect(observe).toHaveBeenCalledWith(feed);
+    expect(observe).toHaveBeenCalledWith(list);
+    expect(observe).toHaveBeenCalledWith(firstItem);
 
-    await waitFor(() =>
+    Object.defineProperties(feed, {
+      clientHeight: { configurable: true, value: 184 },
+      scrollHeight: { configurable: true, value: 368 },
+    });
+    const itemRect = vi.spyOn(firstItem, "getBoundingClientRect").mockReturnValue({
+      bottom: 184,
+      height: 184,
+      left: 0,
+      right: 600,
+      top: 0,
+      width: 600,
+      x: 0,
+      y: 0,
+      toJSON: () => ({}),
+    });
+    act(() => resizeCallback?.([], {} as ResizeObserver));
+
+    await waitFor(() => {
+      expect(feed).toHaveStyle({ blockSize: "184px" });
       expect(screen.getByRole("region", { name: "News updates" })).toHaveAttribute(
         "tabindex",
         "0",
-      ),
-    );
+      );
+    });
+
+    Object.defineProperties(feed, {
+      clientHeight: { configurable: true, value: 220 },
+      scrollHeight: { configurable: true, value: 220 },
+    });
+    itemRect.mockReturnValue({
+      bottom: 220,
+      height: 220,
+      left: 0,
+      right: 600,
+      top: 0,
+      width: 600,
+      x: 0,
+      y: 0,
+      toJSON: () => ({}),
+    });
+    act(() => resizeCallback?.([], {} as ResizeObserver));
+
+    await waitFor(() => {
+      expect(feed).toHaveStyle({ blockSize: "220px" });
+      expect(feed).not.toHaveAttribute("role");
+      expect(feed).not.toHaveAttribute("tabindex");
+    });
   });
 
-  it("does not make a non-overflowing desktop news list a focus stop", async () => {
-    vi.stubGlobal(
-      "matchMedia",
-      vi.fn().mockReturnValue({
-        matches: true,
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-      }),
-    );
+  it("does not make a non-overflowing news list a focus stop", async () => {
     render(<NewsSection items={[{ date: "2026-04-12", title: "One item" }]} />);
 
     const list = screen.getByRole("list");
@@ -201,15 +240,7 @@ describe("home sections", () => {
     expect(list.parentElement).not.toHaveAttribute("role", "region");
   });
 
-  it("makes a long desktop news list keyboard-scrollable", async () => {
-    vi.stubGlobal(
-      "matchMedia",
-      vi.fn().mockReturnValue({
-        matches: true,
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-      }),
-    );
+  it("makes a long news list keyboard-scrollable", async () => {
     const items = Array.from({ length: 2 }, (_, index) => ({
       date: `2026-04-${String(index + 1).padStart(2, "0")}`,
       title: `Update ${index + 1}`,

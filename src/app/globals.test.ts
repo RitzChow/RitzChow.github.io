@@ -93,12 +93,12 @@ describe("global layout styles", () => {
       /@media \(max-width:\s*760px\)[\s\S]*?\.news-feed\s*{([^}]*)}/,
     )?.[1] ?? "";
 
-    expect(feedRule).toMatch(/--news-item-height:/);
-    expect(feedRule).toMatch(/height:\s*var\(--news-item-height\)/);
+    expect(feedRule).toMatch(/--news-viewport-height:/);
+    expect(feedRule).toMatch(/block-size:\s*var\(--news-viewport-height\)/);
     expect(feedRule).toMatch(/overflow-y:\s*auto/);
     expect(feedRule).toMatch(/overscroll-behavior-y:\s*contain/);
     expect(feedRule).toMatch(/touch-action:\s*pan-y/);
-    expect(itemRule).toMatch(/min-height:\s*var\(--news-item-height\)/);
+    expect(itemRule).not.toMatch(/(?:min-)?height:/);
     expect(mobileFeedRule).not.toMatch(/height:\s*auto|max-height:\s*none|overflow:\s*visible/);
   });
 });

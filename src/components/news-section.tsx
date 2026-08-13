@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { news } from "@/data/news";
 import type { NewsItem } from "@/data/types";
 import { sortNews } from "@/lib/content";
@@ -12,26 +12,36 @@ type NewsSectionProps = {
 export function NewsSection({ items = news }: NewsSectionProps) {
   const sortedItems = sortNews(items);
   const feedRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLOListElement>(null);
+  const firstItemRef = useRef<HTMLLIElement>(null);
   const [isScrollable, setIsScrollable] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const feed = feedRef.current;
-    if (!feed) return;
+    const list = listRef.current;
+    const firstItem = firstItemRef.current;
+    if (!feed || !list || !firstItem) return;
 
-    const measureOverflow = () => {
+    const measureViewport = () => {
+      const firstItemHeight = firstItem.getBoundingClientRect().height;
+      if (firstItemHeight > 0) {
+        feed.style.blockSize = `${firstItemHeight}px`;
+      }
       setIsScrollable(feed.scrollHeight > feed.clientHeight);
     };
     const observer =
       typeof ResizeObserver === "function"
-        ? new ResizeObserver(measureOverflow)
+        ? new ResizeObserver(measureViewport)
         : null;
 
-    measureOverflow();
+    measureViewport();
     observer?.observe(feed);
-    window.addEventListener("resize", measureOverflow);
+    observer?.observe(list);
+    observer?.observe(firstItem);
+    window.addEventListener("resize", measureViewport);
     return () => {
       observer?.disconnect();
-      window.removeEventListener("resize", measureOverflow);
+      window.removeEventListener("resize", measureViewport);
     };
   }, [items]);
 
@@ -49,9 +59,13 @@ export function NewsSection({ items = news }: NewsSectionProps) {
         role={isScrollable ? "region" : undefined}
         tabIndex={isScrollable ? 0 : undefined}
       >
-        <ol>
-          {sortedItems.map((item) => (
-            <li className="news-item" key={`${item.date}-${item.title}`}>
+        <ol ref={listRef}>
+          {sortedItems.map((item, index) => (
+            <li
+              className="news-item"
+              key={`${item.date}-${item.title}`}
+              ref={index === 0 ? firstItemRef : undefined}
+            >
               <time dateTime={item.date}>{item.date}</time>
               <p>{item.description ?? item.title}</p>
             </li>
