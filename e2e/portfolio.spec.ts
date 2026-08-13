@@ -108,7 +108,9 @@ test("publications are newest first and expose their types", async ({ page }) =>
 
   const rows = page.locator(".publication-row");
   await expect(rows).toHaveCount(4);
-  await expect(rows.locator(".paper-figure--uniform img[src$='.svg']")).toHaveCount(4);
+  await expect(rows.locator(".paper-figure--uniform")).toHaveCount(4);
+  await expect(rows.locator(".paper-figure--uniform img[src$='.svg']")).toHaveCount(3);
+  await expect(rows.locator(".paper-figure--fallback")).toHaveCount(1);
   await expect(rows.locator("object")).toHaveCount(0);
   await expect(rows.locator(".publication-kicker")).toHaveText([
     "2026 · Preprint",
