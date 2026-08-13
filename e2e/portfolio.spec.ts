@@ -112,6 +112,16 @@ test("publications are newest first and expose their types", async ({ page }) =>
   await expect(rows.locator(".paper-figure--uniform img[src$='.svg']")).toHaveCount(3);
   await expect(rows.locator(".paper-figure--fallback")).toHaveCount(1);
   await expect(rows.locator("object")).toHaveCount(0);
+  const positionRow = page.getByRole("article").filter({
+    has: page.getByRole("heading", {
+      level: 2,
+      name: "Position: The Physics-Physical Reasoning Interplay is Key for Future Embodied World Models",
+      exact: true,
+    }),
+  });
+  const positionFallback = positionRow.locator(".paper-figure--fallback");
+  await expect(positionFallback).toHaveCount(1);
+  await expect(positionFallback.locator("img")).toHaveCount(0);
   await expect(rows.locator(".publication-kicker")).toHaveText([
     "2026 · Preprint",
     "2026 · Preprint",
