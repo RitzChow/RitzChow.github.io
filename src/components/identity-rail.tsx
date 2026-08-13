@@ -7,6 +7,7 @@ import { FiArrowUpRight, FiMail, FiMessageCircle } from "react-icons/fi";
 import { SiGooglescholar } from "react-icons/si";
 import type { IconType } from "react-icons";
 import type { Profile } from "@/data/types";
+import { normalizeContactHref } from "@/lib/content";
 import { WeChatDialog } from "./wechat-dialog";
 
 interface IdentityRailProps {
@@ -65,12 +66,13 @@ export function IdentityRail({ profile }: IdentityRailProps) {
       <nav className="identity-contacts" aria-label="Contact links">
         {definedLinks.map((contact) => {
           const Icon = contactIcons[contact.label] ?? FiArrowUpRight;
-          const external = /^https?:\/\//.test(contact.href!);
+          const href = normalizeContactHref(contact.href!);
+          const external = /^https?:\/\//.test(href);
 
           return (
             <a
               className="identity-contact"
-              href={contact.href}
+              href={href}
               key={contact.label}
               target={external ? "_blank" : undefined}
               rel={external ? "noreferrer" : undefined}

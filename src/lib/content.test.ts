@@ -1,5 +1,24 @@
 import { describe, expect, it } from "vitest";
-import { definedLinks, sortNews, sortPublications } from "./content";
+import {
+  definedLinks,
+  normalizeContactHref,
+  sortNews,
+  sortPublications,
+} from "./content";
+
+describe("normalizeContactHref", () => {
+  it("turns a raw email address into a mailto link", () => {
+    expect(normalizeContactHref("z1459306087@gmail.com")).toBe(
+      "mailto:z1459306087@gmail.com",
+    );
+  });
+
+  it("preserves an already usable contact URL", () => {
+    expect(normalizeContactHref("https://github.com/RitzChow")).toBe(
+      "https://github.com/RitzChow",
+    );
+  });
+});
 
 describe("definedLinks", () => {
   it("removes links whose href is empty", () => {

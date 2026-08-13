@@ -1,3 +1,8 @@
+export const normalizeContactHref = (href: string): string =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(href.trim())
+    ? `mailto:${href.trim()}`
+    : href;
+
 export const definedLinks = <T extends { href?: string }>(
   links: readonly T[],
 ): Array<T & { href: string }> =>

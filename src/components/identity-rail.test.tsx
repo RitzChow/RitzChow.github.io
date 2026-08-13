@@ -15,15 +15,17 @@ describe("IdentityRail", () => {
     expect(
       screen.getByRole("link", { name: /Google Scholar/i }),
     ).toBeInTheDocument();
-    for (const label of ["GitHub", "Google Scholar"]) {
+    for (const label of ["GitHub", "Google Scholar", "LinkedIn", "Email"]) {
       const link = screen.getByRole("link", { name: new RegExp(label, "i") });
       const icons = link.querySelectorAll("svg[aria-hidden='true']");
       expect(icons.length).toBeGreaterThanOrEqual(1);
       expect(within(link).getByText(label)).toBeVisible();
     }
-    expect(screen.queryByText("LinkedIn")).not.toBeInTheDocument();
-    expect(screen.queryByText("WeChat")).not.toBeInTheDocument();
-    expect(screen.queryByText("Email")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /WeChat/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Email" })).toHaveAttribute(
+      "href",
+      "mailto:z1459306087@gmail.com",
+    );
   });
 
   it("shows all configured optional contacts", () => {
@@ -56,7 +58,7 @@ describe("IdentityRail", () => {
   });
 
   it("renders accessible artwork when no portrait is configured", () => {
-    render(<IdentityRail profile={profile} />);
+    render(<IdentityRail profile={{ ...profile, portrait: "" }} />);
 
     expect(screen.getByText("Portrait not yet provided")).toBeInTheDocument();
     expect(screen.queryByRole("img")).not.toBeInTheDocument();
