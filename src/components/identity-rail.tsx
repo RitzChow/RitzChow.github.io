@@ -28,24 +28,29 @@ function Portrait({ name, src }: { name: string; src?: string }) {
 
   if (!src || failed) {
     return (
-      <div className="identity-portrait identity-portrait--fallback">
-        <span className="identity-portrait__head" aria-hidden="true" />
-        <span className="identity-portrait__shoulders" aria-hidden="true" />
-        <span className="sr-only">Portrait not yet provided</span>
+      <div className="identity-portrait-frame">
+        <div className="identity-portrait identity-portrait--fallback">
+          <span className="identity-portrait__head" aria-hidden="true" />
+          <span className="identity-portrait__shoulders" aria-hidden="true" />
+          <span className="sr-only">Portrait not yet provided</span>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="identity-portrait">
-      <Image
-        src={sitePath(src)}
-        alt={`Portrait of ${name}`}
-        fill
-        sizes="(max-width: 760px) 9rem, 16rem"
-        unoptimized
-        onError={() => setFailed(true)}
-      />
+    <div className="identity-portrait-frame">
+      <div className="identity-portrait">
+        <Image
+          className="identity-portrait__image"
+          src={sitePath(src)}
+          alt={`Portrait of ${name}`}
+          fill
+          sizes="(max-width: 760px) 9rem, 16rem"
+          unoptimized
+          onError={() => setFailed(true)}
+        />
+      </div>
     </div>
   );
 }

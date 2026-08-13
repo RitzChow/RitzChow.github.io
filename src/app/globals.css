@@ -139,12 +139,12 @@ a {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(13rem, 17rem);
   gap: clamp(3rem, 7vw, 7rem);
+  padding-top: clamp(2.5rem, 4vw, 3.5rem);
 }
 
 .home-content {
   min-width: 0;
   max-width: 53rem;
-  padding-top: clamp(2.5rem, 4vw, 3.5rem);
   padding-bottom: clamp(4rem, 9vw, 8rem);
 }
 
@@ -162,18 +162,44 @@ a {
 
 .identity-rail {
   align-self: start;
-  padding-top: clamp(4rem, 9vw, 8rem);
+}
+
+.identity-portrait-frame {
+  position: relative;
+  isolation: isolate;
+  padding: 0.3rem;
+  background: linear-gradient(145deg, rgb(243 238 228 / 92%), rgb(203 193 178 / 48%));
+}
+
+.identity-portrait-frame::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0.22rem -0.18rem -0.2rem 0.2rem;
+  border: 1px solid var(--rule);
+  content: "";
+  transform: translate(0.14rem, 0.12rem) rotate(0.25deg);
+}
+
+.identity-portrait-frame::after {
+  position: absolute;
+  top: -0.2rem;
+  right: 0.75rem;
+  width: 2.5rem;
+  height: 0.32rem;
+  background: rgb(155 73 50 / 42%);
+  content: "";
+  transform: rotate(1.5deg);
 }
 
 .identity-portrait {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border: 1px solid var(--rule);
 }
 
-.identity-portrait img {
+.identity-portrait__image {
   object-fit: cover;
 }
 
@@ -630,6 +656,7 @@ a {
   .home-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 0;
+    padding-top: 0;
   }
 
   .identity-rail {

@@ -18,10 +18,13 @@ describe("IdentityRail", () => {
 
     render(<IdentityRail profile={profile} />);
 
-    expect(screen.getByRole("img", { name: "Portrait of Ruizhe Zhou" })).toHaveAttribute(
+    const portrait = screen.getByRole("img", { name: "Portrait of Ruizhe Zhou" });
+    expect(portrait).toHaveClass("identity-portrait__image");
+    expect(portrait).toHaveAttribute(
       "src",
       expect.stringContaining("/portfolio/image/my-photo.jpg"),
     );
+    expect(portrait.closest(".identity-portrait-frame")).not.toBeNull();
 
     await user.click(screen.getByRole("button", { name: /WeChat/i }));
 
@@ -63,10 +66,30 @@ describe("IdentityRail", () => {
       expect(within(link).getByText(label)).toBeVisible();
     }
     expect(screen.getByRole("button", { name: /WeChat/i })).toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: /WeChat/i })).toHaveLength(1);
     expect(screen.getByRole("link", { name: "Email" })).toHaveAttribute(
       "href",
       "mailto:z1459306087@gmail.com",
     );
+  });
+
+  it("renders one QR-driven WeChat trigger even when its contact href is empty", () => {
+    render(
+      <IdentityRail
+        profile={{
+          ...profile,
+          wechatQr: "/profile/wechat.png",
+          contacts: [
+            ...profile.contacts.filter((contact) => contact.label !== "WeChat"),
+            { label: "WeChat", href: "" },
+            { label: "WeChat", href: "https://example.com/duplicate" },
+          ],
+        }}
+      />,
+    );
+
+    expect(screen.getAllByRole("button", { name: /WeChat/i })).toHaveLength(1);
+    expect(screen.queryByRole("link", { name: /WeChat/i })).not.toBeInTheDocument();
   });
 
   it("shows all configured optional contacts", () => {
