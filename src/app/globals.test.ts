@@ -55,6 +55,16 @@ describe("global layout styles", () => {
     expect(css).toMatch(/\.publication-filter\[data-selected="visual"\]::before/);
   });
 
+  it("keeps the publication author legend readable but visually supporting", () => {
+    const legendRule = css.match(/\.publication-author-legend\s*{([^}]*)}/)?.[1] ?? "";
+
+    expect(legendRule).toMatch(/font-size:\s*0\.88rem/);
+    expect(legendRule).toMatch(/font-weight:\s*(?:500|600)/);
+    expect(legendRule).toMatch(/color:\s*(?:var\(--ink\)|color-mix\([^;]*var\(--ink\))/);
+    expect(legendRule).toMatch(/text-align:\s*center/);
+    expect(legendRule).toMatch(/margin:\s*0\s+0\s+1\.5rem/);
+  });
+
   it("uses one white 16:9 canvas and contains publication media without cropping", () => {
     const canvasRule = css.match(/\.paper-figure--uniform\s*{([^}]*)}/)?.[1] ?? "";
     const imageRule = css.match(/\.paper-figure img\s*{([^}]*)}/)?.[1] ?? "";
