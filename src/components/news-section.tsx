@@ -9,22 +9,17 @@ type NewsSectionProps = {
   items?: readonly NewsItem[];
 };
 
-const DESKTOP_MEDIA_QUERY = "(min-width: 761px)";
-
 export function NewsSection({ items = news }: NewsSectionProps) {
   const sortedItems = sortNews(items);
   const feedRef = useRef<HTMLDivElement>(null);
   const [isScrollable, setIsScrollable] = useState(false);
 
   useEffect(() => {
-    if (typeof window.matchMedia !== "function") return;
-
     const feed = feedRef.current;
     if (!feed) return;
 
-    const media = window.matchMedia(DESKTOP_MEDIA_QUERY);
     const measureOverflow = () => {
-      setIsScrollable(media.matches && feed.scrollHeight > feed.clientHeight);
+      setIsScrollable(feed.scrollHeight > feed.clientHeight);
     };
     const observer =
       typeof ResizeObserver === "function"
@@ -34,11 +29,9 @@ export function NewsSection({ items = news }: NewsSectionProps) {
     measureOverflow();
     observer?.observe(feed);
     window.addEventListener("resize", measureOverflow);
-    media.addEventListener("change", measureOverflow);
     return () => {
       observer?.disconnect();
       window.removeEventListener("resize", measureOverflow);
-      media.removeEventListener("change", measureOverflow);
     };
   }, [items]);
 
@@ -46,8 +39,9 @@ export function NewsSection({ items = news }: NewsSectionProps) {
 
   return (
     <section aria-labelledby="news-heading" className="home-section" id="news">
-      <p className="section-label">News</p>
-      <h2 id="news-heading">Latest updates</h2>
+      <h2 className="section-label" id="news-heading">
+        News
+      </h2>
       <div
         aria-label={isScrollable ? "News updates" : undefined}
         className="news-feed"
@@ -59,12 +53,7 @@ export function NewsSection({ items = news }: NewsSectionProps) {
           {sortedItems.map((item) => (
             <li className="news-item" key={`${item.date}-${item.title}`}>
               <time dateTime={item.date}>{item.date}</time>
-              <div>
-                <h3>
-                  {item.href ? <a href={item.href}>{item.title}</a> : item.title}
-                </h3>
-                {item.description ? <p>{item.description}</p> : null}
-              </div>
+              <p>{item.description ?? item.title}</p>
             </li>
           ))}
         </ol>

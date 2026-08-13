@@ -85,4 +85,20 @@ describe("global layout styles", () => {
 
     expect(mobileRule).toMatch(/grid-template-columns:\s*1fr/);
   });
+
+  it("bounds the news feed to one item and contains vertical scrolling", () => {
+    const feedRule = css.match(/\.news-feed\s*{([^}]*)}/)?.[1] ?? "";
+    const itemRule = css.match(/\.news-item\s*{([^}]*)}/)?.[1] ?? "";
+    const mobileFeedRule = css.match(
+      /@media \(max-width:\s*760px\)[\s\S]*?\.news-feed\s*{([^}]*)}/,
+    )?.[1] ?? "";
+
+    expect(feedRule).toMatch(/--news-item-height:/);
+    expect(feedRule).toMatch(/height:\s*var\(--news-item-height\)/);
+    expect(feedRule).toMatch(/overflow-y:\s*auto/);
+    expect(feedRule).toMatch(/overscroll-behavior-y:\s*contain/);
+    expect(feedRule).toMatch(/touch-action:\s*pan-y/);
+    expect(itemRule).toMatch(/min-height:\s*var\(--news-item-height\)/);
+    expect(mobileFeedRule).not.toMatch(/height:\s*auto|max-height:\s*none|overflow:\s*visible/);
+  });
 });

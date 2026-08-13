@@ -104,12 +104,76 @@ describe("home sections", () => {
 
     render(<NewsSection items={items} />);
 
-    const titles = screen.getAllByRole("heading", { level: 3 });
-    expect(titles.map((title) => title.textContent)).toEqual([
-      "Newest",
-      "Middle",
-      "Oldest",
+    const rows = screen.getAllByRole("listitem");
+    expect(rows.map((row) => row.textContent)).toEqual([
+      "2026-04-12Newest",
+      "2025-07-08Middle",
+      "2024-01-03Oldest",
     ]);
+  });
+
+  it("uses only the small News heading and renders updates as plain body copy", () => {
+    render(
+      <NewsSection
+        items={[
+          {
+            date: "2026-04-12",
+            title: "Linked title",
+            description: "The update body.",
+            href: "https://example.com/update",
+          },
+        ]}
+      />,
+    );
+
+    const section = screen.getByRole("region", { name: "News" });
+    expect(within(section).getByRole("heading", { level: 2, name: "News" })).toHaveClass(
+      "section-label",
+    );
+    expect(within(section).queryByText("Latest updates")).not.toBeInTheDocument();
+    expect(within(section).queryByText("Linked title")).not.toBeInTheDocument();
+    expect(within(section).queryByRole("heading", { level: 3 })).not.toBeInTheDocument();
+    expect(within(section).queryByRole("link")).not.toBeInTheDocument();
+    expect(within(section).getByText("The update body.")).toBeInTheDocument();
+  });
+
+  it("uses the title as plain body copy when an update has no description", () => {
+    render(<NewsSection items={[{ date: "2026-04-12", title: "Fallback update" }]} />);
+
+    expect(screen.getByText("Fallback update")).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { level: 3 })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link")).not.toBeInTheDocument();
+  });
+
+  it("makes an overflowing mobile news list keyboard-scrollable", async () => {
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn().mockReturnValue({
+        matches: false,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      }),
+    );
+    const items = Array.from({ length: 2 }, (_, index) => ({
+      date: `2026-04-${String(index + 1).padStart(2, "0")}`,
+      title: `Update ${index + 1}`,
+    }));
+
+    render(<NewsSection items={items} />);
+
+    const list = screen.getByRole("list");
+    Object.defineProperties(list.parentElement, {
+      clientHeight: { configurable: true, value: 160 },
+      scrollHeight: { configurable: true, value: 320 },
+    });
+    fireEvent(window, new Event("resize"));
+
+    await waitFor(() =>
+      expect(screen.getByRole("region", { name: "News updates" })).toHaveAttribute(
+        "tabindex",
+        "0",
+      ),
+    );
   });
 
   it("does not make a non-overflowing desktop news list a focus stop", async () => {
