@@ -2,13 +2,18 @@ import { fireEvent, render, screen, waitFor, within } from "@testing-library/rea
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { Publication } from "@/data/types";
+import { publications } from "@/data/publications";
 import { PaperFigure } from "./paper-figure";
 import { PublicationList, sortPublicationsNewestFirst } from "./publication-list";
 
 const fixture: Publication = {
   id: "fixture-paper",
   title: "A Fixture Paper",
-  authors: ["First Author", "Ruizhe Zhou", "Last Author"],
+  authors: [
+    { name: "First Author", equalContribution: true },
+    { name: "Ruizhe Zhou", equalContribution: true },
+    { name: "Last Author", correspondingAuthor: true },
+  ],
   year: 2025,
   publicationType: "Survey",
   venue: "Test Conference",
@@ -18,8 +23,10 @@ const fixture: Publication = {
   bibtex: "@article{fixture, title={A Fixture Paper}}",
   links: {
     paper: "https://example.com/paper",
+    scholar: "https://scholar.google.com/example",
     code: "https://example.com/code",
   },
+  filterGroups: ["physical"],
 };
 
 describe("publication archive", () => {
@@ -53,6 +60,21 @@ describe("publication archive", () => {
     expect(article).toHaveTextContent(fixture.venue);
     expect(article).toHaveTextContent(fixture.tldr!);
     expect(article).toHaveTextContent(fixture.award!);
+    expect(within(article!).getAllByLabelText("Equal contribution")).toHaveLength(2);
+    expect(within(article!).getByLabelText("Corresponding author")).toHaveTextContent("†");
+    expect(article).toHaveTextContent("* Equal contribution · † Corresponding author");
+  });
+
+  it("omits contribution marks and legend when none are confirmed", () => {
+    const unmarked = {
+      ...fixture,
+      authors: fixture.authors.map(({ name }) => ({ name })),
+    };
+
+    const { container } = render(<PublicationList publications={[unmarked]} />);
+
+    expect(container.querySelector(".publication-author-mark")).not.toBeInTheDocument();
+    expect(screen.queryByText("* Equal contribution · † Corresponding author")).not.toBeInTheDocument();
   });
 
   it("only renders configured links and omits empty BibTeX actions", () => {
@@ -60,8 +82,10 @@ describe("publication archive", () => {
 
     const paper = screen.getByRole("link", { name: "Paper (opens in a new tab)" });
     const code = screen.getByRole("link", { name: "Code (opens in a new tab)" });
+    const scholar = screen.getByRole("link", { name: "Scholar (opens in a new tab)" });
     expect(paper).toHaveAttribute("target", "_blank");
     expect(code).toHaveAttribute("rel", "noreferrer");
+    expect(scholar).toHaveAttribute("href", fixture.links.scholar);
     expect(paper).toHaveTextContent(/^Paper ↗$/);
     expect(code).toHaveTextContent(/^Code ↗$/);
     expect(screen.queryByRole("link", { name: "Project" })).not.toBeInTheDocument();
@@ -102,6 +126,76 @@ describe("publication archive", () => {
         "Could not copy BibTeX. Please select and copy it manually.",
       ),
     );
+  });
+});
+
+describe("publication data", () => {
+  it("contains exactly the four current papers and excludes LLM-Detector", () => {
+    expect(publications).toHaveLength(4);
+    expect(publications.map(({ title }) => title)).toEqual([
+      "Aligning Perception, Reasoning, Modeling and Interaction: A Survey on Physical AI",
+      "When Prompts Become Pixels: Prompt-Region Grounding for Multimodal Reasoning",
+      "Models Under SCOPE: Scalable and Controllable Routing via Pre-hoc Reasoning",
+      "Position: The Physics-Physical Reasoning Interplay is Key for Future Embodied World Models",
+    ]);
+    expect(publications.some(({ title }) => title.includes("LLM-Detector"))).toBe(false);
+  });
+
+  it("stores confirmed metadata, media, grouping, and author roles", () => {
+    const [survey, visual, scope, position] = publications;
+
+    expect(survey).toMatchObject({
+      year: 2025,
+      pdfMedia: "/image/physical-ai-survey.pdf",
+      filterGroups: ["physical"],
+    });
+    expect(survey.authors.slice(0, 3)).toEqual([
+      { name: "Kun Xiang", equalContribution: true },
+      { name: "Terry Jingchen Zhang", equalContribution: true },
+      { name: "Yinya Huang", equalContribution: true },
+    ]);
+    expect(survey.authors.at(-1)).toEqual({
+      name: "Xiaodan Liang",
+      correspondingAuthor: true,
+    });
+
+    expect(visual).toMatchObject({
+      year: 2026,
+      publicationType: "Preprint",
+      venue: "arXiv",
+      pdfMedia: "/image/when-prompts-become-pixels.pdf",
+      filterGroups: ["visual"],
+    });
+    expect(visual.authors.map(({ name }) => name)).toEqual([
+      "Yongxin Wang", "Ruizhe Zhou", "Yueling Tang", "Yingying Zhu",
+      "Xuemin Zhao", "Xiaojun Chang", "Xiaodan Liang",
+    ]);
+    expect(visual.authors.some(({ equalContribution, correspondingAuthor }) =>
+      equalContribution || correspondingAuthor)).toBe(false);
+
+    expect(scope).toMatchObject({
+      year: 2026,
+      publicationType: "Preprint",
+      venue: "arXiv",
+      pdfMedia: "/image/models-under-scope.pdf",
+      filterGroups: [],
+    });
+    expect(scope.authors.map(({ name }) => name)).toEqual([
+      "Qi Cao", "Shuhao Zhang", "Ruizhe Zhou", "Ruiyi Zhang", "Peijia Qin",
+      "Pengtao Xie",
+    ]);
+
+    expect(position).toMatchObject({
+      year: 2025,
+      venue: "NeurIPS LAW Workshop",
+      filterGroups: ["physical"],
+    });
+    expect(position).not.toHaveProperty("pdfMedia");
+    expect(position.authors.slice(0, 3).every(({ equalContribution }) => equalContribution)).toBe(true);
+    expect(position.authors.at(-1)).toEqual({
+      name: "Xiaodan Liang",
+      correspondingAuthor: true,
+    });
   });
 });
 

@@ -38,6 +38,7 @@ export interface NewsItem {
 
 export interface PublicationLinks {
   paper?: string;
+  scholar?: string;
   code?: string;
   project?: string;
   openreview?: string;
@@ -46,10 +47,18 @@ export interface PublicationLinks {
   slides?: string;
 }
 
+export interface PublicationAuthor {
+  name: string;
+  equalContribution?: boolean;
+  correspondingAuthor?: boolean;
+}
+
+export type PublicationFilterGroup = "physical" | "visual";
+
 export interface Publication {
   id: string;
   title: string;
-  authors: string[];
+  authors: PublicationAuthor[];
   year: number;
   publicationType: string;
   venue: string;
@@ -60,5 +69,7 @@ export interface Publication {
   tldr?: string;
   award?: string;
   bibtex?: string;
+  pdfMedia?: string;
+  filterGroups: PublicationFilterGroup[];
   links: PublicationLinks;
 }

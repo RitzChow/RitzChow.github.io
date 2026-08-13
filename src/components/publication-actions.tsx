@@ -10,6 +10,7 @@ interface PublicationActionsProps {
 
 const configuredLinks: Array<[keyof PublicationLinks, string]> = [
   ["paper", "Paper"],
+  ["scholar", "Scholar"],
   ["code", "Code"],
   ["project", "Project"],
 ];
