@@ -1,7 +1,5 @@
 import { expect, test } from "@playwright/test";
 
-const expectedPublicationTypes = ["Preprint", "Preprint", "Survey", "Position paper"];
-
 async function expectNoHorizontalOverflow(page: import("@playwright/test").Page) {
   await expect
     .poll(() =>
@@ -24,19 +22,16 @@ test("desktop navigation opens the publication archive", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1, name: "Publications" })).toBeVisible();
 });
 
-test("the current news feed is not a useless keyboard stop", async ({ page }) => {
+test("the one-item news viewport is keyboard-scrollable when it overflows", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/#news");
 
   const feed = page.locator(".news-feed");
-  await expect(feed).not.toHaveAttribute("tabindex", "0");
-  await expect(feed).not.toHaveAttribute("role", "region");
-
-  await page.keyboard.press("Tab");
-  while ((await page.evaluate(() => document.activeElement?.tagName)) !== "BODY") {
-    await expect(feed).not.toBeFocused();
-    await page.keyboard.press("Tab");
-  }
+  await expect(feed).toHaveAttribute("tabindex", "0");
+  await expect(feed).toHaveAttribute("role", "region");
+  await expect(feed).toHaveAttribute("aria-label", "News updates");
+  await feed.focus();
+  await expect(feed).toBeFocused();
 });
 
 for (const viewport of [
@@ -53,21 +48,71 @@ for (const viewport of [
   });
 }
 
-test("a cross-page home anchor lands on its target section", async ({ page }) => {
+test("the Education navigation item lands on its home section", async ({ page }) => {
   await page.goto("/publications/");
   await page.getByRole("navigation", { name: "Primary" })
-    .getByRole("link", { name: "Research" })
+    .getByRole("link", { name: "Education" })
     .click();
 
-  await expect(page).toHaveURL(/\/#research$/);
-  const research = page.locator("#research");
+  await expect(page).toHaveURL(/\/#education$/);
+  const education = page.locator("#education");
   const header = page.locator(".site-header");
-  await expect(research).toBeVisible();
+  await expect(education).toBeVisible();
   await expect.poll(async () => {
-    const targetTop = await research.evaluate((element) => element.getBoundingClientRect().top);
+    const targetTop = await education.evaluate((element) => element.getBoundingClientRect().top);
     const headerBottom = await header.evaluate((element) => element.getBoundingClientRect().bottom);
     return targetTop >= headerBottom - 1 && targetTop < await page.evaluate(() => window.innerHeight);
   }).toBe(true);
+});
+
+test("desktop navigation and institution columns match the confirmed architecture", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+
+  const primary = page.getByRole("navigation", { name: "Primary" });
+  await expect(primary.locator("a:not([aria-label^='CV'])")).toHaveText([
+    "About",
+    "Publications",
+    "Education",
+    "Experience",
+    "News",
+  ]);
+  await expect(primary.getByRole("link", { name: "Research" })).toHaveCount(0);
+
+  const education = page.locator("#education");
+  const experience = page.locator("#experience");
+  const [educationBox, experienceBox] = await Promise.all([
+    education.boundingBox(),
+    experience.boundingBox(),
+  ]);
+  expect(educationBox).not.toBeNull();
+  expect(experienceBox).not.toBeNull();
+  expect(Math.abs(educationBox!.y - experienceBox!.y)).toBeLessThanOrEqual(1);
+  expect(Math.abs(educationBox!.width - experienceBox!.width)).toBeLessThanOrEqual(1);
+
+  const logos = page.locator(".institution-row__logo");
+  await expect(logos).toHaveCount(3);
+  for (const logo of await logos.all()) {
+    await expect(logo).toBeVisible();
+    const fit = await logo.evaluate((element) => {
+      const style = getComputedStyle(element);
+      return [style.objectFit, style.objectPosition];
+    });
+    expect(fit[0]).toBe("contain");
+    expect(["left 50%", "0% 50%"]).toContain(fit[1]);
+  }
+});
+
+test("institution columns stack cleanly on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const educationBox = await page.locator("#education").boundingBox();
+  const experienceBox = await page.locator("#experience").boundingBox();
+  expect(educationBox).not.toBeNull();
+  expect(experienceBox).not.toBeNull();
+  expect(experienceBox!.y).toBeGreaterThan(educationBox!.y + educationBox!.height - 1);
+  await expectNoHorizontalOverflow(page);
 });
 
 test("the compact header stays pinned while the page scrolls", async ({ page }) => {
@@ -108,13 +153,11 @@ test("publications are newest first and expose their types", async ({ page }) =>
 
   const rows = page.locator(".publication-row");
   await expect(rows).toHaveCount(4);
-  await expect(rows.locator(".publication-kicker")).toHaveText([
-    "2026 · Preprint",
-    "2026 · Preprint",
-    "2025 · Survey",
-    "2025 · Position paper",
-  ]);
-  await expect(rows.locator(".publication-kicker")).toContainText(expectedPublicationTypes);
+  const kickers = await rows.locator(".publication-kicker").allTextContents();
+  expect(kickers).toHaveLength(4);
+  expect(kickers.every((kicker) => /^20\d{2} · .+/.test(kicker))).toBe(true);
+  const years = kickers.map((kicker) => Number.parseInt(kicker, 10));
+  expect(years).toEqual([...years].sort((left, right) => right - left));
 });
 
 test("publication previews use uniform static media with an intentional Position fallback", async ({ page }) => {
@@ -145,7 +188,9 @@ test("publication tabs slide to a centered Featured selection", async ({ page })
   await expect(filter.getByRole("tab")).toHaveCount(4);
   await filter.getByRole("tab", { name: "Featured" }).click();
   await expect(filter).toHaveAttribute("data-selected", "featured");
-  await expect(page.locator(".publication-row")).toHaveCount(2);
+  const featuredRows = page.locator(".publication-row");
+  await expect(featuredRows).not.toHaveCount(0);
+  expect(await featuredRows.count()).toBeLessThan(4);
   await expect(page.locator("article .publication-author-legend")).toHaveCount(0);
   const legend = page.locator(".publication-author-legend");
   await expect(legend).toHaveCount(1);

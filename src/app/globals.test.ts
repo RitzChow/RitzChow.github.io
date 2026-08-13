@@ -60,6 +60,30 @@ describe("global layout styles", () => {
     expect(mobilePanelRule).toMatch(/grid-column:\s*1\s*\/\s*-1/);
   });
 
+  it("uses equal education and experience columns that stack on mobile", () => {
+    const gridRule = css.match(/\.education-experience-grid\s*{([^}]*)}/)?.[1] ?? "";
+    const mobileGridRule = css.match(
+      /@media \(max-width:\s*760px\)[\s\S]*?\.education-experience-grid\s*{([^}]*)}/,
+    )?.[1] ?? "";
+
+    expect(gridRule).toMatch(/display:\s*grid/);
+    expect(gridRule).toMatch(/grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/);
+    expect(mobileGridRule).toMatch(/grid-template-columns:\s*minmax\(0,\s*1fr\)|grid-template-columns:\s*1fr/);
+  });
+
+  it("keeps institution rows editorial and logos fully contained", () => {
+    const rowRule = css.match(/\.institution-row\s*{([^}]*)}/)?.[1] ?? "";
+    const markerRule = css.match(/\.institution-row::before\s*{([^}]*)}/)?.[1] ?? "";
+    const logoRule = css.match(/\.institution-row__logo\s*{([^}]*)}/)?.[1] ?? "";
+
+    expect(rowRule).toMatch(/border-top:\s*1px solid/);
+    expect(rowRule).not.toMatch(/box-shadow/);
+    expect(markerRule).toMatch(/background(?:-color)?:\s*var\(--clay\)/);
+    expect(logoRule).toMatch(/object-fit:\s*contain/);
+    expect(logoRule).toMatch(/object-position:\s*left center/);
+    expect(logoRule).not.toMatch(/object-fit:\s*cover/);
+  });
+
   it("centers the publication filter and uses a sliding light indicator", () => {
     const filterRule = css.match(/\.publication-filter\s*{([^}]*)}/)?.[1] ?? "";
     const indicatorRule = css.match(/\.publication-filter::before\s*{([^}]*)}/)?.[1] ?? "";

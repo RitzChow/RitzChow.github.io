@@ -602,6 +602,109 @@ a {
   line-height: 1.05;
 }
 
+.education-experience-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2rem, 4vw, 4rem);
+}
+
+.education-experience-grid .home-section {
+  min-width: 0;
+}
+
+.education-experience-grid .section-label {
+  margin-bottom: 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.institution-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.institution-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem 1.25rem;
+  padding: 1.4rem 0 1.5rem 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+
+.institution-row:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.institution-row::before {
+  position: absolute;
+  top: 1.7rem;
+  left: 0;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: var(--clay);
+  content: "";
+}
+
+.institution-row__logo {
+  display: block;
+  grid-column: 1 / -1;
+  width: min(100%, 18rem);
+  height: 3.5rem;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.institution-row__content {
+  min-width: 0;
+}
+
+.institution-row__content h3 {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.institution-row__role,
+.institution-row__date,
+.institution-row__content > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.institution-row__date {
+  white-space: nowrap;
+}
+
+.institution-row__details {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.25rem 0.7rem;
+  margin: 0.8rem 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.institution-row__details dt {
+  color: var(--clay);
+  font-weight: 700;
+}
+
+.institution-row__details dd {
+  margin: 0;
+}
+
 .about__bio {
   max-width: 43rem;
   color: var(--muted);
@@ -766,6 +869,11 @@ a {
 
   .home-section {
     scroll-margin-top: 5.25rem;
+  }
+
+  .education-experience-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
   }
 
   .home-grid {

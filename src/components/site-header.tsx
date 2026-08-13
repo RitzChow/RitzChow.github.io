@@ -10,8 +10,8 @@ type SiteHeaderProps = {
 
 const links = [
   { label: "About", href: "/#about" },
-  { label: "Research", href: "/#research" },
   { label: "Publications", href: "/publications/" },
+  { label: "Education", href: "/#education" },
   { label: "Experience", href: "/#experience" },
   { label: "News", href: "/#news" },
 ] as const;

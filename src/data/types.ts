@@ -6,7 +6,7 @@ export interface ContactLink {
 export interface Profile {
   name: string;
   role?: string;
-  institution: string;
+  institution?: string;
   bio: string;
   portrait?: string;
   cv?: string;

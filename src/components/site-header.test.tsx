@@ -8,9 +8,15 @@ describe("SiteHeader", () => {
   it("renders the primary navigation labels and hides an empty CV link", () => {
     render(<SiteHeader cv="" />);
 
-    for (const label of ["About", "Research", "Publications", "Experience", "News"]) {
-      expect(screen.getAllByRole("link", { name: label }).length).toBeGreaterThan(0);
-    }
+    const navigation = screen.getByRole("navigation", { name: "Primary" });
+    expect(Array.from(navigation.querySelectorAll("a"), (link) => [link.textContent, link.getAttribute("href")])).toEqual([
+      ["About", "/#about"],
+      ["Publications", "/publications"],
+      ["Education", "/#education"],
+      ["Experience", "/#experience"],
+      ["News", "/#news"],
+    ]);
+    expect(screen.queryByRole("link", { name: "Research" })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "CV" })).not.toBeInTheDocument();
   });
 

@@ -13,7 +13,6 @@ export default function PublicationsPage() {
       <header className="publications-intro">
         <p className="section-eyebrow">Research archive</p>
         <h1>Publications</h1>
-        <p>Selected work on intelligence grounded in physical systems and reliable language technologies.</p>
       </header>
       <PublicationArchive publications={publications} />
     </main>
