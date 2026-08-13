@@ -1,8 +1,8 @@
 import { AboutSection } from "@/components/about-section";
+import { EducationSection } from "@/components/education-section";
 import { ExperienceSection } from "@/components/experience-section";
 import { IdentityRail } from "@/components/identity-rail";
 import { NewsSection } from "@/components/news-section";
-import { ResearchSection } from "@/components/research-section";
 import { profile } from "@/data/profile";
 
 export default function Page() {
@@ -12,8 +12,10 @@ export default function Page() {
         <div className="home-content">
           <AboutSection />
           <NewsSection />
-          <ResearchSection />
-          <ExperienceSection />
+          <div className="education-experience-grid">
+            <EducationSection />
+            <ExperienceSection />
+          </div>
         </div>
         <IdentityRail profile={profile} />
       </div>

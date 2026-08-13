@@ -19,15 +19,20 @@ export interface ResearchInterest {
   description: string;
 }
 
-export interface Experience {
+export interface InstitutionEntry {
   role: string;
   institution: string;
+  logo: string;
+  logoAlt: string;
   displayDate?: string;
   lab?: string;
   advisor?: string;
   project?: string;
   description?: string;
 }
+
+export type Education = InstitutionEntry;
+export type Experience = InstitutionEntry;
 
 export interface NewsItem {
   date: string;

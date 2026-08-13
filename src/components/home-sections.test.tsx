@@ -2,6 +2,7 @@ import { act, fireEvent, render, screen, waitFor, within } from "@testing-librar
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { NewsItem, Profile } from "@/data/types";
 import { AboutSection } from "./about-section";
+import { EducationSection } from "./education-section";
 import { ExperienceSection } from "./experience-section";
 import { NewsSection } from "./news-section";
 import { ResearchSection } from "./research-section";
@@ -16,12 +17,13 @@ describe("home sections", () => {
       <>
         <AboutSection />
         <ResearchSection />
+        <EducationSection />
         <ExperienceSection />
         <NewsSection />
       </>,
     );
 
-    for (const id of ["about", "research", "experience", "news"]) {
+    for (const id of ["about", "research", "education", "experience", "news"]) {
       expect(container.querySelector(`section#${id}`)).toBeInTheDocument();
     }
   });
@@ -55,13 +57,38 @@ describe("home sections", () => {
     expect(section).not.toHaveTextContent("physical AI");
   });
 
-  it("renders only the confirmed experience", () => {
+  it("renders the confirmed education with its logo and exact date", () => {
+    render(<EducationSection />);
+
+    const section = screen.getByRole("region", { name: "Education" });
+    expect(within(section).getAllByRole("listitem")).toHaveLength(1);
+    expect(section).toHaveTextContent("Undergraduate");
+    expect(section).toHaveTextContent("Sun Yat-sen University");
+    expect(section).toHaveTextContent("2023.09–2027.06");
+    expect(within(section).getByRole("img", { name: "Sun Yat-sen University logo" })).toHaveAttribute(
+      "src",
+      "/image/sysu-logo.gif",
+    );
+  });
+
+  it("renders the two confirmed research assistant experiences in order", () => {
     render(<ExperienceSection />);
 
-    const section = screen.getByRole("region", { name: "Academic experience" });
-    expect(within(section).getAllByRole("listitem")).toHaveLength(1);
-    expect(section).toHaveTextContent("Undergraduate Researcher");
-    expect(section).toHaveTextContent("Sun Yat-sen University");
+    const section = screen.getByRole("region", { name: "Experience" });
+    const rows = within(section).getAllByRole("listitem");
+    expect(rows).toHaveLength(2);
+    expect(rows.map((row) => row.textContent)).toEqual([
+      expect.stringContaining("UNC Chapel HillResearch Assistant—"),
+      expect.stringContaining("UC San DiegoResearch Assistant—"),
+    ]);
+    expect(within(rows[0]).getByRole("img", { name: "UNC Chapel Hill logo" })).toHaveAttribute(
+      "src",
+      "/image/unc-logo.svg",
+    );
+    expect(within(rows[1]).getByRole("img", { name: "UC San Diego logo" })).toHaveAttribute(
+      "src",
+      "/image/uc-san-diego-logo.svg",
+    );
   });
 
   it("labels configured lab, advisor, and project experience details", () => {
@@ -70,6 +97,8 @@ describe("home sections", () => {
         items={[{
           role: "Research Assistant",
           institution: "Test University",
+          logo: "/image/test.svg",
+          logoAlt: "Test University logo",
           lab: "Embodied Intelligence Lab",
           advisor: "Prof. Ada Example",
           project: "World Model Evaluation",
@@ -77,7 +106,7 @@ describe("home sections", () => {
       />,
     );
 
-    const section = screen.getByRole("region", { name: "Academic experience" });
+    const section = screen.getByRole("region", { name: "Experience" });
     expect(within(section).getByText("Lab")).toBeInTheDocument();
     expect(within(section).getByText("Embodied Intelligence Lab")).toBeInTheDocument();
     expect(within(section).getByText("Advisor")).toBeInTheDocument();
@@ -87,12 +116,18 @@ describe("home sections", () => {
   });
 
   it("omits labels for unconfigured experience details", () => {
-    render(<ExperienceSection items={[{ role: "Researcher", institution: "Test University" }]} />);
+    render(<ExperienceSection items={[{
+      role: "Researcher",
+      institution: "Test University",
+      logo: "/image/test.svg",
+      logoAlt: "Test University logo",
+    }]} />);
 
-    const section = screen.getByRole("region", { name: "Academic experience" });
+    const section = screen.getByRole("region", { name: "Experience" });
     expect(within(section).queryByText("Lab")).not.toBeInTheDocument();
     expect(within(section).queryByText("Advisor")).not.toBeInTheDocument();
     expect(within(section).queryByText("Project")).not.toBeInTheDocument();
+    expect(within(section).queryByRole("definition")).not.toBeInTheDocument();
   });
 
   it("sorts news newest first", () => {
