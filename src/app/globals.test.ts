@@ -43,4 +43,20 @@ describe("global layout styles", () => {
     expect(railRule).not.toMatch(/padding-top:/);
     expect(mobileRule).toMatch(/padding-top:\s*0/);
   });
+
+  it("keeps vector publication previews bounded without cropping", () => {
+    const pdfRule = css.match(/\.paper-figure--pdf object\s*{([^}]*)}/)?.[1] ?? "";
+
+    expect(pdfRule).toMatch(/width:\s*100%/);
+    expect(pdfRule).toMatch(/height:\s*100%/);
+    expect(pdfRule).not.toMatch(/object-fit:\s*cover/);
+  });
+
+  it("stacks publication media above details on mobile", () => {
+    const mobileRule = css.match(
+      /@media \(max-width:\s*700px\)[\s\S]*?\.publication-row\s*{([^}]*)}/,
+    )?.[1] ?? "";
+
+    expect(mobileRule).toMatch(/grid-template-columns:\s*1fr/);
+  });
 });

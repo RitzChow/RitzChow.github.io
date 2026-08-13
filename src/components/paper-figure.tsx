@@ -8,6 +8,8 @@ interface PaperFigureProps {
   category: string;
   image?: string;
   imageAlt?: string;
+  pdfMedia?: string;
+  mediaAspectRatio?: number;
 }
 
 function fallbackCategory(category: string) {
@@ -15,8 +17,40 @@ function fallbackCategory(category: string) {
   return "text-detection";
 }
 
-export function PaperFigure({ title, category, image, imageAlt }: PaperFigureProps) {
+export function PaperFigure({
+  title,
+  category,
+  image,
+  imageAlt,
+  pdfMedia,
+  mediaAspectRatio,
+}: PaperFigureProps) {
   const [imageFailed, setImageFailed] = useState(false);
+
+  if (pdfMedia) {
+    const pdfPath = sitePath(pdfMedia);
+    return (
+      <figure
+        className="paper-figure paper-figure--pdf"
+        style={{ aspectRatio: mediaAspectRatio }}
+      >
+        <object
+          data={pdfPath}
+          type="application/pdf"
+          aria-label={`Vector preview of ${title}`}
+        >
+          <a
+            href={pdfPath}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open vector PDF (opens in a new tab)"
+          >
+            Open vector PDF ↗
+          </a>
+        </object>
+      </figure>
+    );
+  }
 
   if (image && !imageFailed) {
     return (

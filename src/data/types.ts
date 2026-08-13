@@ -70,6 +70,7 @@ export interface Publication {
   award?: string;
   bibtex?: string;
   pdfMedia?: string;
+  mediaAspectRatio?: number;
   filterGroups?: PublicationFilterGroup[];
   links: PublicationLinks;
 }

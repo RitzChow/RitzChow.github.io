@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PublicationList } from "@/components/publication-list";
+import { PublicationArchive } from "@/components/publication-filter";
 import { publications } from "@/data/publications";
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export default function PublicationsPage() {
         <h1>Publications</h1>
         <p>Selected work on intelligence grounded in physical systems and reliable language technologies.</p>
       </header>
-      <PublicationList publications={publications} />
+      <PublicationArchive publications={publications} />
     </main>
   );
 }

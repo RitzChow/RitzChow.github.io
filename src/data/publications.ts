@@ -23,6 +23,7 @@ export const publications: Publication[] = [
     category: "physical-ai",
     arxivId: "2510.04978",
     pdfMedia: "/image/physical-ai-survey.pdf",
+    mediaAspectRatio: 955.55 / 486.556,
     filterGroups: ["physical"],
     tldr: "A survey of Physical AI that unifies perception, reasoning, world modeling, and interaction into a framework for intelligent systems acting in the physical world.",
     links: {
@@ -45,6 +46,7 @@ export const publications: Publication[] = [
     category: "visual-reasoning",
     arxivId: "2608.04726",
     pdfMedia: "/image/when-prompts-become-pixels.pdf",
+    mediaAspectRatio: 1535.76 / 634.32,
     filterGroups: ["visual"],
     tldr: "A prompt-region grounding method that connects textual prompts to image regions, enabling multimodal models to reason with spatially grounded visual evidence.",
     links: {
@@ -65,6 +67,7 @@ export const publications: Publication[] = [
     category: "model-routing",
     arxivId: "2601.22323",
     pdfMedia: "/image/models-under-scope.pdf",
+    mediaAspectRatio: 1016 / 261,
     tldr: "A scalable, controllable model-routing framework that uses pre-hoc reasoning to select an appropriate model before generating a response.",
     links: {
       paper: "https://arxiv.org/abs/2601.22323",

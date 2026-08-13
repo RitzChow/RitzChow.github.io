@@ -242,6 +242,40 @@ a {
   font-size: clamp(1.05rem, 2vw, 1.35rem);
 }
 
+.publication-filter {
+  display: inline-flex;
+  gap: 0.2rem;
+  margin-bottom: 1.5rem;
+  padding: 0.2rem;
+  border: 1px solid var(--rule);
+  background: rgb(203 193 178 / 18%);
+}
+
+.publication-filter button {
+  min-width: 5.25rem;
+  padding: 0.55rem 0.9rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.publication-filter button[aria-selected="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.publication-filter button:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 2px;
+}
+
 .publication-list {
   border-top: 1px solid var(--ink);
 }
@@ -265,6 +299,9 @@ a {
 }
 
 .paper-figure img { width: 100%; height: 100%; object-fit: cover; }
+.paper-figure--pdf { background: var(--paper); }
+.paper-figure--pdf object { display: block; width: 100%; height: 100%; border: 0; }
+.paper-figure--pdf a { color: var(--ink); font-size: 0.78rem; font-weight: 700; }
 .paper-figure--fallback { background: linear-gradient(145deg, #e9e1d4, #d9cebe); }
 .paper-figure--physical-ai { background: linear-gradient(145deg, #e8dfd0, #cfc7b7); }
 .paper-figure--world-models { background: linear-gradient(145deg, #e4ddd1, #c6d0ca); }
