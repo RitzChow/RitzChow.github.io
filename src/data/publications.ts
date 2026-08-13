@@ -65,7 +65,6 @@ export const publications: Publication[] = [
     category: "model-routing",
     arxivId: "2601.22323",
     pdfMedia: "/image/models-under-scope.pdf",
-    filterGroups: [],
     tldr: "A scalable, controllable model-routing framework that uses pre-hoc reasoning to select an appropriate model before generating a response.",
     links: {
       paper: "https://arxiv.org/abs/2601.22323",

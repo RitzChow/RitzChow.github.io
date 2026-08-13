@@ -178,8 +178,8 @@ describe("publication data", () => {
       publicationType: "Preprint",
       venue: "arXiv",
       pdfMedia: "/image/models-under-scope.pdf",
-      filterGroups: [],
     });
+    expect(scope).not.toHaveProperty("filterGroups");
     expect(scope.authors.map(({ name }) => name)).toEqual([
       "Qi Cao", "Shuhao Zhang", "Ruizhe Zhou", "Ruiyi Zhang", "Peijia Qin",
       "Pengtao Xie",
