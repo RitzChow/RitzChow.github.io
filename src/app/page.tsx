@@ -9,6 +9,7 @@ export default function Page() {
   return (
     <main className="home-shell">
       <div className="home-grid">
+        <IdentityRail profile={profile} />
         <div className="home-content">
           <AboutSection />
           <NewsSection />
@@ -17,7 +18,6 @@ export default function Page() {
             <ExperienceSection />
           </div>
         </div>
-        <IdentityRail profile={profile} />
       </div>
     </main>
   );

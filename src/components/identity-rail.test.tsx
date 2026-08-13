@@ -89,9 +89,10 @@ describe("IdentityRail", () => {
 
     const panel = screen.getByRole("region", { name: "Research Interests" });
     expect(panel).toHaveClass("identity-interests");
-    expect(
-      within(panel).getByRole("heading", { level: 2, name: "Research Interests" }),
-    ).toBeInTheDocument();
+    expect(within(panel).getByText("Research Interests")).toHaveAttribute(
+      "id",
+      "identity-interests-heading",
+    );
     expect(within(panel).getAllByRole("listitem").map((item) => item.textContent)).toEqual([
       "Physical Intelligence",
       "Visual Intelligence",

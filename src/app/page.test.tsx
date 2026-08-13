@@ -9,6 +9,10 @@ describe("home page", () => {
     expect(screen.getByRole("heading", { level: 2, name: "About" })).toBeInTheDocument();
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     expect(screen.getByRole("heading", { level: 1, name: "Ruizhe Zhou" })).toBeInTheDocument();
+    expect(screen.getAllByRole("heading").slice(0, 2).map((heading) => heading.textContent)).toEqual([
+      "Ruizhe Zhou",
+      "About",
+    ]);
     expect(
       screen.queryByText("Understanding intelligence through the physical world."),
     ).not.toBeInTheDocument();
@@ -18,7 +22,7 @@ describe("home page", () => {
     const { container } = render(<Page />);
 
     expect(container.querySelector(".home-content #research")).not.toBeInTheDocument();
-    expect(screen.getAllByRole("heading", { name: "Research Interests" })).toHaveLength(1);
+    expect(screen.getByRole("region", { name: "Research Interests" })).toBeInTheDocument();
   });
 
   it("orders the home narrative from about and news to education and experience", () => {
@@ -33,5 +37,13 @@ describe("home page", () => {
     expect(container.querySelector(".education-experience-grid")).toContainElement(
       container.querySelector("#experience"),
     );
+  });
+
+  it("places the identity rail before the main narrative in document order", () => {
+    const { container } = render(<Page />);
+    const gridChildren = Array.from(container.querySelector(".home-grid")!.children);
+
+    expect(gridChildren[0]).toHaveClass("identity-rail");
+    expect(gridChildren[1]).toHaveClass("home-content");
   });
 });

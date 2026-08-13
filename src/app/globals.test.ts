@@ -41,6 +41,10 @@ describe("global layout styles", () => {
     expect(gridRule).toMatch(/padding-top:\s*clamp\(/);
     expect(contentRule).not.toMatch(/padding-top:/);
     expect(railRule).not.toMatch(/padding-top:/);
+    expect(contentRule).toMatch(/grid-column:\s*1/);
+    expect(contentRule).toMatch(/grid-row:\s*1/);
+    expect(railRule).toMatch(/grid-column:\s*2/);
+    expect(railRule).toMatch(/grid-row:\s*1/);
     expect(mobileRule).toMatch(/padding-top:\s*0/);
   });
 

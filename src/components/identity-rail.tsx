@@ -99,7 +99,7 @@ export function IdentityRail({ profile, interests = researchInterests }: Identit
       </nav>
       {interests.length > 0 ? (
         <section className="identity-interests" aria-labelledby="identity-interests-heading">
-          <h2 id="identity-interests-heading">Research Interests</h2>
+          <p id="identity-interests-heading">Research Interests</p>
           <ul>
             {interests.map((interest) => (
               <li key={interest.title}>{interest.title}</li>
