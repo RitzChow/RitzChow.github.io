@@ -207,15 +207,16 @@ describe("PaperFigure", () => {
         title="A Fixture Paper"
         category="physical-ai"
         pdfMedia="/image/fixture.pdf"
-        mediaAspectRatio={16 / 9}
       />,
     );
 
+    const figure = container.querySelector("figure");
     const object = container.querySelector("object");
+    expect(figure).toHaveClass("paper-figure--uniform");
+    expect(figure).not.toHaveAttribute("style");
     expect(object).toHaveAttribute("type", "application/pdf");
     expect(object).toHaveAttribute("data", "/portfolio/image/fixture.pdf");
     expect(object).toHaveAccessibleName("Vector preview of A Fixture Paper");
-    expect(container.querySelector("figure")).toHaveStyle({ aspectRatio: `${16 / 9}` });
     const fallback = screen.getByRole("link", { name: "Open vector PDF (opens in a new tab)" });
     expect(fallback).toHaveAttribute("href", "/portfolio/image/fixture.pdf");
     expect(fallback).toHaveAttribute("target", "_blank");
@@ -228,7 +229,8 @@ describe("PaperFigure", () => {
     );
 
     expect(container.querySelector("object")).not.toBeInTheDocument();
-    expect(container.querySelector('[data-figure-category="world-models"]')).toBeInTheDocument();
+    expect(container.querySelector('[data-figure-category="world-models"]'))
+      .toHaveClass("paper-figure--uniform");
   });
 
   it("gives the physical-AI fallback a distinct embodied-system motif", () => {

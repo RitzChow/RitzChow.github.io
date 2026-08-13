@@ -55,12 +55,15 @@ describe("global layout styles", () => {
     expect(css).toMatch(/\.publication-filter\[data-selected="visual"\]::before/);
   });
 
-  it("keeps vector publication previews bounded without cropping", () => {
+  it("uses one white 16:9 canvas and contains publication media without cropping", () => {
+    const canvasRule = css.match(/\.paper-figure--uniform\s*{([^}]*)}/)?.[1] ?? "";
     const pdfRule = css.match(/\.paper-figure--pdf object\s*{([^}]*)}/)?.[1] ?? "";
 
+    expect(canvasRule).toMatch(/aspect-ratio:\s*16\s*\/\s*9/);
+    expect(canvasRule).toMatch(/background(?:-color)?:\s*(?:#fff(?:fff)?|white|rgb\(255\s+255\s+255\))/);
     expect(pdfRule).toMatch(/width:\s*100%/);
     expect(pdfRule).toMatch(/height:\s*100%/);
-    expect(pdfRule).not.toMatch(/object-fit:\s*cover/);
+    expect(pdfRule).toMatch(/object-fit:\s*contain/);
   });
 
   it("stacks publication media above details on mobile", () => {

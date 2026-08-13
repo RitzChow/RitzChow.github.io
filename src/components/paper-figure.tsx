@@ -9,7 +9,6 @@ interface PaperFigureProps {
   image?: string;
   imageAlt?: string;
   pdfMedia?: string;
-  mediaAspectRatio?: number;
 }
 
 function fallbackCategory(category: string) {
@@ -23,17 +22,13 @@ export function PaperFigure({
   image,
   imageAlt,
   pdfMedia,
-  mediaAspectRatio,
 }: PaperFigureProps) {
   const [imageFailed, setImageFailed] = useState(false);
 
   if (pdfMedia) {
     const pdfPath = sitePath(pdfMedia);
     return (
-      <figure
-        className="paper-figure paper-figure--pdf"
-        style={{ aspectRatio: mediaAspectRatio }}
-      >
+      <figure className="paper-figure paper-figure--uniform paper-figure--pdf">
         <object
           data={pdfPath}
           type="application/pdf"
@@ -54,7 +49,7 @@ export function PaperFigure({
 
   if (image && !imageFailed) {
     return (
-      <figure className="paper-figure">
+      <figure className="paper-figure paper-figure--uniform">
         {/* Static export images are deliberately native and base-path prefixed. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -71,7 +66,7 @@ export function PaperFigure({
   const safeCategory = fallbackCategory(category);
   return (
     <figure
-      className={`paper-figure paper-figure--fallback paper-figure--${safeCategory}`}
+      className={`paper-figure paper-figure--uniform paper-figure--fallback paper-figure--${safeCategory}`}
       data-figure-category={safeCategory}
       aria-hidden="true"
     >

@@ -337,21 +337,15 @@ a {
 .paper-figure {
   position: relative;
   width: 100%;
-  aspect-ratio: 8 / 5;
   margin: 0;
   overflow: hidden;
   border: 1px solid var(--rule);
-  background: #e8e0d3;
 }
 
-.paper-figure img { width: 100%; height: 100%; object-fit: cover; }
-.paper-figure--pdf { background: var(--paper); }
-.paper-figure--pdf object { display: block; width: 100%; height: 100%; border: 0; }
+.paper-figure--uniform { aspect-ratio: 16 / 9; background: #fff; }
+.paper-figure img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
+.paper-figure--pdf object { display: block; width: 100%; height: 100%; border: 0; object-fit: contain; object-position: center; }
 .paper-figure--pdf a { color: var(--ink); font-size: 0.78rem; font-weight: 700; }
-.paper-figure--fallback { background: linear-gradient(145deg, #e9e1d4, #d9cebe); }
-.paper-figure--physical-ai { background: linear-gradient(145deg, #e8dfd0, #cfc7b7); }
-.paper-figure--world-models { background: linear-gradient(145deg, #e4ddd1, #c6d0ca); }
-.paper-figure--text-detection { background: linear-gradient(145deg, #e9dfcf, #d8c0b8); }
 .paper-figure__orb { position: absolute; top: 18%; left: 16%; width: 31%; aspect-ratio: 1; border: 1px solid var(--clay); border-radius: 50%; }
 .paper-figure__axis { position: absolute; inset: 20% 13%; border-left: 1px solid rgb(32 30 26 / 45%); border-bottom: 1px solid rgb(32 30 26 / 45%); transform: rotate(-7deg); }
 .paper-figure__trace { position: absolute; right: 14%; bottom: 22%; width: 48%; height: 34%; border-top: 2px solid var(--clay); border-radius: 50%; transform: rotate(-12deg); }

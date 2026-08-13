@@ -53,7 +53,6 @@ export function PublicationList({ publications }: PublicationListProps) {
             image={publication.image}
             imageAlt={publication.imageAlt}
             pdfMedia={publication.pdfMedia}
-            mediaAspectRatio={publication.mediaAspectRatio}
           />
           <div className="publication-row__content">
             <p className="publication-kicker">
