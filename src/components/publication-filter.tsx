@@ -5,10 +5,11 @@ import type { KeyboardEvent } from "react";
 import type { Publication, PublicationFilterGroup } from "@/data/types";
 import { PublicationList } from "./publication-list";
 
-type Filter = "all" | PublicationFilterGroup;
+type Filter = "all" | "featured" | PublicationFilterGroup;
 
 const filters: { id: Filter; label: string }[] = [
   { id: "all", label: "All" },
+  { id: "featured", label: "Featured" },
   { id: "physical", label: "Physical" },
   { id: "visual", label: "Visual" },
 ];
@@ -37,11 +38,18 @@ export function PublicationArchive({ publications }: { publications: Publication
 
   const visible = selected === "all"
     ? publications
-    : publications.filter(({ filterGroups }) => filterGroups?.includes(selected));
+    : selected === "featured"
+      ? publications.filter(({ featured }) => featured)
+      : publications.filter(({ filterGroups }) => filterGroups?.includes(selected));
 
   return (
     <>
-      <div className="publication-filter" role="tablist" aria-label="Filter publications">
+      <div
+        className="publication-filter"
+        role="tablist"
+        aria-label="Filter publications"
+        data-selected={selected}
+      >
         {filters.map((filter, index) => {
           const isSelected = filter.id === selected;
           return (
@@ -62,6 +70,7 @@ export function PublicationArchive({ publications }: { publications: Publication
           );
         })}
       </div>
+      <p className="publication-author-legend">* Equal contribution · † Corresponding author</p>
       <div
         id="publication-results"
         role="tabpanel"

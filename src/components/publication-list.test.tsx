@@ -62,7 +62,7 @@ describe("publication archive", () => {
     expect(article).toHaveTextContent(fixture.award!);
     expect(within(article!).getAllByLabelText("Equal contribution")).toHaveLength(2);
     expect(within(article!).getByLabelText("Corresponding author")).toHaveTextContent("†");
-    expect(article).toHaveTextContent("* Equal contribution · † Corresponding author");
+    expect(article).not.toHaveTextContent("* Equal contribution · † Corresponding author");
   });
 
   it("omits contribution marks and legend when none are confirmed", () => {

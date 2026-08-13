@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-const expectedPublicationTypes = ["Survey", "Position paper", "Preprint"];
+const expectedPublicationTypes = ["Preprint", "Preprint", "Survey", "Position paper"];
 
 async function expectNoHorizontalOverflow(page: import("@playwright/test").Page) {
   await expect
@@ -107,13 +107,26 @@ test("publications are newest first and expose their types", async ({ page }) =>
   await page.goto("/publications/");
 
   const rows = page.locator(".publication-row");
-  await expect(rows).toHaveCount(3);
+  await expect(rows).toHaveCount(4);
   await expect(rows.locator(".publication-kicker")).toHaveText([
+    "2026 · Preprint",
+    "2026 · Preprint",
     "2025 · Survey",
     "2025 · Position paper",
-    "2024 · Preprint",
   ]);
   await expect(rows.locator(".publication-kicker")).toContainText(expectedPublicationTypes);
+});
+
+test("publication tabs slide to a centered Featured selection", async ({ page }) => {
+  await page.goto("/publications/");
+
+  const filter = page.getByRole("tablist", { name: "Filter publications" });
+  await expect(filter.getByRole("tab")).toHaveCount(4);
+  await filter.getByRole("tab", { name: "Featured" }).click();
+  await expect(filter).toHaveAttribute("data-selected", "featured");
+  await expect(page.locator(".publication-row")).toHaveCount(2);
+  await expect(page.locator("article .publication-author-legend")).toHaveCount(0);
+  await expect(page.locator(".publication-author-legend")).toHaveCount(1);
 });
 
 test("reduced motion disables authored navigation motion", async ({ page }) => {

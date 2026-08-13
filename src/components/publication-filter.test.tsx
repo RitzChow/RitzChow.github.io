@@ -14,9 +14,11 @@ function renderedTitles() {
 
 describe("PublicationArchive", () => {
   it("selects All by default and keeps the stable newest-first order", () => {
-    render(<PublicationArchive publications={publications} />);
+    const { container } = render(<PublicationArchive publications={publications} />);
 
     expect(screen.getByRole("tab", { name: "All" })).toHaveAttribute("aria-selected", "true");
+    expect(container.querySelector(".publication-filter")).toHaveAttribute("data-selected", "all");
+    expect(screen.getByText("* Equal contribution · † Corresponding author")).toBeInTheDocument();
     expect(renderedTitles()).toEqual([titles[1], titles[2], titles[0], titles[3]]);
   });
 
@@ -31,6 +33,16 @@ describe("PublicationArchive", () => {
     await user.click(screen.getByRole("tab", { name: "Visual" }));
     expect(renderedTitles()).toEqual([titles[1]]);
     expect(screen.queryByText(titles[2])).not.toBeInTheDocument();
+    expect(document.querySelector(".publication-filter")).toHaveAttribute("data-selected", "visual");
+  });
+
+  it("shows the representative Physical and Visual works under Featured", async () => {
+    const user = userEvent.setup();
+    render(<PublicationArchive publications={publications} />);
+
+    await user.click(screen.getByRole("tab", { name: "Featured" }));
+    expect(renderedTitles()).toEqual([titles[1], titles[0]]);
+    expect(document.querySelector(".publication-filter")).toHaveAttribute("data-selected", "featured");
   });
 
   it("supports ArrowLeft, ArrowRight, Home, and End with selected-state semantics", async () => {
@@ -38,13 +50,14 @@ describe("PublicationArchive", () => {
     render(<PublicationArchive publications={publications} />);
 
     const all = screen.getByRole("tab", { name: "All" });
+    const featured = screen.getByRole("tab", { name: "Featured" });
     const physical = screen.getByRole("tab", { name: "Physical" });
     const visual = screen.getByRole("tab", { name: "Visual" });
 
     all.focus();
     await user.keyboard("{ArrowRight}");
-    expect(physical).toHaveFocus();
-    expect(physical).toHaveAttribute("aria-selected", "true");
+    expect(featured).toHaveFocus();
+    expect(featured).toHaveAttribute("aria-selected", "true");
 
     await user.keyboard("{End}");
     expect(visual).toHaveFocus();

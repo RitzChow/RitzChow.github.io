@@ -44,6 +44,17 @@ describe("global layout styles", () => {
     expect(mobileRule).toMatch(/padding-top:\s*0/);
   });
 
+  it("centers the publication filter and uses a sliding light indicator", () => {
+    const filterRule = css.match(/\.publication-filter\s*{([^}]*)}/)?.[1] ?? "";
+    const indicatorRule = css.match(/\.publication-filter::before\s*{([^}]*)}/)?.[1] ?? "";
+
+    expect(filterRule).toMatch(/margin-inline:\s*auto/);
+    expect(filterRule).toMatch(/border-radius:/);
+    expect(indicatorRule).toMatch(/transition:\s*transform/);
+    expect(css).toMatch(/\.publication-filter\[data-selected="all"\]::before/);
+    expect(css).toMatch(/\.publication-filter\[data-selected="visual"\]::before/);
+  });
+
   it("keeps vector publication previews bounded without cropping", () => {
     const pdfRule = css.match(/\.paper-figure--pdf object\s*{([^}]*)}/)?.[1] ?? "";
 

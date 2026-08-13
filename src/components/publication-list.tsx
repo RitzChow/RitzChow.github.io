@@ -27,26 +27,18 @@ function AuthorMark({ author }: { author: PublicationAuthor }) {
 }
 
 function Authors({ authors }: { authors: PublicationAuthor[] }) {
-  const hasMarks = authors.some(({ equalContribution, correspondingAuthor }) =>
-    equalContribution || correspondingAuthor);
-
   return (
-    <>
-      <p className="publication-authors">
-        {authors.map((author, index) => (
-          <span key={`${author.name}-${index}`}>
-            {author.name === "Ruizhe Zhou" ? (
-              <strong className="publication-author--self">{author.name}</strong>
-            ) : author.name}
-            <AuthorMark author={author} />
-            {index < authors.length - 1 ? ", " : ""}
-          </span>
-        ))}
-      </p>
-      {hasMarks ? (
-        <p className="publication-author-legend">* Equal contribution · † Corresponding author</p>
-      ) : null}
-    </>
+    <p className="publication-authors">
+      {authors.map((author, index) => (
+        <span key={`${author.name}-${index}`}>
+          {author.name === "Ruizhe Zhou" ? (
+            <strong className="publication-author--self">{author.name}</strong>
+          ) : author.name}
+          <AuthorMark author={author} />
+          {index < authors.length - 1 ? ", " : ""}
+        </span>
+      ))}
+    </p>
   );
 }
 

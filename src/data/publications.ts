@@ -24,6 +24,7 @@ export const publications: Publication[] = [
     arxivId: "2510.04978",
     pdfMedia: "/image/physical-ai-survey.pdf",
     mediaAspectRatio: 955.55 / 486.556,
+    featured: true,
     filterGroups: ["physical"],
     tldr: "A survey of Physical AI that unifies perception, reasoning, world modeling, and interaction into a framework for intelligent systems acting in the physical world.",
     links: {
@@ -47,6 +48,7 @@ export const publications: Publication[] = [
     arxivId: "2608.04726",
     pdfMedia: "/image/when-prompts-become-pixels.pdf",
     mediaAspectRatio: 1535.76 / 634.32,
+    featured: true,
     filterGroups: ["visual"],
     tldr: "A prompt-region grounding method that connects textual prompts to image regions, enabling multimodal models to reason with spatially grounded visual evidence.",
     links: {

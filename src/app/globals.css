@@ -218,12 +218,12 @@ a {
 .publications-shell {
   width: min(100% - 3rem, 78rem);
   margin-inline: auto;
-  padding-block: clamp(3.5rem, 8vw, 7rem);
+  padding-block: clamp(2rem, 4vw, 3.5rem) clamp(3.5rem, 8vw, 7rem);
 }
 
 .publications-intro {
   max-width: 48rem;
-  margin-bottom: clamp(3rem, 7vw, 6rem);
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
 }
 
 .publications-intro h1 {
@@ -243,15 +243,54 @@ a {
 }
 
 .publication-filter {
-  display: inline-flex;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(5.25rem, 1fr));
   gap: 0.2rem;
-  margin-bottom: 1.5rem;
+  width: min(100%, 25rem);
+  margin: 0 auto 0.85rem;
+  margin-inline: auto;
   padding: 0.2rem;
-  border: 1px solid var(--rule);
-  background: rgb(203 193 178 / 18%);
+  border: 1px solid rgb(100 94 85 / 12%);
+  border-radius: 999px;
+  background: rgb(203 193 178 / 28%);
+}
+
+.publication-filter::before {
+  position: absolute;
+  top: 0.2rem;
+  left: 0.2rem;
+  width: calc((100% - 1rem) / 4);
+  height: calc(100% - 0.4rem);
+  border: 1px solid rgb(100 94 85 / 10%);
+  border-radius: 999px;
+  background: var(--paper);
+  box-shadow: 0 1px 3px rgb(32 30 27 / 10%);
+  content: "";
+  transform: translate3d(0, 0, 0);
+  transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.publication-filter[data-selected="all"]::before {
+  transform: translate3d(0, 0, 0);
+}
+
+.publication-filter[data-selected="featured"]::before {
+  transform: translate3d(calc(100% + 0.2rem), 0, 0);
+}
+
+.publication-filter[data-selected="physical"]::before {
+  transform: translate3d(calc(200% + 0.4rem), 0, 0);
+}
+
+.publication-filter[data-selected="visual"]::before {
+  transform: translate3d(calc(300% + 0.6rem), 0, 0);
 }
 
 .publication-filter button {
+  position: relative;
+  z-index: 1;
   min-width: 5.25rem;
   padding: 0.55rem 0.9rem;
   border: 0;
@@ -267,13 +306,20 @@ a {
 }
 
 .publication-filter button[aria-selected="true"] {
-  background: var(--ink);
-  color: var(--paper);
+  color: var(--ink);
 }
 
 .publication-filter button:focus-visible {
   outline: 2px solid var(--clay);
   outline-offset: 2px;
+}
+
+.publication-author-legend {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-align: center;
 }
 
 .publication-list {
