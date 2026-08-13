@@ -344,7 +344,8 @@ a {
 
 .paper-figure--uniform { aspect-ratio: 16 / 9; background: #fff; }
 .paper-figure img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
-.paper-figure--pdf object { display: block; width: 100%; height: 100%; border: 0; object-fit: contain; object-position: center; }
+.paper-figure--pdf { display: flex; align-items: center; justify-content: center; }
+.paper-figure--pdf object { display: block; flex: none; border: 0; object-fit: contain; object-position: center; }
 .paper-figure--pdf a { color: var(--ink); font-size: 0.78rem; font-weight: 700; }
 .paper-figure__orb { position: absolute; top: 18%; left: 16%; width: 31%; aspect-ratio: 1; border: 1px solid var(--clay); border-radius: 50%; }
 .paper-figure__axis { position: absolute; inset: 20% 13%; border-left: 1px solid rgb(32 30 26 / 45%); border-bottom: 1px solid rgb(32 30 26 / 45%); transform: rotate(-7deg); }

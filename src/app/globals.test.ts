@@ -61,8 +61,10 @@ describe("global layout styles", () => {
 
     expect(canvasRule).toMatch(/aspect-ratio:\s*16\s*\/\s*9/);
     expect(canvasRule).toMatch(/background(?:-color)?:\s*(?:#fff(?:fff)?|white|rgb\(255\s+255\s+255\))/);
-    expect(pdfRule).toMatch(/width:\s*100%/);
-    expect(pdfRule).toMatch(/height:\s*100%/);
+    expect(css.match(/\.paper-figure--pdf\s*{([^}]*)}/)?.[1] ?? "")
+      .toMatch(/(?:align-items:\s*center[\s\S]*justify-content:\s*center|justify-content:\s*center[\s\S]*align-items:\s*center)/);
+    expect(pdfRule).not.toMatch(/width:\s*100%/);
+    expect(pdfRule).not.toMatch(/height:\s*100%/);
     expect(pdfRule).toMatch(/object-fit:\s*contain/);
   });
 

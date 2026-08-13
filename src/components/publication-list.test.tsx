@@ -207,6 +207,7 @@ describe("PaperFigure", () => {
         title="A Fixture Paper"
         category="physical-ai"
         pdfMedia="/image/fixture.pdf"
+        mediaAspectRatio={2}
       />,
     );
 
@@ -217,10 +218,33 @@ describe("PaperFigure", () => {
     expect(object).toHaveAttribute("type", "application/pdf");
     expect(object).toHaveAttribute("data", "/portfolio/image/fixture.pdf");
     expect(object).toHaveAccessibleName("Vector preview of A Fixture Paper");
+    expect(object).toHaveStyle({
+      aspectRatio: "2",
+      width: "100%",
+      height: `${(16 / 9 / 2) * 100}%`,
+    });
     const fallback = screen.getByRole("link", { name: "Open vector PDF (opens in a new tab)" });
     expect(fallback).toHaveAttribute("href", "/portfolio/image/fixture.pdf");
     expect(fallback).toHaveAttribute("target", "_blank");
     vi.unstubAllEnvs();
+  });
+
+  it("fits a narrow PDF by height while preserving its source ratio", () => {
+    const { container } = render(
+      <PaperFigure
+        title="Portrait fixture"
+        category="physical-ai"
+        pdfMedia="/image/portrait.pdf"
+        mediaAspectRatio={1}
+      />,
+    );
+
+    expect(container.querySelector("figure")).not.toHaveAttribute("style");
+    expect(container.querySelector("object")).toHaveStyle({
+      aspectRatio: "1",
+      width: `${(1 / (16 / 9)) * 100}%`,
+      height: "100%",
+    });
   });
 
   it("keeps the Position paper on its deterministic fallback instead of an object", () => {

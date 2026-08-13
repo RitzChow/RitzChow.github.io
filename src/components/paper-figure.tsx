@@ -9,6 +9,7 @@ interface PaperFigureProps {
   image?: string;
   imageAlt?: string;
   pdfMedia?: string;
+  mediaAspectRatio?: number;
 }
 
 function fallbackCategory(category: string) {
@@ -22,17 +23,32 @@ export function PaperFigure({
   image,
   imageAlt,
   pdfMedia,
+  mediaAspectRatio,
 }: PaperFigureProps) {
   const [imageFailed, setImageFailed] = useState(false);
 
   if (pdfMedia) {
     const pdfPath = sitePath(pdfMedia);
+    const canvasAspectRatio = 16 / 9;
+    const pdfAspectRatio = mediaAspectRatio ?? canvasAspectRatio;
+    const pdfStyle = pdfAspectRatio >= canvasAspectRatio
+      ? {
+          aspectRatio: pdfAspectRatio,
+          width: "100%",
+          height: `${(canvasAspectRatio / pdfAspectRatio) * 100}%`,
+        }
+      : {
+          aspectRatio: pdfAspectRatio,
+          width: `${(pdfAspectRatio / canvasAspectRatio) * 100}%`,
+          height: "100%",
+        };
     return (
       <figure className="paper-figure paper-figure--uniform paper-figure--pdf">
         <object
           data={pdfPath}
           type="application/pdf"
           aria-label={`Vector preview of ${title}`}
+          style={pdfStyle}
         >
           <a
             href={pdfPath}
