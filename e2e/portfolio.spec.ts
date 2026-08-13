@@ -61,11 +61,30 @@ test("a cross-page home anchor lands on its target section", async ({ page }) =>
 
   await expect(page).toHaveURL(/\/#research$/);
   const research = page.locator("#research");
+  const header = page.locator(".site-header");
   await expect(research).toBeVisible();
-  await expect.poll(() => research.evaluate((element) => {
-    const top = element.getBoundingClientRect().top;
-    return top >= 0 && top < window.innerHeight;
-  })).toBe(true);
+  await expect.poll(async () => {
+    const targetTop = await research.evaluate((element) => element.getBoundingClientRect().top);
+    const headerBottom = await header.evaluate((element) => element.getBoundingClientRect().bottom);
+    return targetTop >= headerBottom - 1 && targetTop < await page.evaluate(() => window.innerHeight);
+  }).toBe(true);
+});
+
+test("the compact header stays pinned while the page scrolls", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+
+  const header = page.locator(".site-header");
+  const about = page.locator("#about");
+  const initialHeader = await header.boundingBox();
+  const initialAbout = await about.boundingBox();
+  expect(initialHeader).not.toBeNull();
+  expect(initialAbout).not.toBeNull();
+  expect(initialHeader!.height).toBeLessThanOrEqual(80);
+  expect(initialAbout!.y - (initialHeader!.y + initialHeader!.height)).toBeLessThanOrEqual(56);
+
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await expect.poll(() => header.evaluate((element) => element.getBoundingClientRect().top)).toBeCloseTo(0, 0);
 });
 
 test("mobile menu expands and navigates", async ({ page }) => {

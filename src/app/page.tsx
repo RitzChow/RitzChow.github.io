@@ -11,9 +11,9 @@ export default function Page() {
       <div className="home-grid">
         <div className="home-content">
           <AboutSection />
+          <NewsSection />
           <ResearchSection />
           <ExperienceSection />
-          <NewsSection />
         </div>
         <IdentityRail profile={profile} />
       </div>

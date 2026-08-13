@@ -13,4 +13,12 @@ describe("home page", () => {
       }),
     ).toBeInTheDocument();
   });
+
+  it("orders the home narrative from about and news to research and experience", () => {
+    const { container } = render(<Page />);
+
+    expect(
+      Array.from(container.querySelectorAll(".home-content > section"), (section) => section.id),
+    ).toEqual(["about", "news", "research", "experience"]);
+  });
 });
