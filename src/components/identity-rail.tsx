@@ -69,7 +69,7 @@ export function IdentityRail({ profile }: IdentityRailProps) {
       <Portrait name={profile.name} src={profile.portrait} />
       <div className="identity-rail__text">
         <p className="identity-rail__name">{profile.name}</p>
-        <p className="identity-rail__role">{profile.role}</p>
+        {profile.role ? <p className="identity-rail__role">{profile.role}</p> : null}
         <p className="identity-rail__institution">{profile.institution}</p>
       </div>
       <nav className="identity-contacts" aria-label="Contact links">

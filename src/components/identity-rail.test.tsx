@@ -50,10 +50,14 @@ describe("IdentityRail", () => {
   });
 
   it("shows the configured academic identity and filters empty contacts", () => {
-    render(<IdentityRail profile={profile} />);
+    const { container } = render(<IdentityRail profile={profile} />);
 
     expect(screen.getByText("Ruizhe Zhou")).toBeInTheDocument();
-    expect(screen.getByText("Undergraduate Researcher")).toBeInTheDocument();
+    if (profile.role) {
+      expect(screen.getByText(profile.role)).toBeInTheDocument();
+    } else {
+      expect(container.querySelector(".identity-rail__role")).not.toBeInTheDocument();
+    }
     expect(screen.getByText("Sun Yat-sen University")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /GitHub/i })).toBeInTheDocument();
     expect(
