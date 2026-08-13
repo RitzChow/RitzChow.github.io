@@ -146,7 +146,7 @@ describe("publication data", () => {
 
     expect(survey).toMatchObject({
       year: 2025,
-      pdfMedia: "/image/physical-ai-survey.pdf",
+      image: "/image/physical-ai-survey-preview.svg",
       filterGroups: ["physical"],
     });
     expect(survey.authors.slice(0, 3)).toEqual([
@@ -163,7 +163,7 @@ describe("publication data", () => {
       year: 2026,
       publicationType: "Preprint",
       venue: "arXiv",
-      pdfMedia: "/image/when-prompts-become-pixels.pdf",
+      image: "/image/when-prompts-become-pixels-preview.svg",
       filterGroups: ["visual"],
     });
     expect(visual.authors.map(({ name }) => name)).toEqual([
@@ -177,7 +177,7 @@ describe("publication data", () => {
       year: 2026,
       publicationType: "Preprint",
       venue: "arXiv",
-      pdfMedia: "/image/models-under-scope.pdf",
+      image: "/image/models-under-scope-preview.svg",
     });
     expect(scope).not.toHaveProperty("filterGroups");
     expect(scope.authors.map(({ name }) => name)).toEqual([
@@ -190,7 +190,7 @@ describe("publication data", () => {
       venue: "NeurIPS LAW Workshop",
       filterGroups: ["physical"],
     });
-    expect(position).not.toHaveProperty("pdfMedia");
+    expect(position).not.toHaveProperty("image");
     expect(position.authors.slice(0, 3).every(({ equalContribution }) => equalContribution)).toBe(true);
     expect(position.authors.at(-1)).toEqual({
       name: "Xiaodan Liang",
@@ -200,59 +200,32 @@ describe("publication data", () => {
 });
 
 describe("PaperFigure", () => {
-  it("embeds vector PDF media directly with a base-path-safe fallback link", () => {
+  it("renders a base-path-safe static SVG preview without an interactive PDF object", () => {
     vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/portfolio");
     const { container } = render(
       <PaperFigure
         title="A Fixture Paper"
         category="physical-ai"
-        pdfMedia="/image/fixture.pdf"
-        mediaAspectRatio={2}
+        image="/image/fixture-preview.svg"
+        imageAlt="First-page preview of A Fixture Paper"
       />,
     );
 
     const figure = container.querySelector("figure");
-    const object = container.querySelector("object");
+    const preview = screen.getByRole("img", { name: "First-page preview of A Fixture Paper" });
     expect(figure).toHaveClass("paper-figure--uniform");
     expect(figure).not.toHaveAttribute("style");
-    expect(object).toHaveAttribute("type", "application/pdf");
-    expect(object).toHaveAttribute("data", "/portfolio/image/fixture.pdf");
-    expect(object).toHaveAccessibleName("Vector preview of A Fixture Paper");
-    expect(object).toHaveStyle({
-      aspectRatio: "2",
-      width: "100%",
-      height: `${(16 / 9 / 2) * 100}%`,
-    });
-    const fallback = screen.getByRole("link", { name: "Open vector PDF (opens in a new tab)" });
-    expect(fallback).toHaveAttribute("href", "/portfolio/image/fixture.pdf");
-    expect(fallback).toHaveAttribute("target", "_blank");
+    expect(preview).toHaveAttribute("src", "/portfolio/image/fixture-preview.svg");
+    expect(container.querySelector("object")).not.toBeInTheDocument();
     vi.unstubAllEnvs();
   });
 
-  it("fits a narrow PDF by height while preserving its source ratio", () => {
-    const { container } = render(
-      <PaperFigure
-        title="Portrait fixture"
-        category="physical-ai"
-        pdfMedia="/image/portrait.pdf"
-        mediaAspectRatio={1}
-      />,
-    );
-
-    expect(container.querySelector("figure")).not.toHaveAttribute("style");
-    expect(container.querySelector("object")).toHaveStyle({
-      aspectRatio: "1",
-      width: `${(1 / (16 / 9)) * 100}%`,
-      height: "100%",
-    });
-  });
-
-  it("keeps the Position paper on its deterministic fallback instead of an object", () => {
+  it("keeps the Position paper on its deterministic fallback instead of an image", () => {
     const { container } = render(
       <PaperFigure title="Position paper" category="world-models" />,
     );
 
-    expect(container.querySelector("object")).not.toBeInTheDocument();
+    expect(container.querySelector("img")).not.toBeInTheDocument();
     expect(container.querySelector('[data-figure-category="world-models"]'))
       .toHaveClass("paper-figure--uniform");
   });

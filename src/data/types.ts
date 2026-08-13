@@ -69,8 +69,6 @@ export interface Publication {
   tldr?: string;
   award?: string;
   bibtex?: string;
-  pdfMedia?: string;
-  mediaAspectRatio?: number;
   featured?: boolean;
   filterGroups?: PublicationFilterGroup[];
   links: PublicationLinks;

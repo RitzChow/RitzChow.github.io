@@ -57,15 +57,15 @@ describe("global layout styles", () => {
 
   it("uses one white 16:9 canvas and contains publication media without cropping", () => {
     const canvasRule = css.match(/\.paper-figure--uniform\s*{([^}]*)}/)?.[1] ?? "";
-    const pdfRule = css.match(/\.paper-figure--pdf object\s*{([^}]*)}/)?.[1] ?? "";
+    const imageRule = css.match(/\.paper-figure img\s*{([^}]*)}/)?.[1] ?? "";
 
     expect(canvasRule).toMatch(/aspect-ratio:\s*16\s*\/\s*9/);
     expect(canvasRule).toMatch(/background(?:-color)?:\s*(?:#fff(?:fff)?|white|rgb\(255\s+255\s+255\))/);
-    expect(css.match(/\.paper-figure--pdf\s*{([^}]*)}/)?.[1] ?? "")
-      .toMatch(/(?:align-items:\s*center[\s\S]*justify-content:\s*center|justify-content:\s*center[\s\S]*align-items:\s*center)/);
-    expect(pdfRule).not.toMatch(/width:\s*100%/);
-    expect(pdfRule).not.toMatch(/height:\s*100%/);
-    expect(pdfRule).toMatch(/object-fit:\s*contain/);
+    expect(imageRule).toMatch(/width:\s*100%/);
+    expect(imageRule).toMatch(/height:\s*100%/);
+    expect(imageRule).toMatch(/object-fit:\s*contain/);
+    expect(imageRule).toMatch(/object-position:\s*center/);
+    expect(css).not.toMatch(/\.paper-figure--pdf\s+object/);
   });
 
   it("stacks publication media above details on mobile", () => {
